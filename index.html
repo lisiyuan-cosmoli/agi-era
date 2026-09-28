@@ -1,0 +1,1423 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AGI 时代下，人类如何生活？</title>
+<meta name="description" content="一次 10 分钟的互动推演：假如整个社会是一栋楼，AGI 到来之后，这栋楼会发生什么，我们还有哪些选择。">
+<meta name="theme-color" content="#0f1729">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="共同未来">
+<meta property="og:title" content="AGI 时代下，人类如何生活？">
+<meta property="og:description" content="假如整个社会是一栋楼：12 户人家、一家小馆。AI 越来越能干了，这栋楼会发生什么？10 分钟互动推演。">
+<meta property="og:image" content="https://lisiyuan-cosmoli.github.io/agi-era/assets/share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://lisiyuan-cosmoli.github.io/agi-era/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AGI 时代下，人类如何生活？">
+<meta name="twitter:description" content="假如整个社会是一栋楼：12 户人家、一家小馆。AI 越来越能干了，这栋楼会发生什么？10 分钟互动推演。">
+<meta name="twitter:image" content="https://lisiyuan-cosmoli.github.io/agi-era/assets/share.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='15' cy='20' r='11' fill='none' stroke='%23f0a02e' stroke-width='3'/%3E%3Ccircle cx='26' cy='20' r='11' fill='none' stroke='%233657ff' stroke-width='3'/%3E%3C/svg%3E">
+<style>/* 共同未来 · 一栋楼里的 AI 时代
+   人用琥珀色，AI 用蓝色；这栋楼是整个社会的缩影。 */
+:root{
+  --bg:#f4f6fa; --surface:#ffffff; --surface-2:#eef1f6; --ink:#141a24; --ink-2:#434c5c; --muted:#646d80; --line:#dde2ea;
+  --ai:#3657ff; --ai-ink:#2a45d8; --ai-soft:#e3e8ff;
+  --human:#f0a02e; --human-ink:#8f5600; --human-soft:#fdf0db;
+  --risk:#f0604d; --risk-ink:#c23b2b; --share:#16a57a; --share-ink:#0c7a59; --gov:#5b6b8c;
+  --facade:#efe6d8; --facade-2:#e6dac7; --facade-line:#d6c7b0; --roof:#c9b89f;
+  --win-lit:#ffe2a1; --win-dark:#cdd3dd; --win-ai:#dbe3ff; --shop:#f7d9b5; --win-ai-ink:#1c2a6b;
+  --on-ink:#ffffff; --focus:#f0a02e;
+  --night:#0f1729; --night-2:#16213a; --night-ink:#f1f4fa; --night-dim:#a7b1c6;
+  --sans:"PingFang SC","Hiragino Sans GB","Noto Sans SC","Noto Sans CJK SC","Source Han Sans SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono","Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+  --gutter:max(16px,5vw); --wide:1160px; --measure:33em;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --bg:#0c1018; --surface:#141a25; --surface-2:#1b2230; --ink:#eef1f6; --ink-2:#b3bccb; --muted:#8b95a7; --line:#273041;
+  --ai:#7d95ff; --ai-ink:#a2b3ff; --ai-soft:#1c2555;
+  --human:#ffb44f; --human-ink:#ffca80; --human-soft:#3a2a12;
+  --risk:#ff7a6a; --risk-ink:#ff9a8c; --share:#3fd09d; --share-ink:#72e0ba; --gov:#98a8c6;
+  --facade:#252c3b; --facade-2:#2d3547; --facade-line:#3a4459; --roof:#3a4459;
+  --win-lit:#ffd27a; --win-dark:#111723; --win-ai:#2a3a80; --shop:#4a3a2a; --win-ai-ink:#e3e8ff;
+  --on-ink:#0c1018;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0c1018; --surface:#141a25; --surface-2:#1b2230; --ink:#eef1f6; --ink-2:#b3bccb; --muted:#8b95a7; --line:#273041;
+  --ai:#7d95ff; --ai-ink:#a2b3ff; --ai-soft:#1c2555;
+  --human:#ffb44f; --human-ink:#ffca80; --human-soft:#3a2a12;
+  --risk:#ff7a6a; --risk-ink:#ff9a8c; --share:#3fd09d; --share-ink:#72e0ba; --gov:#98a8c6;
+  --facade:#252c3b; --facade-2:#2d3547; --facade-line:#3a4459; --roof:#3a4459;
+  --win-lit:#ffd27a; --win-dark:#111723; --win-ai:#2a3a80; --shop:#4a3a2a; --win-ai-ink:#e3e8ff;
+  --on-ink:#0c1018;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.8;padding-inline:var(--gutter);padding-block:0;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--ai-ink);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:6px}
+::selection{background:var(--ai-soft)}
+h1,h2,h3{text-wrap:balance;margin:0}
+p{margin:0}
+.skip{position:absolute;left:-999px;top:8px;z-index:100;background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px}
+.skip:focus{left:16px}
+.bleed{margin-inline:calc(var(--gutter)*-1);padding-inline:var(--gutter)}
+
+/* 顶栏 */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;margin-inline:calc(var(--gutter)*-1);padding:12px var(--gutter);display:flex;align-items:center;gap:20px;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid color-mix(in srgb,var(--line) 70%,transparent)}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-weight:800;font-size:15px;white-space:nowrap}
+.brand-mark{position:relative;width:24px;height:16px;flex:none}
+.brand-mark::before,.brand-mark::after{content:"";position:absolute;top:0;width:16px;height:16px;border-radius:50%;border:2px solid var(--human)}
+.brand-mark::after{left:8px;border-color:var(--ai)}
+.track{position:relative;flex:1;height:16px;min-width:0}
+.track-line,.track-fill{position:absolute;left:0;right:0;top:7px;height:2px;border-radius:2px;background:var(--line)}
+.track-fill{right:auto;width:0;background:linear-gradient(90deg,var(--human),var(--ai))}
+.track-stop{position:absolute;top:3px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--bg);border:2px solid var(--muted);transition:transform .3s,border-color .3s,background .3s}
+.track-stop.passed{background:var(--ink);border-color:var(--ink)}
+.track-stop.current{border-color:var(--ai);background:var(--ai);transform:scale(1.25)}
+.track-now{font-size:13px;font-weight:700;color:var(--ink-2);white-space:nowrap;min-width:7em;text-align:right}
+@media (max-width:600px){.brand-text,.track-now{display:none}}
+
+/* 开场：夜里的一栋楼 */
+.hero{background:var(--night);color:var(--night-ink);position:relative;overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(1.5px 1.5px at 12% 18%,#fff8 50%,transparent 51%),radial-gradient(1px 1px at 32% 42%,#fff6 50%,transparent 51%),radial-gradient(1.5px 1.5px at 58% 12%,#fff7 50%,transparent 51%),radial-gradient(1px 1px at 78% 30%,#fff5 50%,transparent 51%),radial-gradient(1px 1px at 88% 8%,#fff8 50%,transparent 51%),radial-gradient(1.5px 1.5px at 22% 70%,#fff4 50%,transparent 51%),radial-gradient(1px 1px at 46% 84%,#fff4 50%,transparent 51%)}
+.hero-in{max-width:var(--wide);margin-inline:auto;padding-block:clamp(40px,6vw,72px) 0;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:24px 56px;align-items:end}
+.hero-copy{padding-bottom:clamp(40px,6vw,88px)}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--human)}
+.kicker::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--human);box-shadow:0 0 0 4px color-mix(in srgb,var(--human) 30%,transparent)}
+.hero h1{margin-top:18px;font-weight:800;font-size:clamp(38px,6.6vw,78px);line-height:1.12;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--win-lit)}
+.hero-lede{margin-top:20px;max-width:30em;font-size:clamp(16.5px,1.8vw,19px);line-height:1.85;color:#cdd5e4}
+.go{margin-top:28px;display:inline-flex;align-items:center;gap:12px;padding:13px 22px;border-radius:999px;background:var(--human);color:#1a1206;font-weight:800;text-decoration:none;font-size:16px}
+.go:hover{background:#ffd27a}
+.go span{transition:transform .3s}.go:hover span{transform:translateY(3px)}
+.hero-art{position:relative;max-width:380px;width:100%;justify-self:center}
+.hero-art svg{display:block;width:100%;height:auto}
+.hero-year{position:absolute;right:0;top:6px;text-align:right;font-family:var(--mono);color:var(--night-dim);font-size:12px;line-height:1.4}
+.hero-year b{display:block;font-size:30px;color:var(--night-ink);font-weight:600;font-variant-numeric:tabular-nums}
+.hero-legend{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;padding:10px 0 18px;font-size:12.5px;color:var(--night-dim)}
+.hero-legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+@media (max-width:860px){.hero-in{grid-template-columns:1fr}.hero-copy{padding-bottom:8px}.hero-art{max-width:320px}}
+/* 章节与通用元素 */
+.ch{max-width:var(--wide);margin-inline:auto;padding-top:clamp(80px,10vw,136px);scroll-margin-top:56px}
+.ch-head{display:grid;gap:12px;max-width:46em}
+.ch-no{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--ai-ink)}
+.ch-no span{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ai);color:var(--on-ink);font-family:var(--mono);font-size:12px}
+.ch h2{font-weight:800;font-size:clamp(28px,4.4vw,50px);line-height:1.2;letter-spacing:-.01em}
+.ch-lede{font-size:clamp(17px,1.8vw,19px);color:var(--ink-2);max-width:var(--measure)}
+.note{margin-top:16px;font-size:13px;line-height:1.7;color:var(--muted);max-width:46em}
+.stage{margin-top:clamp(28px,4vw,44px)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(16px,2.6vw,26px)}
+.live{min-height:3.2em;font-size:16px;line-height:1.75;color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--on-ink);font-weight:800;font-size:15px;line-height:1.3}
+.btn:hover{background:var(--ai);border-color:var(--ai)}
+.btn.line{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.line:hover{border-color:var(--ink);background:var(--surface)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.range{-webkit-appearance:none;appearance:none;width:100%;height:30px;background:transparent;margin:0}
+.range::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(90deg,var(--ai) var(--p,0%),var(--line) var(--p,0%))}
+.range::-moz-range-track{height:6px;border-radius:6px;background:var(--line)}
+.range::-moz-range-progress{height:6px;border-radius:6px;background:var(--ai)}
+.range::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;margin-top:-10px;border-radius:50%;background:var(--surface);border:3px solid var(--ai);box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.range::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--surface);border:3px solid var(--ai)}
+.ticks{position:relative;height:18px;margin:2px 13px 0;font-size:11.5px;font-weight:700;color:var(--muted)}
+.ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.ticks span:first-child{transform:none}.ticks span:last-child{transform:translateX(-100%)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-2)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.callout{margin-top:22px;padding:16px 18px;border-radius:16px;background:var(--ai-soft);font-size:16px;line-height:1.75;max-width:46em}
+.callout b{color:var(--ai-ink)}
+
+/* 1 节点：时间轨道（站点等距，小圆点按真实间隔移动，越走越快） */
+.rail-box{padding:18px 18px 16px;border-radius:20px;background:var(--surface);border:1px solid var(--line)}
+.rail{position:relative;height:58px;margin:0 12px}
+.rail-line,.rail-fill{position:absolute;left:0;top:34px;height:4px;border-radius:4px;background:var(--line);right:0}
+.rail-fill{right:auto;width:0;background:linear-gradient(90deg,var(--human),var(--ai))}
+.rail-stop{position:absolute;top:26px;width:20px;height:20px;margin-left:-10px;border-radius:50%;border:3px solid var(--muted);background:var(--surface);padding:0;transition:transform .3s,border-color .3s,background .3s}
+.rail-stop.passed{border-color:var(--ink);background:var(--ink)}
+.rail-stop.cur{border-color:var(--ai);background:var(--ai);transform:scale(1.25);box-shadow:0 0 0 6px var(--ai-soft)}
+.rail-stop span{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+.rail-stop.cur span{color:var(--ai-ink)}
+.rail-gap{position:absolute;top:42px;transform:translateX(-50%);font-size:10.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+.rail-card{display:grid;grid-template-columns:auto 1fr;gap:2px 16px;align-items:center;margin-top:16px;min-height:5em}
+.rail-year{grid-row:span 2;font-family:var(--mono);font-size:clamp(32px,6vw,46px);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.rail-card b{font-size:18px;line-height:1.4}
+.rail-card p{font-size:15px;color:var(--ink-2);line-height:1.6}
+.here-tag{display:inline-block;margin-right:6px;padding:0 8px;border-radius:999px;background:var(--ai);color:var(--on-ink);font-size:12px;font-weight:800;vertical-align:2px}
+.agi{margin-top:14px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:12px 40px;align-items:start;padding:18px;border-radius:20px;border:2px dashed var(--line)}
+.agi h3{font-size:clamp(20px,2.4vw,26px);line-height:1.35}
+.agi p{color:var(--ink-2);font-size:15px;margin-top:4px}
+.agi-pick{display:flex;flex-wrap:wrap;gap:8px}
+.agi-btn{padding:9px 15px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-family:var(--mono);font-size:14px;font-weight:700;min-height:40px}
+.agi-btn:hover{border-color:var(--ink)}
+.agi-btn[aria-pressed="true"]{background:var(--ai);border-color:var(--ai);color:var(--on-ink)}
+.agi .live{margin-top:10px;min-height:2.6em;font-size:15px}
+@media (max-width:900px){.agi{grid-template-columns:1fr}}
+
+/* 这栋楼 */
+.bldg{display:block;width:100%;height:auto}
+.b-facade{fill:var(--facade)}.b-facade-2{fill:var(--facade-2)}.b-roof{fill:var(--roof)}
+.b-line{stroke:var(--facade-line);stroke-width:2;fill:none}
+.b-ground{fill:var(--facade-line)}
+.u-win{fill:var(--win-lit);transition:fill .5s,stroke .3s;stroke:transparent;stroke-width:3}
+.unit{cursor:pointer}
+.unit:focus-visible{outline:none}
+.unit:focus-visible .u-win,.unit.sel .u-win{stroke:var(--ai)}
+.unit.dark .u-win{fill:var(--win-dark)}
+.unit.ai .u-win{fill:var(--win-ai)}
+.u-name{font-family:var(--sans);font-size:12px;font-weight:800;fill:#2b2418}
+.u-job{font-family:var(--sans);font-size:10.5px;fill:#5a4d38}
+.unit.dark .u-name,.unit.dark .u-job{fill:var(--ink-2)}
+.unit.ai .u-name{fill:#1c2a6b}.unit.ai .u-job{fill:#34457f}
+.av{fill:#2b2418;opacity:.55;transition:opacity .4s}
+.unit.dark .av{opacity:.25}
+.pip{fill:var(--human);transition:fill .4s}
+.pip.on{fill:var(--ai)}
+.pip.keep{fill:none;stroke:var(--human);stroke-width:1.6;stroke-dasharray:2 2}
+.u-me{display:none}
+.unit.me .u-me{display:inline}
+.u-me rect{fill:var(--human)}.u-me text{font-family:var(--sans);font-size:10px;font-weight:800;fill:#1a1206}
+.shop-body{fill:var(--shop)}.awning{fill:var(--risk)}.awning-2{fill:#ffffff;opacity:.85}
+.shop-text{font-family:var(--sans);font-size:12px;font-weight:800;fill:#2b2418}
+.shop.dark .shop-body{fill:var(--win-dark)}
+.shop.dark .shop-text{fill:var(--ink-2)}
+.fx{opacity:0;transition:opacity .6s}
+.fx-text{font-family:var(--sans);font-size:11px;font-weight:800}
+.unit.ai .av{fill:var(--win-ai-ink);opacity:.6}
+.unit.ai .u-name{fill:var(--win-ai-ink)}.unit.ai .u-job{fill:var(--win-ai-ink);opacity:.85}
+
+/* 02 AI 敲门 */
+.b-wrap{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:28px 48px;align-items:start}
+.time-ctl{position:sticky;top:calc(env(safe-area-inset-top,0px) + 54px);z-index:20;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px 16px 8px;box-shadow:0 10px 30px -22px rgba(0,0,0,.45)}
+.time-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.time-when{font-weight:800;font-size:19px}
+.time-count{font-size:13.5px;color:var(--ink-2)}
+.time-count b{color:var(--ai-ink);font-size:17px;font-family:var(--mono)}
+.play{background:none;border:0;padding:4px 0;color:var(--ai-ink);font-size:14px;font-weight:800}
+.b-card{margin-top:14px;padding:12px;border-radius:22px;background:var(--surface);border:1px solid var(--line)}
+.res{display:grid;gap:14px}
+.res h3{font-size:22px;line-height:1.35}
+.res h3 small{display:block;font-size:14px;font-weight:700;color:var(--muted)}
+.res-tasks{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.res-tasks li{display:flex;align-items:center;gap:10px;font-size:15px}
+.res-tasks li::before{content:"";flex:none;width:12px;height:12px;border-radius:50%;background:var(--human)}
+.res-tasks li.on::before{background:var(--ai)}
+.res-tasks li.keep::before{background:none;border:2px dashed var(--human)}
+.res-tasks li span{margin-left:auto;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.res-say{font-size:15px;line-height:1.75;color:var(--ink-2);padding:12px 14px;border-radius:14px;background:var(--surface-2)}
+@media (max-width:900px){.b-wrap{grid-template-columns:1fr}}
+
+/* 03 连锁反应 */
+.dominoes{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:26px 6px;padding:8px 2px 0}
+@media (max-width:900px){.dominoes{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.dom{display:flex;flex-direction:column;align-items:center;gap:10px}
+.dom-base{position:relative;width:100%;height:84px;display:flex;justify-content:center;align-items:flex-end;border-bottom:2px solid var(--line)}
+.dom-tile{width:28px;height:74px;border-radius:6px;background:var(--ink);position:relative;transform-origin:100% 100%;transition:transform .42s cubic-bezier(.55,0,.8,.45),background .3s}
+.dom-tile::before{content:"";position:absolute;left:5px;right:5px;top:36px;height:2px;background:var(--bg);opacity:.6}
+.dom-tile::after{content:"";position:absolute;left:10px;top:13px;width:8px;height:8px;border-radius:50%;background:var(--bg);box-shadow:0 36px 0 var(--bg)}
+.dom:first-child .dom-tile{background:var(--ai)}
+.dom.fallen .dom-tile{transform:rotate(74deg);background:var(--risk)}
+.dom:first-child.fallen .dom-tile{background:var(--ai)}
+.dom.lean .dom-tile{transform:rotate(16deg)}
+.dom-wall{position:absolute;left:-6px;bottom:0;width:8px;height:64px;border-radius:4px;background:var(--share);display:none}
+.dom.guarded .dom-wall{display:block}
+.dom.shake .dom-wall{animation:shake .5s}
+.dom-label{font-size:12.5px;line-height:1.5;text-align:center;color:var(--ink-2);min-height:4.5em}
+.dom.fallen .dom-label{color:var(--risk-ink);font-weight:700}
+.dom.saved .dom-label{color:var(--share-ink);font-weight:700}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+.dom-ctl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:20px 44px;margin-top:26px;align-items:start}
+@media (max-width:900px){.dom-ctl{grid-template-columns:1fr}}
+.barriers{display:grid;gap:8px}
+.barriers h3{font-size:15px;margin-bottom:4px}
+.barrier{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-size:14.5px;line-height:1.5}
+.barrier .box{flex:none;width:18px;height:18px;margin-top:2px;border-radius:5px;border:2px solid var(--share);display:grid;place-items:center;color:#fff;font-size:12px;font-weight:800}
+.barrier[aria-pressed="true"]{border-color:var(--share);background:color-mix(in srgb,var(--share) 10%,var(--surface))}
+.barrier[aria-pressed="true"] .box{background:var(--share)}
+.barrier[aria-pressed="true"] .box::after{content:"✓"}
+.barrier small{display:block;color:var(--muted);font-size:12.5px}
+
+/* 04 钱怎么转 */
+.flow-wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px 48px;align-items:center}
+@media (max-width:900px){.flow-wrap{grid-template-columns:1fr}}
+#flowSvg{display:block;width:100%;height:auto;max-width:520px;margin:0 auto}
+.fl-path{fill:none;stroke-linecap:round;transition:stroke-width .5s,opacity .5s}
+.fl-wage{stroke:var(--human)}.fl-spend{stroke:color-mix(in srgb,var(--human) 55%,var(--muted))}.fl-ai{stroke:var(--ai)}
+.fl-share{stroke:var(--share)}.fl-public{stroke:var(--gov)}
+.fl-node{fill:var(--surface);stroke:var(--ink);stroke-width:2}
+.fl-node.ai{stroke:var(--ai)}.fl-node.gov{stroke:var(--gov)}
+.fl-label{font-family:var(--sans);font-size:14px;font-weight:800;fill:var(--ink)}
+.fl-small{font-family:var(--sans);font-size:11.5px;fill:var(--muted)}
+.fl-tag{font-family:var(--sans);font-size:11.5px;font-weight:800;transition:opacity .5s}
+.t-wage{fill:var(--human-ink)}.t-spend{fill:var(--muted)}.t-ai{fill:var(--ai-ink)}.t-share{fill:var(--share-ink)}.t-public{fill:var(--gov)}
+.meter-bg{fill:var(--surface-2)}.meter.home{fill:var(--human)}.meter.firm{fill:color-mix(in srgb,var(--human) 55%,var(--muted))}.meter.own{fill:var(--ai)}
+.coin{stroke:var(--surface);stroke-width:1.2}
+.c-wage{fill:var(--human)}.c-spend{fill:color-mix(in srgb,var(--human) 55%,var(--muted))}.c-ai{fill:var(--ai)}.c-share{fill:var(--share)}.c-public{fill:var(--gov)}
+.fade{transition:opacity .6s}
+.ctl{display:grid;gap:12px}
+.ctl-label{display:flex;justify-content:space-between;font-weight:800;font-size:15px}
+.ctl-label span{font-size:13px;font-weight:700;color:var(--ink-2)}
+.tog{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-size:14.5px;line-height:1.45}
+.tog .sw{flex:none;width:42px;height:26px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);position:relative;transition:background .3s}
+.tog .sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:transform .3s,background .3s}
+.tog[aria-pressed="true"] .sw{background:var(--share);border-color:var(--share)}
+.tog[aria-pressed="true"] .sw::after{transform:translateX(16px);background:#fff}
+.tog[data-k="public"][aria-pressed="true"] .sw{background:var(--gov);border-color:var(--gov)}
+.tog b{display:block}.tog small{color:var(--muted);font-size:12.5px}
+/* 05 四种未来 */
+.fut{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:24px 48px;align-items:start}
+@media (max-width:900px){.fut{grid-template-columns:1fr}}
+.fut-art{padding:12px;border-radius:22px;background:var(--surface);border:1px solid var(--line)}
+.switches{display:grid;gap:16px}
+.sw-q{font-weight:800;font-size:15px;margin-bottom:8px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:14px;background:var(--surface-2)}
+.opt{padding:10px 8px;border-radius:11px;border:0;background:transparent;font-size:15px;font-weight:800;color:var(--ink-2)}
+.opt[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.14)}
+.opt:disabled{opacity:.5;cursor:not-allowed}
+.tog.ctrl[aria-pressed="false"]{border-color:var(--risk);background:color-mix(in srgb,var(--risk) 9%,var(--surface))}
+.tog.ctrl[aria-pressed="true"] .sw{background:var(--ink);border-color:var(--ink)}
+.fut-out{padding:18px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.fut-out .tag{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.fut-out h3{font-size:24px;line-height:1.35;margin:4px 0 8px}
+.fut-out p{font-size:15.5px;line-height:1.8;color:var(--ink-2)}
+.fut-out.risk{border-color:var(--risk)}
+.fx-garden-tree{fill:var(--share)}.fx-garden-ink{fill:#2b2418;opacity:.6}
+.fx-scaffold line{stroke:var(--human-ink);stroke-width:2}
+.fx-sign rect{fill:var(--surface)}.fx-sign text{fill:var(--ink)}
+.fx-platform rect{fill:var(--ai)}.fx-platform text{fill:#fff}.fx-platform line{stroke:var(--ai);stroke-width:1.5;stroke-dasharray:4 4}
+.fx-crack path{fill:none;stroke:var(--risk);stroke-width:3;stroke-linejoin:round}
+.fx-closed rect{fill:var(--ink)}.fx-closed text{fill:var(--bg)}
+.fx-alarm circle{fill:var(--risk)}
+.future-A .fx-garden,.future-B .fx-scaffold,.future-C .fx-platform,.future-D .fx-crack,.future-D .fx-closed{opacity:1}
+.future-B .unit.flick .u-win{animation:flick 2.6s steps(1) infinite}
+.unit.rich .u-win{fill:#ffc94d}
+.off .b-body{filter:grayscale(.9);opacity:.75}
+.off .fx-alarm{opacity:1;animation:blink 1s steps(1) infinite}
+@keyframes flick{0%{fill:var(--win-dark)}50%{fill:var(--win-lit)}}
+@keyframes blink{50%{opacity:.2}}
+
+/* 06 各方 */
+.tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:6px;margin-top:clamp(26px,4vw,40px);padding-bottom:2px}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:800;font-size:15px;color:var(--ink-2)}
+.tab svg{width:18px;height:18px}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-ink)}
+.tabpanel{margin-top:16px}
+.acts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.acts{grid-template-columns:1fr}}
+.act{padding:18px;border-radius:18px;background:var(--surface);border:1px solid var(--line);animation:rise .45s both}
+.act:nth-child(2){animation-delay:.06s}.act:nth-child(3){animation-delay:.12s}
+.act b{display:block;font-size:17px;line-height:1.45;margin-bottom:6px}
+.act p{font-size:15px;line-height:1.75;color:var(--ink-2)}
+@keyframes rise{from{transform:translateY(8px)}to{transform:none}}
+
+/* 07 更远的未来 */
+.far-sec{background:var(--night);color:var(--night-ink);margin-top:clamp(80px,10vw,136px)}
+.far-sec .ch{padding-block:clamp(64px,8vw,110px)}
+.far-sec .ch-no{color:var(--human)}.far-sec .ch-no span{background:var(--human);color:#1a1206}
+.far-sec .ch-lede{color:#cdd5e4}
+.far{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:36px;align-items:center;margin-top:clamp(26px,4vw,44px)}
+@media (max-width:900px){.far{grid-template-columns:1fr}}
+.far-art{position:relative;aspect-ratio:4/3;max-width:100%;border-radius:18px;overflow:hidden;background:var(--night-2)}
+.far-art canvas{display:block;width:100%;height:100%}
+.far-legend{position:absolute;left:14px;right:14px;bottom:12px;display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12.5px;color:var(--night-dim)}
+.far-legend i{display:inline-block;width:10px;height:10px;margin-right:6px;vertical-align:-1px}
+.lg-nat{border-radius:50%;background:#ffb44f}.lg-enh{border-radius:50%;border:2px solid #ffb44f}.lg-ai{background:#8ea2ff;transform:rotate(45deg) scale(.85)}
+.principles{list-style:none;margin:0;padding:0;display:grid;gap:22px}
+.principles li{font-size:clamp(19px,2.2vw,24px);font-weight:800;line-height:1.5}
+.principles small{display:block;margin-top:4px;font-size:15px;font-weight:400;color:var(--night-dim);line-height:1.7}
+.far-sec .note{color:var(--night-dim)}
+
+/* 08 轮到你 */
+.qs{list-style:none;margin:clamp(26px,4vw,40px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.qs{grid-template-columns:1fr}}
+.q-item{padding:20px;border-radius:18px;background:var(--surface);border:1px solid var(--line)}
+.q-item .n{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--human-soft);color:var(--human-ink);font-weight:800;font-size:14px}
+.q-item b{display:block;font-size:19px;line-height:1.5;margin:10px 0 6px}
+.q-item p{font-size:15px;color:var(--ink-2);line-height:1.75}
+.finale{max-width:var(--wide);margin:clamp(80px,10vw,130px) auto 0;padding-top:32px;border-top:1px solid var(--line)}
+.motto{font-weight:800;font-size:clamp(34px,6vw,72px);line-height:1.15}
+.motto span{color:var(--ai)}
+.finale .sub{margin-top:18px;max-width:var(--measure);color:var(--ink-2)}
+.finale .row{margin-top:26px}
+.about{max-width:var(--wide);margin:52px auto 0;padding:18px 0 40px;border-top:1px solid var(--line);display:grid;gap:6px;font-size:13px;line-height:1.7;color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+
+/* 开场里的楼，始终是夜色 */
+.hero .bldg{--facade:#232a3b;--facade-2:#2b3346;--facade-line:#3a4459;--roof:#3a4459;--win-lit:#ffd27a;--win-dark:#101624;--win-ai:#5d77e0;--win-ai-ink:#e3e8ff;--shop:#4a3a2a}
+
+/* 手机一屏一幕：自动演示 + 自己试试 */
+.scene{margin-top:clamp(18px,3vw,30px)}
+.scene-cap{min-height:3.5em;margin-top:12px;font-size:16px;line-height:1.7;color:var(--ink)}
+.scene-cap b{color:var(--ai-ink)}
+.scene-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:14px;font-weight:800;color:var(--ink-2)}
+.chip:hover,.chip[aria-expanded="true"]{border-color:var(--ink);color:var(--ink)}
+.auto-tag{display:none;font-size:12.5px;font-weight:700;color:var(--ai-ink)}
+.auto-tag::before{content:"";display:inline-block;width:8px;height:8px;margin-right:6px;border-radius:50%;background:var(--ai);animation:blink 1.2s steps(1) infinite;vertical-align:1px}
+.scene.playing .auto-tag{display:inline}
+.scene.playing .replay{display:none}
+.hands{display:none;margin-top:14px}
+.scene.hands-on .hands{display:block}
+.hands-grid{display:grid;gap:10px}
+@media (min-width:900px){
+  .hands{display:block}
+  .chip.try{display:none}
+}
+.fig-bldg{max-width:330px;margin:0 auto}
+.fut .fig-bldg{max-width:300px}
+.res-mini{display:none}
+.scene.hands-on .res-mini{display:block}
+@media (min-width:900px){.res-mini{display:block}}
+
+/* 手机上收紧节奏 */
+@media (max-width:600px){
+  body{font-size:16px}
+  .ch{padding-top:64px}
+  .ch h2{font-size:26px}
+  .ch-lede{font-size:16px}
+  .hero-in{padding-top:32px;gap:12px}
+  .hero-lede{font-size:16px;margin-top:14px}
+  .go{margin-top:20px}
+  .hero-art{max-width:280px}
+  .fig-bldg{max-width:290px}
+  .fut .fig-bldg{max-width:250px}
+  .b-card{padding:8px}
+  .dom-base{height:70px}
+  .dom-tile{width:24px;height:62px}
+  .dom-tile::before{top:30px}
+  .dom-tile::after{left:8px;top:11px;box-shadow:0 30px 0 var(--bg)}
+  .dom-label{font-size:12px;min-height:4.4em}
+  .dominoes{gap:18px 4px}
+  .note{font-size:12.5px}
+  .acts{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin-inline:calc(var(--gutter)*-1);padding:0 var(--gutter) 6px;scrollbar-width:none}
+  .acts::-webkit-scrollbar{display:none}
+  .act{flex:0 0 84%;scroll-snap-align:start}
+}
+.scene.hands-on .ctl.hands{display:grid}
+@media (min-width:900px){.ctl.hands{display:grid}}
+@media (max-width:600px){
+  .hero-year{position:static;display:flex;justify-content:flex-end;align-items:baseline;gap:8px;margin-bottom:6px}
+  .hero-year b{font-size:24px}
+  .ch-head{gap:8px}
+  .ch h2{font-size:24px}
+  .ch-lede{font-size:15px;line-height:1.7}
+  .time-ctl{padding:10px 14px 6px;top:calc(env(safe-area-inset-top,0px) + 46px)}
+  .time-when{font-size:17px}
+  .time-count{font-size:12.5px}
+  #bScene .fig-bldg{max-width:250px}
+  .scene-cap{min-height:3.4em;margin-top:8px;font-size:15px;line-height:1.65}
+  .scene-ctl{margin-top:6px}
+  #flowSvg{max-width:300px}
+  .fut .fig-bldg{max-width:210px}
+  .fut-out{padding:14px}
+  .fut-out h3{font-size:20px;margin:2px 0 4px}
+  .fut-out p{font-size:14.5px;line-height:1.7}
+}
+.b-card{margin-top:10px}
+@media (max-width:600px){.b-card{padding:6px;margin-top:8px}.scene{margin-top:14px}}
+</style>
+</head>
+<body>
+<!--@@BODY-START@@-->
+<a class="skip" href="#c1">跳到正文</a>
+<header class="topbar">
+  <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span class="brand-text">共同未来</span></a>
+  <nav class="track" id="track" aria-label="章节"><div class="track-line"></div><div class="track-fill" id="trackFill"></div></nav>
+  <span class="track-now" id="trackNow" aria-hidden="true">开场</span>
+</header>
+
+<main id="top">
+<section class="hero bleed" aria-labelledby="heroTitle">
+  <div class="hero-in">
+    <div class="hero-copy">
+      <p class="kicker">10 分钟互动推演</p>
+      <h1 id="heroTitle">AGI 时代下，<br><em>人类如何生活？</em></h1>
+      <p class="hero-lede">假如整个社会是一栋楼：12 户人家做着各种各样的工作，楼下还有一家小馆。AI 越来越能干了，这栋楼会发生什么？</p>
+      <a class="go" href="#c1">走进这栋楼 <span aria-hidden="true">↓</span></a>
+    </div>
+    <figure class="hero-art" style="margin:0">
+      <div class="hero-year" aria-hidden="true">年份<b id="heroYear">2026</b></div>
+      <svg id="heroBldg" class="bldg" viewBox="0 38 360 392" role="img" aria-label="夜里的一栋 6 层楼，每层两户，楼下是一家小馆。随着年份从 2012 走到 2026，越来越多窗户里的活交给了 AI，窗户从暖黄色变成蓝色。"></svg>
+      <div class="hero-legend" aria-hidden="true"><span><i style="background:#ffd27a"></i>主要是人在做</span><span><i style="background:#8ea2ff"></i>AI 已经能做大部分</span></div>
+    </figure>
+  </div>
+</section>
+
+<section class="ch" id="c1" data-name="节点" aria-labelledby="c1t">
+  <header class="ch-head">
+    <p class="ch-no"><span>1</span>节点</p>
+    <h2 id="c1t">我们正站在一个节点上</h2>
+    <p class="ch-lede">回头看这十几年，大事一件比一件来得快。</p>
+  </header>
+  <div class="scene" id="railScene">
+    <div class="rail-box">
+      <div class="rail" id="rail" role="group" aria-label="2012 年到 2026 年的时间轨道，点任意一站查看"><div class="rail-line"></div><div class="rail-fill" id="railFill"></div></div>
+      <div class="rail-card" id="railCard" aria-live="polite"><span class="rail-year">2026</span><b><span class="here-tag">你在这里</span>几乎每个行业都在变</b><p>很多人还没意识到，变化已经开始了。</p></div>
+    </div>
+    <div class="scene-ctl"><span class="auto-tag">自动演示中</span><button type="button" class="chip replay" data-replay>↻ 再看一遍</button></div>
+  </div>
+  <div class="agi">
+    <div>
+      <h3>下一站：AGI？</h3>
+      <p>AGI 就是在大多数工作上，都能做得和人一样好、甚至更好的 AI。它哪一年到来，没有人知道。你猜呢？</p>
+    </div>
+    <div>
+      <div class="agi-pick" role="group" aria-label="你猜 AGI 哪一年到来">
+        <button type="button" class="agi-btn" data-year="2027" aria-pressed="false">2027</button>
+        <button type="button" class="agi-btn" data-year="2028" aria-pressed="false">2028</button>
+        <button type="button" class="agi-btn" data-year="2029" aria-pressed="false">2029</button>
+        <button type="button" class="agi-btn" data-year="2031" aria-pressed="false">2030 以后</button>
+        <button type="button" class="agi-btn" data-year="0" aria-pressed="false">不会来</button>
+      </div>
+      <p class="live" id="agiReply" aria-live="polite">选一个年份，后面的推演会跟着它走。</p>
+    </div>
+  </div>
+</section>
+<section class="ch" id="c2" data-name="AI 敲门" aria-labelledby="c2t">
+  <header class="ch-head">
+    <p class="ch-no"><span>2</span>AI 敲门</p>
+    <h2 id="c2t">谁家的活，先被 AI 接手？</h2>
+    <p class="ch-lede">小圆点是每户人家的活，变蓝表示 AI 已经能做。</p>
+  </header>
+  <div class="scene b-wrap" id="bScene">
+    <div>
+      <div class="time-ctl">
+        <div class="time-top"><span class="time-when" id="timeWhen">今天（2026）</span><span class="time-count" id="timeCount"></span></div>
+        <input class="range" type="range" id="timeRange" min="0" max="100" step="1" value="40" aria-label="时间：从 2022 年到 AGI" aria-valuetext="今天（2026）">
+        <div class="ticks" aria-hidden="true"><span style="left:0">2022</span><span style="left:40%">今天</span><span style="left:70%">更强的 AI</span><span style="left:100%" data-agi-tick>AGI</span></div>
+      </div>
+      <div class="b-card fig-bldg"><svg id="mainBldg" class="bldg" viewBox="0 38 360 392" role="group" aria-label="一栋 6 层楼，每层两户，楼下是小馆。点任意一户查看这家人的活。"></svg></div>
+      <p class="scene-cap" id="bCap" aria-live="polite">拖动时间，或者点任意一户，看看这家人的活。</p>
+      <div class="scene-ctl"><span class="auto-tag">自动演示中</span><button type="button" class="chip replay" data-replay>↻ 再看一遍</button><button type="button" class="chip try" data-try aria-expanded="false">✋ 自己试试</button></div>
+    </div>
+    <div class="res card res-mini" id="resPanel" aria-live="polite"></div>
+  </div>
+  <p class="callout"><b>楼里有个规律。</b>坐在电脑前、按流程办事的活最先被接手；要到现场动手、要被人信任的活最晚。这一次的新变化是，写作、设计、编程、研究这些“动脑”的活，也在很快地变。</p>
+  <p class="note">每件活什么时候能交给 AI，是按 2026 年能看到的情况做的粗略判断，只用来示意，不是预测。</p>
+</section>
+
+<section class="ch" id="c3" data-name="连锁反应" aria-labelledby="c3t">
+  <header class="ch-head">
+    <p class="ch-no"><span>3</span>连锁反应</p>
+    <h2 id="c3t">一户出事，整栋楼都会感觉到</h2>
+    <p class="ch-lede">假设客服小周和会计阿敏的活，大部分交给了 AI。</p>
+  </header>
+  <div class="scene card" id="domScene">
+    <div class="dominoes" id="dominoes">
+      <div class="dom"><div class="dom-base"><span class="dom-wall"></span><span class="dom-tile"></span></div><p class="dom-label">AI 接手了客服和会计的活</p></div>
+      <div class="dom"><div class="dom-base"><span class="dom-wall"></span><span class="dom-tile"></span></div><p class="dom-label">公司不再需要那么多人</p></div>
+      <div class="dom"><div class="dom-base"><span class="dom-wall"></span><span class="dom-tile"></span></div><p class="dom-label">小周和阿敏丢了工作</p></div>
+      <div class="dom"><div class="dom-base"><span class="dom-wall"></span><span class="dom-tile"></span></div><p class="dom-label">他们不再去楼下小馆吃饭</p></div>
+      <div class="dom"><div class="dom-base"><span class="dom-wall"></span><span class="dom-tile"></span></div><p class="dom-label">小馆生意变差，辞掉了帮工</p></div>
+      <div class="dom"><div class="dom-base"><span class="dom-wall"></span><span class="dom-tile"></span></div><p class="dom-label">大家都少花钱，房贷吃紧</p></div>
+      <div class="dom"><div class="dom-base"><span class="dom-wall"></span><span class="dom-tile"></span></div><p class="dom-label">银行收紧贷款，更多店铺关门</p></div>
+      <div class="dom"><div class="dom-base"><span class="dom-wall"></span><span class="dom-tile"></span></div><p class="dom-label">物业费收不上来，电梯也修不起了</p></div>
+    </div>
+    <p class="scene-cap" id="domMsg" aria-live="polite">八块多米诺已经立好。第一块是 AI。</p>
+    <div class="scene-ctl"><span class="auto-tag">自动演示中</span><button type="button" class="chip replay" data-replay>↻ 再看一遍</button><button type="button" class="chip try" data-try aria-expanded="false">✋ 自己试试</button></div>
+    <div class="hands">
+      <div class="dom-ctl">
+        <div class="row">
+          <button type="button" class="btn" id="domPush">推倒第一块</button>
+          <button type="button" class="btn line" id="domReset">全部扶起来</button>
+        </div>
+        <div class="barriers">
+          <h3>先放几块挡板，再推：</h3>
+          <button type="button" class="barrier" data-before="2" aria-pressed="false"><span class="box" aria-hidden="true"></span><span>转岗、缩短工时、分享收益<small>公司 · 挡在“丢了工作”前面</small></span></button>
+          <button type="button" class="barrier" data-before="3" aria-pressed="false"><span class="box" aria-hidden="true"></span><span>失业以后，收入不断档<small>政府 · 挡在“不再去小馆”前面</small></span></button>
+          <button type="button" class="barrier" data-before="5" aria-pressed="false"><span class="box" aria-hidden="true"></span><span>房贷可以有序调整<small>银行和政府 · 挡在“房贷吃紧”前面</small></span></button>
+          <button type="button" class="barrier" data-before="6" aria-pressed="false"><span class="box" aria-hidden="true"></span><span>东西变便宜，带来新生意<small>市场 · 挡在“更多店铺关门”前面</small></span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note">压力还可能在裁员之前就开始：客户、老板和投资人只要预期变了，就会先压价、停招、收紧融资。现实里一块挡板往往只能挡住一部分，通常要几块一起放。</p>
+</section>
+
+<section class="ch" id="c4" data-name="钱怎么转" aria-labelledby="c4t">
+  <header class="ch-head">
+    <p class="ch-no"><span>4</span>钱怎么转</p>
+    <h2 id="c4t">楼里的钱，是怎么转起来的？</h2>
+    <p class="ch-lede">公司发工资，住户拿去消费，钱又回到公司。AI 会让工资这条管道变细。</p>
+  </header>
+  <div class="scene card flow-wrap" id="flowScene">
+    <svg id="flowSvg" viewBox="0 0 360 330" role="img" aria-labelledby="flowDesc">
+      <desc id="flowDesc">公司把工资付给住户，住户消费把钱付回公司。AI 接手的活越多，工资这条线越细，流向 AI 公司和平台的钱越多。打开收益分享和公共服务，会出现从政府流向住户的新线路。</desc>
+      <path id="pWage" class="fl-path fl-wage" d="M146 76 C88 80 48 150 50 214"></path>
+      <path id="pSpend" class="fl-path fl-spend" d="M92 228 C128 196 158 160 170 106"></path>
+      <path id="pAI" class="fl-path fl-ai" d="M214 76 C272 80 312 150 310 214"></path>
+      <path id="pOwn" class="fl-path fl-spend" d="M268 228 C232 196 202 160 190 106"></path>
+      <path id="pTax" class="fl-path fl-share" d="M270 268 C250 290 226 296 204 296"></path>
+      <path id="pShare" class="fl-path fl-share" d="M156 292 C132 290 110 282 92 270"></path>
+      <path id="pPublic" class="fl-path fl-public" d="M160 308 C130 314 98 304 76 282"></path>
+      <g id="coins"></g>
+      <text class="fl-tag t-wage" x="76" y="70">工资</text>
+      <text class="fl-tag t-spend" x="146" y="202">消费</text>
+      <text class="fl-tag t-ai" x="256" y="72">AI 收益</text>
+      <text class="fl-tag t-spend" x="236" y="172" id="tagOwn" style="opacity:0">消费、投资</text>
+      <text class="fl-tag t-share" x="112" y="264" id="tagShare" style="opacity:0">分红</text>
+      <text class="fl-tag t-share" x="226" y="322" id="tagTax" style="opacity:0">税和基金</text>
+      <text class="fl-tag t-public" x="104" y="326" id="tagPublic" style="opacity:0">公共服务</text>
+      <circle class="fl-node" cx="180" cy="70" r="34"></circle>
+      <text class="fl-label" x="180" y="75" text-anchor="middle">公司</text>
+      <circle class="fl-node" cx="62" cy="250" r="34"></circle>
+      <text class="fl-label" x="62" y="255" text-anchor="middle">住户</text>
+      <g class="fade" id="ownerG" style="opacity:.35">
+        <circle class="fl-node ai" cx="298" cy="250" r="34"></circle>
+        <text class="fl-label" x="298" y="247" text-anchor="middle" style="font-size:12.5px">AI 公司</text>
+        <text class="fl-label" x="298" y="263" text-anchor="middle" style="font-size:12.5px">和平台</text>
+      </g>
+      <g class="fade" id="govG" style="opacity:.3">
+        <circle class="fl-node gov" cx="180" cy="298" r="24"></circle>
+        <text class="fl-label" x="180" y="303" text-anchor="middle" style="font-size:13px">政府</text>
+      </g>
+      <rect class="meter-bg" x="224" y="36" width="8" height="64" rx="3"></rect>
+      <rect class="meter firm" id="mFirm" x="224" y="36" width="8" height="64" rx="3"></rect>
+      <text class="fl-small" x="238" y="44">营收</text>
+      <rect class="meter-bg" x="8" y="286" width="8" height="40" rx="3"></rect>
+      <rect class="meter home" id="mHome" x="8" y="286" width="8" height="40" rx="3"></rect>
+      <text class="fl-small" x="22" y="324">生活</text>
+      <rect class="meter-bg" x="344" y="178" width="8" height="40" rx="3"></rect>
+      <rect class="meter own" id="mOwn" x="344" y="214" width="8" height="4" rx="3"></rect>
+      <text class="fl-small" x="352" y="172" text-anchor="end">财富</text>
+    </svg>
+    <div>
+      <p class="scene-cap" id="flowMsg" aria-live="polite">今天：工资是大多数住户最主要的收入。公司发工资，住户拿去消费，钱又回到公司。</p>
+      <div class="scene-ctl"><span class="auto-tag">自动演示中</span><button type="button" class="chip replay" data-replay>↻ 再看一遍</button><button type="button" class="chip try" data-try aria-expanded="false">✋ 自己试试</button></div>
+      <div class="hands ctl">
+        <div>
+          <div class="ctl-label"><label for="flowRange">AI 接手的活</label><span id="flowPct">很少</span></div>
+          <input class="range" type="range" id="flowRange" min="0" max="100" step="1" value="0" aria-valuetext="很少">
+        </div>
+        <button type="button" class="tog" data-k="share" aria-pressed="false"><span class="sw" aria-hidden="true"></span><span><b>接一条新管道：收益分享</b><small>AI 带来的收益，通过公共基金、分红回到每户人家</small></span></button>
+        <button type="button" class="tog" data-k="public" aria-pressed="false"><span class="sw" aria-hidden="true"></span><span><b>再接一条：公共服务</b><small>住房、看病、上学、养老更便宜，也更有保障</small></span></button>
+      </div>
+    </div>
+  </div>
+  <p class="note">这是示意图，不是经济模型。国家之间也有类似的事：原来外包给别国的客服、设计、软件订单，可能会转给掌握 AI 的公司。</p>
+</section>
+<section class="ch" id="c5" data-name="四种未来" aria-labelledby="c5t">
+  <header class="ch-head">
+    <p class="ch-no"><span>5</span>四种未来</p>
+    <h2 id="c5t">同一栋楼，可以变成很不一样的样子</h2>
+    <p class="ch-lede">AI 本身不决定结局。取决于两件事：财富怎么分，社会什么时候开始准备。</p>
+  </header>
+  <div class="scene fut" id="futScene">
+    <div class="fut-art fig-bldg"><svg id="futBldg" class="bldg" viewBox="0 0 360 430" role="img" aria-label="这栋楼在所选未来里的样子。"></svg></div>
+    <div class="switches">
+      <div class="fut-out" id="futOut" aria-live="polite"><span class="tag">还没选</span><h3>扳动两个开关</h3><p>这栋楼会变成什么样子，取决于你的选择。</p></div>
+      <div class="scene-ctl"><span class="auto-tag">自动演示中</span><button type="button" class="chip replay" data-replay>↻ 再看一遍</button><button type="button" class="chip try" data-try aria-expanded="false">✋ 自己试试</button></div>
+      <div class="hands hands-grid">
+        <div class="switch" data-k="dist" role="group" aria-labelledby="swDist">
+          <p class="sw-q" id="swDist">① AI 带来的财富，怎么分？</p>
+          <div class="seg"><button type="button" class="opt" data-v="all" aria-pressed="false">大家都能分到</button><button type="button" class="opt" data-v="few" aria-pressed="false">少数人拿走</button></div>
+        </div>
+        <div class="switch" data-k="prep" role="group" aria-labelledby="swPrep">
+          <p class="sw-q" id="swPrep">② 社会什么时候开始准备？</p>
+          <div class="seg"><button type="button" class="opt" data-v="early" aria-pressed="false">提前准备好</button><button type="button" class="opt" data-v="late" aria-pressed="false">出了事再补</button></div>
+        </div>
+        <button type="button" class="tog ctrl" id="ctrlToggle" aria-pressed="true"><span class="sw" aria-hidden="true"></span><span><b>前提：人类还管得住 AI</b><small>关键的 AI 行动能被叫停、能撤回。关掉看看会怎样。</small></span></button>
+      </div>
+    </div>
+  </div>
+  <p class="note">四种未来是简化的示意。现实可能介于它们之间，不同的国家和人群也可能走到不同的地方，或者在它们之间来回切换。</p>
+</section>
+
+<section class="ch" id="c6" data-name="各方能做什么" aria-labelledby="c6t">
+  <header class="ch-head">
+    <p class="ch-no"><span>6</span>各方能做什么</p>
+    <h2 id="c6t">这两个开关，由谁来扳？</h2>
+    <p class="ch-lede">没有哪一方能单独扳动。左右滑动卡片，看看每一方能做什么。</p>
+  </header>
+  <div class="tabs" role="tablist" aria-label="五类角色">
+    <button type="button" class="tab" role="tab" id="tab-gov" aria-controls="panel-gov" aria-selected="true" tabindex="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-6 9 6M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 20h18"></path></svg>政府</button>
+    <button type="button" class="tab" role="tab" id="tab-biz" aria-controls="panel-biz" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h16M5 10l1-5h12l1 5M6 10v9h12v-9M10 19v-5h4v5"></path></svg>公司</button>
+    <button type="button" class="tab" role="tab" id="tab-ai" aria-controls="panel-ai" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2"></rect><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"></path></svg>AI 公司</button>
+    <button type="button" class="tab" role="tab" id="tab-world" aria-controls="panel-world" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"></path></svg>国家之间</button>
+    <button type="button" class="tab" role="tab" id="tab-you" aria-controls="panel-you" aria-selected="false" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1-5 4-7 8-7s7 2 8 7"></path></svg>每个人</button>
+  </div>
+  <div class="tabpanel" role="tabpanel" id="panel-gov" aria-labelledby="tab-gov" tabindex="0"><ol class="acts">
+    <li class="act"><b>别等出了大事再帮</b><p>收入一掉，保障就要接上。不必先证明自己是被哪个 AI 替代的。</p></li>
+    <li class="act"><b>让 AI 的收益分到每户人家</b><p>公共基金、分红、更好的公共服务都可以讨论。钱从哪来、怎么分，要公开、能监督。</p></li>
+    <li class="act"><b>必需品要跟上</b><p>光发钱不够。住房、看病、养老跟不上，钱会被房租和涨价吃掉。</p></li>
+  </ol></div>
+  <div class="tabpanel" role="tabpanel" id="panel-biz" aria-labelledby="tab-biz" tabindex="0" hidden><ol class="acts">
+    <li class="act"><b>想清楚客户为什么还付钱</b><p>员工学会了 AI，不代表生意还成立。客户能自己做的部分，迟早不会再付钱。</p></li>
+    <li class="act"><b>提前说，一起商量</b><p>早点告诉员工会发生什么，一起讨论转岗、缩短工时、分享收益。</p></li>
+    <li class="act"><b>撑不下去，就有序退出</b><p>先把工资结清、把客户交接好，别一夜之间消失。</p></li>
+  </ol></div>
+  <div class="tabpanel" role="tabpanel" id="panel-ai" aria-labelledby="tab-ai" tabindex="0" hidden><ol class="acts">
+    <li class="act"><b>越关键的操作，越要能叫停</b><p>转账、控制设备、修改系统这类动作，要能随时停下、能撤回。</p></li>
+    <li class="act"><b>出了事谁负责，上线前说清楚</b><p>要有事故报告和赔偿办法。有钱赔，也不等于什么风险都可以冒。</p></li>
+    <li class="act"><b>让用户能搬家、能离开</b><p>数据能导出，换一家供应商不会被卡死。别让一整个行业只能依赖一家公司。</p></li>
+  </ol></div>
+  <div class="tabpanel" role="tabpanel" id="panel-world" aria-labelledby="tab-world" tabindex="0" hidden><ol class="acts">
+    <li class="act"><b>出了事故，互相通报</b><p>一个地方的 AI 事故，可能很快出现在别处。及时通报，大家才能一起补漏洞。</p></li>
+    <li class="act"><b>别比谁更不设防</b><p>谁都怕慢一步，就容易一起被带着加速。共同的规则，能让各方都敢放慢一点。</p></li>
+    <li class="act"><b>让工具到得了各地</b><p>工具便宜、能迁移，靠外包和制造挣钱的地方，也才有机会用 AI 做出新的生计。</p></li>
+  </ol></div>
+  <div class="tabpanel" role="tabpanel" id="panel-you" aria-labelledby="tab-you" tabindex="0" hidden><ol class="acts">
+    <li class="act"><b>先学会用 AI 干活</b><p>它能让你一个人做以前几个人的事，也能帮你试试新的收入来源。</p></li>
+    <li class="act"><b>难反悔的大决定，先缓一缓</b><p>大额贷款、长期合同、花几年去学一门“AI 做不了”的手艺，先小步试，再加码。</p></li>
+    <li class="act"><b>别一个人硬扛</b><p>留几个月的生活费当缓冲。和同行、邻居抱团，一起找活、一起谈价钱，也一起关心规则怎么定。</p></li>
+  </ol></div>
+</section>
+
+<section class="far-sec bleed" aria-labelledby="c7t">
+  <div class="ch" id="c7" data-name="更远的未来">
+    <header class="ch-head">
+      <p class="ch-no"><span>7</span>更远的未来</p>
+      <h2 id="c7t">如果有一天，AI 也有了自己的感受？</h2>
+      <p class="ch-lede">人可能借助技术改变自己的身体和大脑，AI 也可能不再只是工具。“人”和“机器”的边界会变得模糊。</p>
+    </header>
+    <div class="far">
+      <div class="far-art">
+        <canvas id="farCanvas" role="img" aria-label="不同形状的点在缓慢移动，彼此靠近时连成线：实心圆是自然人，空心圆是选择增强自己的人，菱形是可能有自己感受的 AI。"></canvas>
+        <div class="far-legend" aria-hidden="true"><span><i class="lg-nat"></i>自然人</span><span><i class="lg-enh"></i>选择增强自己的人</span><span><i class="lg-ai"></i>可能有感受的 AI</span></div>
+      </div>
+      <ol class="principles">
+        <li>人不需要证明“AI 永远做不了我的事”，才值得拥有未来。<small>一份工作可以被替代，一个人的生活仍然值得继续。</small></li>
+        <li>更强，不等于有权替别人做决定。<small>对人如此。如果 AI 真的有了自己的感受，对它也一样。</small></li>
+        <li>未来不必只有一种活法。<small>想改变自己的人可以改变，想保持原样的人也可以。</small></li>
+      </ol>
+    </div>
+    <p class="note">这是一个方向，不是预言。它不会随着 AI 变强自动出现，需要不同的存在彼此承认、互相关心。</p>
+  </div>
+</section>
+
+<section class="ch" id="c8" data-name="轮到你" aria-labelledby="c8t">
+  <header class="ch-head">
+    <p class="ch-no"><span>8</span>轮到你</p>
+    <h2 id="c8t">三个值得现在就想的问题</h2>
+  </header>
+  <ol class="qs">
+    <li class="q-item"><span class="n">1</span><b>你是楼里的哪一户？</b><p id="q1More">你的活里，哪一件最难交给 AI？只剩这一件时，它撑得起你的收入吗？</p></li>
+    <li class="q-item"><span class="n">2</span><b>如果明天收入断了，你能撑几个月？</b><p>你的家人呢？楼里有没有能互相帮一把的邻居？</p></li>
+    <li class="q-item"><span class="n">3</span><b>这栋楼的规矩，你希望由谁来定？</b><p>公司、政府、专家，还是每一户受影响的人家？你能在哪里说上话？</p></li>
+  </ol>
+</section>
+
+<section class="finale" aria-label="结语">
+  <p class="motto">智能继续生长。<br><span>未来，保持开放。</span></p>
+  <p class="sub">这一页不是预言。变化可能比很多人想的更快，结局也还没有写好。越早开始想、开始准备，能选的路就越多。</p>
+  <div class="row">
+    <a class="btn" href="report/index.html">读完整的研究报告 →</a>
+    <a class="btn line" href="report/en.html">Read the report in English</a>
+  </div>
+</section>
+</main>
+<footer class="about">
+  <p>关于这一页：楼里的人家都是虚构的。图都是示意，不是预测，也不是统计数据。AGI 什么时候到来，没有人知道。</p>
+  <p>这一页不联网，也不追踪。你选的年份和“哪一户是你”，只保存在你自己的浏览器里。</p>
+  <p>共同未来 · 文字和图像采用 CC BY 4.0 许可，代码采用 MIT 许可。</p>
+</footer>
+<script>(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* 私密模式等情况下忽略 */ } }
+};
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+function seeded(s) { return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+function onScreen(el, fn, threshold = .1) {
+  if (!('IntersectionObserver' in window)) { fn(true); return; }
+  new IntersectionObserver(es => es.forEach(e => fn(e.isIntersecting)), { threshold }).observe(el);
+}
+/* 大半个元素（或大半屏）进入视野时算“看到了”，长元素也适用 */
+function onMostlySeen(el, fn) {
+  if (!('IntersectionObserver' in window)) { fn(true); return; }
+  new IntersectionObserver(es => es.forEach(e => {
+    const need = Math.min(e.boundingClientRect.height, innerHeight) * .6;
+    fn(e.isIntersecting && e.intersectionRect.height >= need);
+  }), { threshold: [0, .2, .4, .6, .8, 1] }).observe(el);
+}
+function fitCanvas(c) {
+  const r = c.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1);
+  c.width = Math.max(1, Math.round(r.width * d)); c.height = Math.max(1, Math.round(r.height * d));
+  const x = c.getContext('2d'); x.setTransform(d, 0, 0, d, 0, 0);
+  return { ctx: x, w: r.width, h: r.height };
+}
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, parent) {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  if (parent) parent.appendChild(n);
+  return n;
+}
+let agiYear = null;
+
+/* ---------- 自动演示：滑到哪一幕，就自动演一遍；想自己玩，随时接手 ---------- */
+function scene(root, script, onHands) {
+  let token = 0, done = false;
+  const replay = root.querySelector('[data-replay]'), tryBtn = root.querySelector('[data-try]');
+  const alive = my => my === token;
+  const kit = my => ({
+    wait: ms => new Promise((res, rej) => setTimeout(() => (alive(my) ? res() : rej(0)), reduce ? 0 : ms)),
+    tween: (a, b, ms, fn) => new Promise((res, rej) => {
+      if (reduce) { fn(b); res(); return; }
+      const t0 = performance.now();
+      const step = t => {
+        if (!alive(my)) { rej(0); return; }
+        const k = clamp((t - t0) / ms, 0, 1);
+        fn(a + (b - a) * ease(k));
+        if (k < 1) requestAnimationFrame(step); else res();
+      };
+      requestAnimationFrame(step);
+    })
+  });
+  async function play() {
+    const my = ++token;
+    root.classList.add('playing');
+    try { await script(kit(my)); done = true; } catch (e) { /* 被打断 */ }
+    if (alive(my)) root.classList.remove('playing');
+  }
+  function stop() { token++; root.classList.remove('playing'); }
+  function hands() {
+    stop(); done = true;
+    root.classList.add('hands-on');
+    if (tryBtn) tryBtn.setAttribute('aria-expanded', 'true');
+    if (onHands) onHands();
+  }
+  if (replay) replay.addEventListener('click', () => {
+    root.classList.remove('hands-on');
+    if (tryBtn) tryBtn.setAttribute('aria-expanded', 'false');
+    play();
+  });
+  if (tryBtn) tryBtn.addEventListener('click', () => {
+    if (root.classList.contains('hands-on')) { root.classList.remove('hands-on'); tryBtn.setAttribute('aria-expanded', 'false'); }
+    else hands();
+  });
+  if (!reduce) onMostlySeen(root, seen => {
+    const playing = root.classList.contains('playing');
+    if (seen && !done && !playing) play();
+    else if (!seen && playing) stop();
+  });
+  return { hands, stop };
+}
+
+/* ---------- 顶部进度 ---------- */
+const chs = $$('.ch');
+const track = $('#track'), fill = $('#trackFill'), now = $('#trackNow');
+const marks = chs.map((s, i) => {
+  const a = document.createElement('a');
+  a.className = 'track-stop';
+  a.href = '#' + s.id;
+  a.style.left = ((i + .5) / chs.length * 100) + '%';
+  a.setAttribute('aria-label', `第 ${i + 1} 章：${s.dataset.name}`);
+  track.appendChild(a);
+  return a;
+});
+let tops = [];
+function measure() { tops = chs.map(s => s.getBoundingClientRect().top + scrollY - innerHeight * .45); }
+function progress() {
+  const y = scrollY, n = chs.length, pos = i => (i + .5) / n;
+  let f, cur = -1;
+  if (y < tops[0]) f = pos(0) * clamp(y / Math.max(1, tops[0]), 0, 1);
+  else {
+    cur = n - 1;
+    for (let i = 0; i < n - 1; i++) if (y < tops[i + 1]) { cur = i; break; }
+    if (cur < n - 1) f = pos(cur) + (pos(cur + 1) - pos(cur)) * (y - tops[cur]) / (tops[cur + 1] - tops[cur]);
+    else {
+      const end = document.documentElement.scrollHeight - innerHeight;
+      f = pos(cur) + (1 - pos(cur)) * clamp((y - tops[cur]) / Math.max(1, end - tops[cur]), 0, 1);
+    }
+  }
+  fill.style.width = (clamp(f, 0, 1) * 100) + '%';
+  marks.forEach((m, i) => {
+    m.classList.toggle('passed', i < cur);
+    m.classList.toggle('current', i === cur);
+    if (i === cur) m.setAttribute('aria-current', 'step'); else m.removeAttribute('aria-current');
+  });
+  now.textContent = cur < 0 ? '开场' : `${cur + 1} · ${chs[cur].dataset.name}`;
+}
+let ticking = false;
+addEventListener('scroll', () => {
+  if (!ticking) { ticking = true; requestAnimationFrame(() => { progress(); ticking = false; }); }
+}, { passive: true });
+addEventListener('load', () => { measure(); progress(); });
+addEventListener('resize', () => { measure(); progress(); });
+measure(); progress();
+
+/* ---------- 楼里的 12 户人家（t：这件活大约什么时候能交给 AI；0=2022，40=今天，70=更强的 AI，100=AGI；K=可能一直留给人） ---------- */
+const K = 999;
+const PEOPLE = [
+  ['陈工', '程序员', 6, [['写代码', 25], ['写测试', 30], ['查 bug', 38], ['设计整个系统', 65], ['出了事故负责', K]]],
+  ['王姐', '护工', 6, [['记录体征', 20], ['提醒吃药', 25], ['应对突发情况', 85], ['翻身、护理', 90], ['陪老人聊天', K]]],
+  ['小周', '客服', 5, [['回答常见问题', 8], ['查订单', 15], ['处理投诉', 45], ['安抚情绪', 55], ['特殊情况拍板', 80]]],
+  ['大海', '货车司机', 5, [['规划路线', 10], ['高速上开车', 55], ['城市里开车', 70], ['装卸货', 80], ['处理路上的意外', 90]]],
+  ['林然', '剪辑师', 4, [['加字幕、配乐', 15], ['挑素材', 25], ['粗剪', 30], ['调色、特效', 35], ['读懂客户要什么', 72]]],
+  ['苏老师', '中学老师', 4, [['出题、批改', 20], ['备课', 30], ['答疑', 45], ['管好一个班', 85], ['关心每个学生', K]]],
+  ['阿敏', '会计', 3, [['记账', 10], ['报税', 25], ['做报表', 30], ['审核', 50], ['给老板出主意', 75]]],
+  ['张哥', '外卖骑手', 3, [['接单、派单', 5], ['规划路线', 10], ['处理差评', 50], ['送餐', 75], ['上楼交到手里', 88]]],
+  ['小吴', '研究员', 2, [['查文献', 20], ['分析数据', 30], ['写论文初稿', 40], ['设计实验', 60], ['决定研究什么', 92]]],
+  ['小芳', '仓库分拣员', 2, [['扫码登记', 10], ['盘点', 30], ['分拣', 45], ['搬运', 60], ['处理破损件', 85]]],
+  ['刘医生', '医生', 1, [['写病历', 20], ['看影像片子', 35], ['辅助诊断', 50], ['定治疗方案', 68], ['陪病人、签字负责', K]]],
+  ['老马', '维修师傅', 1, [['报价', 30], ['判断故障', 50], ['上门修理', 92], ['爬高下低', 95], ['和住户沟通', K]]]
+];
+const aiCount = (p, lv) => p[3].filter(t => t[1] <= lv).length;
+
+/* ---------- 画一栋楼（viewBox 360×430） ---------- */
+function drawBuilding(svg, labels) {
+  const g = el('g', { class: 'b-body' }, svg), fx = {};
+  const fxG = (name, parent = g) => (fx[name] = el('g', { class: 'fx fx-' + name }, parent));
+  const garden = fxG('garden');
+  [[66, 22], [100, 18], [260, 20], [294, 24]].forEach(([x, y]) => {
+    el('rect', { x: x - 2, y: y + 6, width: 4, height: 44 - y - 6, class: 'fx-garden-ink' }, garden);
+    el('circle', { cx: x, cy: y, r: 10, class: 'fx-garden-tree' }, garden);
+  });
+  [[160, 36], [182, 34], [202, 37]].forEach(([x, y]) => {
+    el('circle', { cx: x, cy: y - 7, r: 3.5, class: 'fx-garden-ink' }, garden);
+    el('rect', { x: x - 3.5, y: y - 3, width: 7, height: 10, rx: 3, class: 'fx-garden-ink' }, garden);
+  });
+  const plat = fxG('platform');
+  el('rect', { x: 100, y: 4, width: 160, height: 30, rx: 8 }, plat);
+  el('text', { x: 180, y: 24, 'text-anchor': 'middle', class: 'fx-text', style: 'font-size:13.5px' }, plat).textContent = '大平台 · 规则由我定';
+  el('rect', { x: 172, y: 34, width: 16, height: 10 }, plat);
+  const pent = fxG('crack');
+  el('rect', { x: 120, y: 6, width: 120, height: 38, rx: 6, style: 'fill:#ffc94d' }, pent);
+  el('text', { x: 180, y: 30, 'text-anchor': 'middle', class: 'fx-text', style: 'fill:#3a2a00;font-size:12.5px' }, pent).textContent = '少数人的顶层';
+  el('rect', { x: 16, y: 44, width: 328, height: 8, rx: 3, class: 'b-roof' }, g);
+  el('rect', { x: 24, y: 52, width: 312, height: 312, class: 'b-facade' }, g);
+  for (let f = 1; f < 6; f++) el('line', { x1: 24, x2: 336, y1: 52 + f * 52, y2: 52 + f * 52, class: 'b-line' }, g);
+  const units = PEOPLE.map((p, i) => {
+    const x = i % 2 === 0 ? 36 : 184, y = 52 + (6 - p[2]) * 52 + 6;
+    const u = el('g', { class: 'unit' }, g);
+    el('rect', { x, y, width: 140, height: 40, rx: 6, class: 'u-win' }, u);
+    const pips = [];
+    if (labels) {
+      u.setAttribute('tabindex', '0');
+      u.setAttribute('role', 'button');
+      u.setAttribute('aria-label', `${p[0]}，${p[1]}，${p[2]} 楼`);
+      el('text', { x: x + 10, y: y + 16, class: 'u-name' }, u).textContent = p[0];
+      el('text', { x: x + 10 + p[0].length * 12 + 5, y: y + 16, class: 'u-job' }, u).textContent = p[1];
+      p[3].forEach((t, k) => pips.push(el('circle', { cx: x + 15 + k * 14, cy: y + 29, r: 4.3, class: 'pip' + (t[1] === K ? ' keep' : '') }, u)));
+      const me = el('g', { class: 'u-me' }, u);
+      el('rect', { x: x + 110, y: y + 5, width: 24, height: 15, rx: 7.5 }, me);
+      el('text', { x: x + 122, y: y + 16, 'text-anchor': 'middle' }, me).textContent = '你';
+    } else {
+      el('circle', { cx: x + 70, cy: y + 14, r: 6, class: 'av' }, u);
+      el('rect', { x: x + 62, y: y + 22, width: 16, height: 18, rx: 7, class: 'av' }, u);
+    }
+    return { u, pips, p, i };
+  });
+  el('rect', { x: 24, y: 364, width: 312, height: 52, class: 'b-facade-2' }, g);
+  const shop = el('g', { class: 'shop' }, g);
+  el('rect', { x: 38, y: 380, width: 204, height: 32, rx: 4, class: 'shop-body' }, shop);
+  for (let k = 0; k < 8; k++) el('path', { d: `M${34 + k * 27} 366 h27 v10 q-13.5 7 -27 0 z`, class: k % 2 ? 'awning-2' : 'awning' }, shop);
+  el('text', { x: 140, y: 401, 'text-anchor': 'middle', class: 'shop-text' }, shop).textContent = labels ? '楼下小馆 · 营业中' : '';
+  el('rect', { x: 262, y: 376, width: 44, height: 40, rx: 3, class: 'b-facade' }, g);
+  const closed = fxG('closed');
+  el('rect', { x: 84, y: 386, width: 112, height: 20, rx: 4 }, closed);
+  el('text', { x: 140, y: 400.5, 'text-anchor': 'middle', class: 'fx-text', style: 'font-size:12px' }, closed).textContent = '暂停营业';
+  el('rect', { x: 8, y: 416, width: 344, height: 8, rx: 2, class: 'b-ground' }, g);
+  const sc = fxG('scaffold');
+  [30, 330].forEach(x => el('line', { x1: x, x2: x, y1: 100, y2: 340 }, sc));
+  [104, 156, 208, 260, 312].forEach(y => el('line', { x1: 22, x2: 338, y1: y, y2: y }, sc));
+  const sign = el('g', { class: 'fx-sign' }, sc);
+  el('rect', { x: 128, y: 170, width: 104, height: 24, rx: 6 }, sign);
+  el('text', { x: 180, y: 186.5, 'text-anchor': 'middle', class: 'fx-text', style: 'font-size:12px' }, sign).textContent = '修修补补中';
+  const crackG = el('g', { class: 'fx fx-crack' }, g);
+  el('path', { d: 'M180 52 L172 100 L186 150 L174 200 L188 250 L176 300 L186 340 L180 364' }, crackG);
+  const wires = el('g', { class: 'fx fx-platform' }, g);
+  [80, 132, 184, 236, 288].forEach((y, k) => el('line', { x1: 180, y1: 44, x2: k % 2 ? 254 : 106, y2: y }, wires));
+  const alarm = el('g', { class: 'fx fx-alarm' }, svg);
+  el('circle', { cx: 180, cy: 30, r: 11 }, alarm);
+  el('text', { x: 212, y: 35, class: 'fx-text', style: 'fill:var(--risk);font-size:13px' }, alarm).textContent = '系统失灵';
+  return { svg, units, shop, fx };
+}
+function paintLevel(b, lv) {
+  let total = 0;
+  b.units.forEach(({ u, pips, p }) => {
+    const n = aiCount(p, lv);
+    total += n;
+    pips.forEach((c, k) => c.classList.toggle('on', p[3][k][1] <= lv));
+    u.classList.toggle('ai', n >= 3);
+  });
+  return total;
+}
+const levelOfYear = y => (y <= 2022 ? (y - 2012) / 10 * 5 : 5 + (y - 2022) / 4 * 35);
+
+/* ---------- 开场：夜里的楼，窗户一扇扇变蓝 ---------- */
+const heroB = drawBuilding($('#heroBldg'), false), heroYear = $('#heroYear');
+function heroAt(y) { paintLevel(heroB, levelOfYear(y)); heroYear.textContent = Math.floor(y); }
+heroAt(2026);
+if (!reduce) {
+  const t0 = performance.now(), dur = 4200;
+  const step = t => {
+    const k = clamp((t - t0) / dur, 0, 1);
+    heroAt(2012 + 14 * ease(k));
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+/* ---------- 1 时间轨道：站点等距，圆点按真实间隔移动，越走越快 ---------- */
+const EVENTS = [
+  [2012, 'AI 学会“看图”', '能从照片里认出猫和狗。'],
+  [2016, '下围棋赢了世界冠军', '靠“感觉”的事，AI 也能赢过人。'],
+  [2020, '写出像人写的文章', '给它开个头，它就能接着往下写。'],
+  [2022, '会聊天的 AI 来了', '很快就有上亿人用上了它。'],
+  [2024, '一句话生成视频', '光影和镜头，像真的拍出来的。'],
+  [2025, '数学奥赛拿到金牌水平', '也开始自己写代码、操作电脑。'],
+  [2026, '几乎每个行业都在变', '很多人还没意识到，变化已经开始了。']
+];
+const rail = $('#rail'), railFill = $('#railFill'), railCard = $('#railCard');
+const railPos = i => (i / (EVENTS.length - 1)) * 100;
+const railStops = EVENTS.map((e, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'rail-stop';
+  b.style.left = railPos(i) + '%';
+  b.setAttribute('aria-label', `${e[0]} 年：${e[1]}`);
+  b.innerHTML = `<span>${e[0]}</span>`;
+  rail.appendChild(b);
+  if (i > 0) {
+    const gp = document.createElement('span');
+    gp.className = 'rail-gap';
+    gp.style.left = ((railPos(i - 1) + railPos(i)) / 2) + '%';
+    gp.textContent = (e[0] - EVENTS[i - 1][0]) + ' 年';
+    rail.appendChild(gp);
+  }
+  return b;
+});
+function railShow(i, fillTo) {
+  const e = EVENTS[i], here = i === EVENTS.length - 1;
+  railStops.forEach((b, k) => { b.classList.toggle('passed', k < i); b.classList.toggle('cur', k === i); });
+  railFill.style.width = (fillTo === undefined ? railPos(i) : fillTo) + '%';
+  railCard.innerHTML = `<span class="rail-year">${e[0]}</span><b>${here ? '<span class="here-tag">你在这里</span>' : ''}${e[1]}</b><p>${e[2]}</p>`;
+}
+railShow(EVENTS.length - 1);
+const railScene = scene($('#railScene'), async ({ wait, tween }) => {
+  railShow(0); await wait(1300);
+  for (let i = 1; i < EVENTS.length; i++) {
+    const years = EVENTS[i][0] - EVENTS[i - 1][0];
+    await tween(railPos(i - 1), railPos(i), 380 * years, v => { railFill.style.width = v + '%'; });
+    railShow(i);
+    await wait(i === EVENTS.length - 1 ? 0 : 1100);
+  }
+});
+railStops.forEach((b, i) => b.addEventListener('click', () => { railScene.hands(); railShow(i); }));
+
+/* ---------- 你猜 AGI 哪年来 ---------- */
+const agiBtns = $$('.agi-btn'), agiReply = $('#agiReply');
+const agiTickText = y => (!y ? 'AGI' : y > 2030 ? 'AGI（2030 后？）' : `AGI（${y}？）`);
+function setAgi(y, speak) {
+  agiYear = y;
+  agiBtns.forEach(b => b.setAttribute('aria-pressed', String(y !== null && +b.dataset.year === y)));
+  $$('[data-agi-tick]').forEach(n => { n.textContent = agiTickText(y); });
+  timeSet(+timeRange.value);
+  if (!speak) return;
+  if (y === 0) agiReply.textContent = '也有可能。不过就算没有 AGI，今天的 AI 已经足够改变很多行业。';
+  else if (y > 2030) agiReply.textContent = '好，就当它来得晚一些。就算晚几年，要提前准备的事情一样多。';
+  else agiReply.textContent = `好，就按 ${y} 年。往下看，到那时这栋楼会是什么样子。`;
+}
+agiBtns.forEach(b => b.addEventListener('click', () => {
+  const y = +b.dataset.year;
+  setAgi(y, true);
+  store.set('fws-agi-year', String(y));
+}));
+
+/* ---------- 2 AI 敲门 ---------- */
+const mainB = drawBuilding($('#mainBldg'), true);
+const timeRange = $('#timeRange'), timeWhen = $('#timeWhen'), timeCount = $('#timeCount');
+const resPanel = $('#resPanel'), bCap = $('#bCap');
+const TOTAL = PEOPLE.length * 5;
+let selected = 2, meIdx = null;
+function whenText(v) {
+  if (v < 12) return '2022 年';
+  if (v < 30) return '2024 年';
+  if (v <= 45) return '今天（2026）';
+  if (v < 88) return '更强的 AI';
+  return agiTickText(agiYear);
+}
+function sayLine(p, n) {
+  const hasKeep = p[3].some(t => t[1] === K);
+  let s = n <= 1 ? '我的活，大部分还得我自己来。'
+    : n === 2 ? '有两件活 AI 已经能做了，确实省了不少事。'
+    : n === 3 ? '一大半的活 AI 都能干了。老板开始问我：你还能做点什么别的？'
+    : '几乎所有活 AI 都能做了。剩下那一点，撑得起我的工资吗？';
+  if (hasKeep && n >= 3) s += '好在有些事，大家还是希望由人来做。';
+  return `${p[0]}：“${s}”`;
+}
+function renderRes() {
+  const lv = +timeRange.value;
+  mainB.units.forEach(x => x.u.classList.toggle('sel', x.i === selected));
+  if (selected === null) { resPanel.innerHTML = '<p class="res-say">点楼里任意一户，看看这家人的活。</p>'; return; }
+  const p = PEOPLE[selected], n = aiCount(p, lv), isMe = meIdx === selected;
+  const items = p[3].map(t => {
+    const st = t[1] === K ? ['keep', '可能一直留给人'] : t[1] <= lv ? ['on', 'AI 已经能做'] : ['', '还得靠人'];
+    return `<li class="${st[0]}">${t[0]}<span>${st[1]}</span></li>`;
+  }).join('');
+  resPanel.innerHTML = `<h3>${p[0]}<small>${p[1]} · 住 ${p[2]} 楼 · AI 能做 ${n}/5 件活</small></h3>
+    <ul class="res-tasks">${items}</ul><p class="res-say">${sayLine(p, n)}</p>
+    <div class="row"><button type="button" class="btn ${isMe ? '' : 'line'}" id="isMe" aria-pressed="${isMe}">${isMe ? '✓ 这一户最像我' : '这一户最像我'}</button></div>`;
+  $('#isMe').addEventListener('click', () => {
+    meIdx = isMe ? null : selected;
+    mainB.units.forEach(x => x.u.classList.toggle('me', x.i === meIdx));
+    store.set('fws-me', meIdx === null ? '' : String(meIdx));
+    renderRes();
+    $('#q1More').textContent = meIdx === null ? '你的活里，哪一件最难交给 AI？只剩这一件时，它撑得起你的收入吗？'
+      : `你选了${PEOPLE[meIdx][1]}${PEOPLE[meIdx][0]}那一户。你的活里，哪一件最难交给 AI？只剩这一件时，它撑得起你的收入吗？`;
+  });
+}
+function timeSet(v) {
+  const n = paintLevel(mainB, v);
+  timeWhen.textContent = whenText(v);
+  timeCount.innerHTML = `楼里 ${TOTAL} 件活，AI 能做 <b>${n}</b> 件`;
+  timeRange.value = v;
+  timeRange.style.setProperty('--p', v + '%');
+  timeRange.setAttribute('aria-valuetext', `${whenText(v)}，AI 能做 ${n} 件活`);
+  renderRes();
+}
+const bScene = scene($('#bScene'), async ({ wait, tween }) => {
+  const say = t => { bCap.innerHTML = t; };
+  const lv = v => timeSet(Math.round(v));
+  selected = null; timeSet(0);
+  say('2022 年：楼里的活，几乎都还是人在做。'); await wait(1600);
+  await tween(0, 40, 2600, lv);
+  selected = 4; renderRes();
+  say('<b>到了今天</b>，左边一列坐在电脑前的人家，窗户先变蓝了。剪辑师林然的 5 件活，AI 已经能做 4 件。'); await wait(3600);
+  await tween(40, 70, 2000, lv);
+  selected = 3; renderRes();
+  say('<b>更强的 AI</b>：司机大海开车的活，也能交给 AI 了。要到现场的活，开始变了。'); await wait(3600);
+  await tween(70, 100, 2000, lv);
+  selected = 1; renderRes();
+  say('<b>到了 AGI</b>：剩下的多半是照顾、信任和承担责任，比如护工王姐陪老人聊天。'); await wait(3800);
+  await tween(100, 40, 1200, lv);
+  selected = null; renderRes();
+  say('回到今天。点任意一户，看看这家人的活。');
+});
+timeRange.addEventListener('input', () => { bScene.hands(); timeSet(+timeRange.value); });
+mainB.units.forEach(x => {
+  const pick = () => { bScene.hands(); selected = x.i; renderRes(); bCap.textContent = sayLine(x.p, aiCount(x.p, +timeRange.value)); };
+  x.u.addEventListener('click', pick);
+  x.u.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
+});
+timeSet(40);
+
+/* ---------- 3 多米诺 ---------- */
+const doms = $$('.dom'), domPush = $('#domPush'), domReset = $('#domReset');
+const domMsg = $('#domMsg'), barriers = $$('.barrier');
+const guard = new Set();
+let domRunning = false, domTimers = [], domDone = null;
+const domLabel = i => doms[i].querySelector('.dom-label').textContent;
+function domStand() {
+  domTimers.forEach(clearTimeout); domTimers = [];
+  domRunning = false;
+  doms.forEach(d => d.classList.remove('fallen', 'lean', 'saved', 'shake'));
+  domPush.disabled = false;
+}
+function guardSet(list) {
+  guard.clear(); list.forEach(i => guard.add(i));
+  barriers.forEach(b => b.setAttribute('aria-pressed', String(guard.has(+b.dataset.before))));
+  doms.forEach((d, i) => d.classList.toggle('guarded', guard.has(i)));
+}
+function domFinish(blockedAt) {
+  domRunning = false;
+  domPush.disabled = false;
+  domPush.textContent = '再推一次';
+  if (blockedAt < 0) domMsg.innerHTML = '<b>全倒了。</b>两户人家的变化，一路传到了楼下的小馆、银行，连电梯都修不起了。';
+  else domMsg.innerHTML = `<b>挡住了！</b>压力停在了“${domLabel(blockedAt)}”前面，后面 ${doms.length - blockedAt} 块都还立着。`;
+  if (domDone) { const f = domDone; domDone = null; f(); }
+}
+function domRun() {
+  return new Promise(res => {
+    domStand();
+    domDone = res;
+    domRunning = true;
+    domPush.disabled = true;
+    domMsg.textContent = '倒下去了……';
+    const gap = reduce ? 0 : 360;
+    let i = 0;
+    const next = () => {
+      doms[i].classList.add('fallen');
+      if (guard.has(i + 1)) {
+        doms[i].classList.add('lean');
+        doms[i + 1].classList.add('shake');
+        for (let k = i + 1; k < doms.length; k++) doms[k].classList.add('saved');
+        domTimers.push(setTimeout(() => domFinish(i + 1), gap));
+        return;
+      }
+      i++;
+      if (i >= doms.length) { domTimers.push(setTimeout(() => domFinish(-1), gap)); return; }
+      domTimers.push(setTimeout(next, gap));
+    };
+    if (gap) domTimers.push(setTimeout(next, 60)); else next();
+  });
+}
+const domScene = scene($('#domScene'), async ({ wait }) => {
+  guardSet([]); domStand();
+  domMsg.textContent = '八块多米诺已经立好。第一块是 AI。推！'; await wait(1500);
+  await domRun(); await wait(2800);
+  domStand(); guardSet([3]);
+  domMsg.innerHTML = '再来一次。这次提前放一块<b>挡板</b>：失业以后，收入不断档。'; await wait(2600);
+  await domRun(); await wait(2400);
+  domMsg.innerHTML = '挡板要在倒下之前就放好。点“自己试试”，放几块挡板推推看。';
+});
+domPush.addEventListener('click', () => { domScene.hands(); domRun(); });
+domReset.addEventListener('click', () => {
+  domScene.hands(); domStand();
+  domPush.textContent = '推倒第一块';
+  domMsg.textContent = '都扶起来了。可以换几块挡板试试。';
+});
+barriers.forEach(b => b.addEventListener('click', () => {
+  domScene.hands();
+  if (domRunning) { domMsg.innerHTML = '<b>来不及了。</b>多米诺已经在倒了。挡板要在倒下之前放好。'; return; }
+  const at = +b.dataset.before, list = [...guard];
+  guardSet(guard.has(at) ? list.filter(x => x !== at) : list.concat(at));
+  domStand();
+  domPush.textContent = '推倒第一块';
+  domMsg.textContent = guard.size ? `放好了 ${guard.size} 块挡板。现在推一次试试。` : '挡板都拿走了。';
+}));
+
+/* ---------- 4 楼里的钱怎么转 ---------- */
+function makeFlow(svg, paths, kinds, layer) {
+  const coins = [], per = 7;
+  let vals = {}, on = false, last = 0;
+  Object.keys(paths).forEach(k => {
+    const len = paths[k].getTotalLength();
+    for (let i = 0; i < per; i++) {
+      const c = el('circle', { r: 4, class: 'coin ' + kinds[k] }, layer);
+      c.style.opacity = 0;
+      coins.push({ k, i, c, len, t: i / per });
+    }
+  });
+  function tick(ts) {
+    if (!on) return;
+    const dt = last ? Math.min(50, ts - last) : 16;
+    last = ts;
+    coins.forEach(o => {
+      const v = clamp(vals[o.k] || 0, 0, 1);
+      if (o.i >= Math.round(v * per)) { o.c.style.opacity = 0; return; }
+      o.t = (o.t + dt * (.00015 + .00018 * v)) % 1;
+      const p = paths[o.k].getPointAtLength(o.t * o.len);
+      o.c.setAttribute('cx', p.x.toFixed(1));
+      o.c.setAttribute('cy', p.y.toFixed(1));
+      o.c.style.opacity = 1;
+    });
+    requestAnimationFrame(tick);
+  }
+  if (!reduce) onScreen(svg, vis => {
+    if (vis && !on) { on = true; last = 0; requestAnimationFrame(tick); } else if (!vis) on = false;
+  });
+  return v => {
+    vals = v;
+    Object.keys(paths).forEach(k => {
+      const x = clamp(v[k] || 0, 0, 1);
+      paths[k].style.strokeWidth = x <= .001 ? 0 : 1.5 + 11 * x;
+      paths[k].style.opacity = x <= .001 ? 0 : .85;
+    });
+  };
+}
+function meter(m, top, max, v) {
+  const h = clamp(v, 0, 1) * max;
+  m.setAttribute('y', (top + max - h).toFixed(1));
+  m.setAttribute('height', Math.max(2, h).toFixed(1));
+}
+const amount = a => (a < .15 ? '很少' : a < .4 ? '一些' : a < .7 ? '很多' : '大部分');
+const flowRange = $('#flowRange'), flowPct = $('#flowPct'), flowMsg = $('#flowMsg'), socTogs = $$('#flowScene .tog');
+const soc = { a: 0, share: false, public: false };
+const socDraw = makeFlow($('#flowSvg'),
+  { wage: $('#pWage'), spend: $('#pSpend'), ai: $('#pAI'), own: $('#pOwn'), tax: $('#pTax'), share: $('#pShare'), public: $('#pPublic') },
+  { wage: 'c-wage', spend: 'c-spend', ai: 'c-ai', own: 'c-spend', tax: 'c-share', share: 'c-share', public: 'c-public' },
+  $('#coins'));
+function socText() {
+  const { a, share, public: pub } = soc;
+  if (a < .25 && !share && !pub) return '今天：工资是大多数住户最主要的收入。公司发工资，住户拿去消费，钱又回到公司。';
+  if (!share && !pub) return a < .6
+    ? 'AI 接手的活越来越多，工资这条管道开始变细，更多的钱流向了 AI 公司和平台。'
+    : '工资这条管道细得快断了。钱并没有消失，它流向了 AI 公司和平台。住户手里没钱，东西再便宜也买不了多少，公司的客人也少了。';
+  if (share && pub) return '两条新管道都接上了。住户的日子稳住了，公司也重新有了客人。修管道，就是让 AI 带来的好处流到每户人家。';
+  if (share) return '接上一条新管道：AI 带来的收益通过税和公共基金变成分红，回到住户手里。钱从哪来、谁来管，都要认真设计。';
+  return '公共服务让住房、看病、养老更便宜，住户的压力小了一些。可收入的缺口还在，只靠这一条管道还不够。';
+}
+function socSet() {
+  const a = soc.a, wage = 1 - .8 * a, ai = .08 + .9 * a, own = .3 * ai;
+  const share = soc.share ? .55 * ai : 0, pub = soc.public ? .22 + .2 * a : 0;
+  const spend = .9 * (wage + share) + .5 * pub;
+  socDraw({ wage, spend, ai, own: own * 1.6, tax: share, share, public: pub });
+  $('#tagOwn').style.opacity = own > .05 ? 1 : 0;
+  $('#tagShare').style.opacity = $('#tagTax').style.opacity = share > 0 ? 1 : 0;
+  $('#tagPublic').style.opacity = pub > 0 ? 1 : 0;
+  $('#ownerG').style.opacity = .35 + .65 * clamp(a * 2.5, 0, 1);
+  $('#govG').style.opacity = (soc.share || soc.public) ? 1 : .3;
+  meter($('#mFirm'), 36, 64, spend + own);
+  meter($('#mHome'), 286, 40, (wage + share + pub) / 1.2);
+  meter($('#mOwn'), 178, 40, Math.max(0, ai - own - share));
+  flowRange.value = Math.round(a * 100);
+  flowPct.textContent = amount(a);
+  flowRange.setAttribute('aria-valuetext', amount(a));
+  flowRange.style.setProperty('--p', flowRange.value + '%');
+  socTogs.forEach(b => b.setAttribute('aria-pressed', String(soc[b.dataset.k])));
+  const t = socText();
+  if (flowMsg.textContent !== t) flowMsg.textContent = t;
+}
+const flowScene = scene($('#flowScene'), async ({ wait, tween }) => {
+  Object.assign(soc, { a: 0, share: false, public: false }); socSet(); await wait(2800);
+  await tween(0, 1, 3800, v => { soc.a = v; socSet(); }); await wait(3200);
+  soc.share = true; socSet(); await wait(3400);
+  soc.public = true; socSet(); await wait(3400);
+});
+flowRange.addEventListener('input', () => { flowScene.hands(); soc.a = +flowRange.value / 100; socSet(); });
+socTogs.forEach(b => b.addEventListener('click', () => { flowScene.hands(); soc[b.dataset.k] = !soc[b.dataset.k]; socSet(); }));
+socSet();
+
+/* ---------- 5 这栋楼的四种未来 ---------- */
+const futB = drawBuilding($('#futBldg'), true);
+futB.units.forEach(x => { x.u.removeAttribute('tabindex'); x.u.removeAttribute('role'); x.u.removeAttribute('aria-label'); x.u.style.cursor = 'default'; });
+const fork = { dist: null, prep: null, ctrl: true };
+const futOut = $('#futOut'), ctrlToggle = $('#ctrlToggle');
+const FUT = {
+  A: ['分给大家 · 提前准备', '软着陆', '楼顶多了一个小花园。大家一周工作三四天，AI 带来的收益变成分红和更好的公共服务，回到每户人家。楼下小馆天天有人来。'],
+  B: ['分给大家 · 出了事再补', '反复阵痛', '楼里总在修修补补。每来一轮新技术，就有几户人家先断了收入，过一两年才被接住。大家都不太敢做长远打算。'],
+  C: ['少数人拿走 · 提前准备', '被照顾，但说不上话', '每户人家都有基本保障，灯都亮着。可楼顶挂着大平台的招牌：接什么活、拿多少钱、用什么工具，都由它说了算。'],
+  D: ['少数人拿走 · 出了事再补', '撕裂', '楼顶越来越亮，楼里越来越暗。小馆关了门，楼道里的争吵越来越多，大家越来越难坐下来一起商量。']
+};
+const FLICK = [2, 5, 6, 9], DARK_D = [0, 2, 3, 4, 5, 6, 7, 8, 9, 11];
+function futKey() {
+  if (!fork.dist || !fork.prep) return null;
+  return fork.dist === 'all' ? (fork.prep === 'early' ? 'A' : 'B') : (fork.prep === 'early' ? 'C' : 'D');
+}
+function futSet(endText) {
+  const e = fork.ctrl ? futKey() : null, svg = futB.svg;
+  ['A', 'B', 'C', 'D'].forEach(k => svg.classList.toggle('future-' + k, k === e));
+  svg.classList.toggle('off', !fork.ctrl);
+  futB.units.forEach(x => {
+    x.u.classList.toggle('flick', e === 'B' && FLICK.includes(x.i));
+    x.u.classList.toggle('dark', e === 'D' && DARK_D.includes(x.i));
+    x.u.classList.toggle('ai', e !== 'D' && aiCount(x.p, 40) >= 3);
+  });
+  paintLevel(futB, 40);
+  if (e === 'D') futB.units.forEach(x => x.u.classList.remove('ai'));
+  futB.shop.classList.toggle('dark', e === 'D');
+  $$('.switch').forEach(g => $$('.opt', g).forEach(o => {
+    o.setAttribute('aria-pressed', String(fork[g.dataset.k] === o.dataset.v));
+    o.disabled = !fork.ctrl;
+  }));
+  ctrlToggle.setAttribute('aria-pressed', String(fork.ctrl));
+  futOut.classList.toggle('risk', !fork.ctrl);
+  let tag, title, text;
+  if (!fork.ctrl) [tag, title, text] = ['前提失效', '失控', '如果最关键的 AI 行动已经没人能叫停，这两个开关可能都扳不动了。所以“管得住”是其他一切选择的前提。'];
+  else if (e) [tag, title, text] = FUT[e];
+  else if (endText) [tag, title, text] = endText;
+  else if (fork.dist || fork.prep) [tag, title, text] = ['还差一个开关', '再扳另一个开关', fork.dist ? '财富怎么分已经选了。社会什么时候开始准备？' : '准备的时机已经选了。AI 带来的财富，怎么分？'];
+  else [tag, title, text] = ['还没选', '扳动两个开关', '这栋楼会变成什么样子，取决于你的选择。'];
+  futOut.innerHTML = `<span class="tag">${tag}</span><h3>${title}</h3><p>${text}</p>`;
+}
+const futScene = scene($('#futScene'), async ({ wait }) => {
+  for (const [d, p] of [['all', 'early'], ['all', 'late'], ['few', 'early'], ['few', 'late']]) {
+    Object.assign(fork, { dist: d, prep: p, ctrl: true }); futSet(); await wait(4200);
+  }
+  fork.ctrl = false; futSet(); await wait(3800);
+  Object.assign(fork, { dist: null, prep: null, ctrl: true });
+  futSet(['轮到你', '你想让这栋楼变成哪一种？', '点“自己试试”，扳一扳这两个开关。']);
+});
+$$('.switch').forEach(g => $$('.opt', g).forEach(o => o.addEventListener('click', () => {
+  futScene.hands(); fork[g.dataset.k] = o.dataset.v; futSet();
+})));
+ctrlToggle.addEventListener('click', () => { futScene.hands(); fork.ctrl = !fork.ctrl; futSet(); });
+futSet();
+
+/* ---------- 6 页签 ---------- */
+const tabs = $$('.tab');
+function selectTab(t, focus) {
+  tabs.forEach(x => {
+    const on = x === t;
+    x.setAttribute('aria-selected', String(on));
+    x.tabIndex = on ? 0 : -1;
+    $('#' + x.getAttribute('aria-controls')).hidden = !on;
+  });
+  if (focus) t.focus();
+}
+tabs.forEach((t, i) => {
+  t.addEventListener('click', () => selectTab(t));
+  t.addEventListener('keydown', e => {
+    let j = null;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') j = (i + 1) % tabs.length;
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') j = (i + tabs.length - 1) % tabs.length;
+    if (e.key === 'Home') j = 0;
+    if (e.key === 'End') j = tabs.length - 1;
+    if (j !== null) { e.preventDefault(); selectTab(tabs[j], true); }
+  });
+});
+
+/* ---------- 7 不同的存在 ---------- */
+const far = $('#farCanvas');
+const frnd = seeded(7), kinds = ['nat', 'nat', 'nat', 'enh', 'enh', 'ai', 'ai'];
+const beings = Array.from({ length: 24 }, (_, i) => ({
+  k: kinds[i % kinds.length], x: (i % 6 + .15 + frnd() * .7) / 6, y: (Math.floor(i / 6) + .15 + frnd() * .7) / 4,
+  vx: (frnd() - .5) * .00005, vy: (frnd() - .5) * .00005
+}));
+let farView = fitCanvas(far), farOn = false, farLast = 0;
+function farDraw() {
+  const { ctx, w, h } = farView;
+  if (!w) return;
+  ctx.clearRect(0, 0, w, h);
+  const pts = beings.map(b => [b.x * w, 14 + b.y * (h - 64)]), reach = Math.min(140, w * .3);
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = '#a7b1c6';
+  for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+    const dd = Math.hypot(pts[i][0] - pts[j][0], pts[i][1] - pts[j][1]);
+    if (dd < reach) {
+      ctx.globalAlpha = .45 * (1 - dd / reach);
+      ctx.beginPath(); ctx.moveTo(pts[i][0], pts[i][1]); ctx.lineTo(pts[j][0], pts[j][1]); ctx.stroke();
+    }
+  }
+  ctx.globalAlpha = 1;
+  beings.forEach((b, i) => {
+    const [x, y] = pts[i];
+    ctx.beginPath();
+    if (b.k === 'nat') { ctx.fillStyle = '#ffb44f'; ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.fill(); }
+    else if (b.k === 'enh') { ctx.fillStyle = '#16213a'; ctx.strokeStyle = '#ffb44f'; ctx.lineWidth = 2.5; ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.lineWidth = 1; ctx.strokeStyle = '#a7b1c6'; }
+    else { ctx.fillStyle = '#8ea2ff'; ctx.moveTo(x, y - 8); ctx.lineTo(x + 7, y); ctx.lineTo(x, y + 8); ctx.lineTo(x - 7, y); ctx.closePath(); ctx.fill(); }
+  });
+}
+function farTick(ts) {
+  if (!farOn) return;
+  const dt = farLast ? Math.min(50, ts - farLast) : 16;
+  farLast = ts;
+  beings.forEach(b => {
+    b.x += b.vx * dt; b.y += b.vy * dt;
+    if (b.x < .03 || b.x > .97) b.vx *= -1;
+    if (b.y < .02 || b.y > .98) b.vy *= -1;
+  });
+  farDraw();
+  requestAnimationFrame(farTick);
+}
+farDraw();
+addEventListener('resize', () => { farView = fitCanvas(far); farDraw(); });
+if (!reduce) onScreen(far, vis => {
+  if (vis && !farOn) { farOn = true; farLast = 0; requestAnimationFrame(farTick); } else if (!vis) farOn = false;
+}, .05);
+
+/* ---------- 记住读者的选择 ---------- */
+const savedYear = store.get('fws-agi-year');
+if (savedYear !== null && savedYear !== '' && !isNaN(+savedYear)) setAgi(+savedYear, true);
+const savedMe = store.get('fws-me');
+if (savedMe !== null && savedMe !== '' && !isNaN(+savedMe) && PEOPLE[+savedMe]) {
+  meIdx = +savedMe;
+  mainB.units.forEach(x => x.u.classList.toggle('me', x.i === meIdx));
+  $('#q1More').textContent = `你选了${PEOPLE[meIdx][1]}${PEOPLE[meIdx][0]}那一户。你的活里，哪一件最难交给 AI？只剩这一件时，它撑得起你的收入吗？`;
+  renderRes();
+}
+})();
+</script>
+<!--@@BODY-END@@-->
+</body>
+</html>
