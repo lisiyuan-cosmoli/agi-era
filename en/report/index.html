@@ -216,10 +216,11 @@ ol.refs > li:target{background:var(--human-soft)}
 .btn.line:hover{border-color:var(--night-ink)}
 .about{max-width:var(--wide);margin:0 auto;padding:28px var(--gutter) 44px;font-size:13px;line-height:1.7;color:var(--muted)}
 .about p + p{margin-top:6px}
-.lang-link a{font-weight:700}
+.foot-links{display:flex;flex-wrap:wrap;gap:2px 20px}
+.foot-links a{font-weight:700}
 
 @media print{
-  .topbar,.toc-side,.toc-mob,.tip,.end .row,.lang-link{display:none!important}
+  .topbar,.toc-side,.toc-mob,.tip,.end .row,.foot-links{display:none!important}
   .hero{background:none;color:#000}.hero h1 em{color:#000}.hero-meta span{color:#333;border-color:#999}
   body{background:#fff;color:#000;font-size:11pt}
   .doc{display:block}
@@ -255,7 +256,7 @@ ol.refs > li:target{background:var(--human-soft)}
     </aside>
   </main>
 </div>
-<footer class="about"><p>Futures We Share · Text and images under CC BY 4.0; code under MIT.</p><p class="lang-link"><a href="../../report/index.html" lang="zh-CN" hreflang="zh-CN">中文版 →</a></p></footer>
+<footer class="about"><p>Futures We Share · Text and images under CC BY 4.0; code under MIT.</p><p class="foot-links"><a href="https://github.com/lisiyuan-cosmoli/agi-era">GitHub repository ↗</a><a href="../../report/index.html" lang="zh-CN" hreflang="zh-CN">中文版 →</a></p></footer>
 <div class="tip" id="tip" role="dialog" aria-labelledby="tipNo" tabindex="-1" hidden>
   <button type="button" class="tip-x" aria-label="Close">×</button>
   <p class="tip-no" id="tipNo">Source</p>

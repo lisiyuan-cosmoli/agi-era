@@ -13,7 +13,7 @@ from html import escape
 from pathlib import Path
 import re
 
-from build_story import site_url
+from build_story import REPO_URL, site_url
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / 'source' / 'report'
@@ -25,7 +25,7 @@ ICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0
 UI = {
     'zh': {
         'md': 'report.zh.md', 'out': 'report/index.html', 'url': 'report/', 'share': 'assets/share.png', 'html_lang': 'zh-CN',
-        'other_url': '../en/report/index.html', 'other_label': 'English version →', 'other_lang': 'en',
+        'other_url': '../en/report/index.html', 'other_label': 'English version →', 'other_lang': 'en', 'repo_label': 'GitHub 仓库 ↗',
         'split': ('，', True),
         'site_name': '共同未来', 'title': '研究报告 · {t}',
         'desc': '《AGI 时代下，人类如何生活？》的研究报告：每一章的结论、证据、还不知道的事，以及会让我们改判断的信号。',
@@ -41,7 +41,7 @@ UI = {
     },
     'en': {
         'md': 'report.en.md', 'out': 'en/report/index.html', 'url': 'en/report/', 'share': 'en/assets/share.png', 'html_lang': 'en',
-        'other_url': '../../report/index.html', 'other_label': '中文版 →', 'other_lang': 'zh-CN',
+        'other_url': '../../report/index.html', 'other_label': '中文版 →', 'other_lang': 'zh-CN', 'repo_label': 'GitHub repository ↗',
         'split': (' in the ', False),
         'site_name': 'Futures We Share', 'title': 'Research report · {t}',
         'desc': 'The research report behind “How Will Humans Live in the Age of AGI?”: for each chapter, the bottom line, the evidence, what we don’t know yet, and the signals that would change our minds.',
@@ -335,7 +335,7 @@ def render(lang):
     </aside>
   </main>
 </div>
-<footer class="about"><p>{escape(ui['footer'])}</p><p class="lang-link"><a href="{ui['other_url']}" lang="{ui['other_lang']}" hreflang="{ui['other_lang']}">{escape(ui['other_label'])}</a></p></footer>
+<footer class="about"><p>{escape(ui['footer'])}</p><p class="foot-links"><a href="{REPO_URL}">{escape(ui['repo_label'])}</a><a href="{ui['other_url']}" lang="{ui['other_lang']}" hreflang="{ui['other_lang']}">{escape(ui['other_label'])}</a></p></footer>
 <div class="tip" id="tip" role="dialog" aria-labelledby="tipNo" tabindex="-1" hidden>
   <button type="button" class="tip-x" aria-label="{escape(ui['tip_close'], quote=True)}">×</button>
   <p class="tip-no" id="tipNo">{escape(ui['tip_label'])}</p>

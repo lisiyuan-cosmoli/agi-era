@@ -15,6 +15,7 @@ import re
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / 'source' / 'story'
 DEFAULT_SITE_URL = 'https://lisiyuan-cosmoli.github.io/agi-era/'
+REPO_URL = 'https://github.com/lisiyuan-cosmoli/agi-era'
 PAGES = [('story.html', 'strings.zh.json', 'index.html'), ('story.en.html', 'strings.en.json', 'en/index.html')]
 
 
@@ -50,7 +51,7 @@ def build(template, strings):
     site = site_url()
     if not site:
         page = re.sub(r'\n<meta property="og:url" content="@@SITE@@[^"]*">', '', page)
-    return page.replace('@@SITE@@', site)
+    return page.replace('@@SITE@@', site).replace('@@REPO@@', REPO_URL)
 
 
 def check_pair():

@@ -193,10 +193,11 @@ ol.refs > li:target{background:var(--human-soft)}
 .btn.line:hover{border-color:var(--night-ink)}
 .about{max-width:var(--wide);margin:0 auto;padding:28px var(--gutter) 44px;font-size:13px;line-height:1.7;color:var(--muted)}
 .about p + p{margin-top:6px}
-.lang-link a{font-weight:700}
+.foot-links{display:flex;flex-wrap:wrap;gap:2px 20px}
+.foot-links a{font-weight:700}
 
 @media print{
-  .topbar,.toc-side,.toc-mob,.tip,.end .row,.lang-link{display:none!important}
+  .topbar,.toc-side,.toc-mob,.tip,.end .row,.foot-links{display:none!important}
   .hero{background:none;color:#000}.hero h1 em{color:#000}.hero-meta span{color:#333;border-color:#999}
   body{background:#fff;color:#000;font-size:11pt}
   .doc{display:block}
