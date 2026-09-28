@@ -681,6 +681,21 @@ if (!reduce) onScreen(far, vis => {
   if (vis && !farOn) { farOn = true; farLast = 0; requestAnimationFrame(farTick); } else if (!vis) farOn = false;
 }, .05);
 
+/* ---------- 90 秒短片：点了才加载 ---------- */
+const shortDlg = $('#short'), shortVid = $('#shortVideo');
+if (shortDlg && shortVid) {
+  const openShort = () => {
+    if (!shortVid.getAttribute('src')) { shortVid.poster = shortVid.dataset.poster; shortVid.src = shortVid.dataset.src; }
+    if (shortDlg.showModal) { if (!shortDlg.open) shortDlg.showModal(); } else shortDlg.setAttribute('open', '');
+    shortVid.play().catch(() => { /* 浏览器不让自动播放时，读者点一下播放键即可 */ });
+  };
+  const closeShort = () => { shortVid.pause(); if (shortDlg.close) shortDlg.close(); else shortDlg.removeAttribute('open'); };
+  $$('[data-short]').forEach(b => b.addEventListener('click', openShort));
+  $('.short-x', shortDlg).addEventListener('click', closeShort);
+  shortDlg.addEventListener('close', () => shortVid.pause());
+  shortDlg.addEventListener('click', e => { if (e.target === shortDlg) closeShort(); });
+}
+
 /* ---------- 记住读者的选择 ---------- */
 const savedYear = store.get('fws-agi-year');
 if (savedYear !== null && savedYear !== '' && !isNaN(+savedYear)) setAgi(+savedYear, true);

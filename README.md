@@ -12,12 +12,14 @@
 ## 内容
 
 - `index.html`：互动推演（中文）。把整个社会比作一栋住着 12 户人家的楼，共八章：节点、AI 敲门、连锁反应、钱怎么转、四种未来、各方能做什么、更远的未来、轮到你。
+- `assets/short.mp4`：90 秒竖屏短片（1080×1920，带配乐），适合发到 X 等社交平台。首页点“看 90 秒短片”可以直接播放和下载。
 - `report/`：研究报告，中英双语（`index.html`、`en.html`）。和互动页面的八章一一对应，每章写清结论、证据、还不知道的问题，以及出现什么信号就要改判断。所有数字都注明出处，共 29 条参考资料，资料截至 2026 年 9 月。Markdown 原文是 `report/report.zh.md` 和 `report/report.en.md`。
 - `essay/开放演化的共生文明.md`：关于智能、主体与共同未来的长文，第 07 章由此而来。
 
 ## 修改与构建
 
 - `source/story/`：首页的页面、样式和脚本。`tools/build_story.py` 把它们合成单文件 `index.html`。
+- `source/video/`：短片的源文件。`short.html` 按时间画出每一帧，配乐也在里面用代码合成；`render.js` 逐帧渲染成 MP4。需要 Node.js、Playwright 和 ffmpeg，在该目录执行 `npm install` 后运行 `npm run render`。
 - `report/report.zh.md`、`report/report.en.md`：报告正文。`source/report/` 是报告页面的样式和脚本，`tools/build_report.py` 把它们生成 `report/index.html` 和 `report/en.html`。
 - 修改后在仓库根目录执行：
 
@@ -25,7 +27,7 @@
 python3 build.py
 ```
 
-只用 Python 标准库，运行时不联网。修改报告时，中英两版要一起改；构建会检查每个引用编号都有出处、每条参考资料都被引用，两版的参考资料数量一致。
+网页和报告的构建只用 Python 标准库，运行时不联网。修改报告时，中英两版要一起改；构建会检查每个引用编号都有出处、每条参考资料都被引用，两版的参考资料数量一致。
 
 ## 发布到 GitHub Pages
 
@@ -48,5 +50,5 @@ SITE_URL=https://新网址/ python3 build.py
 
 ## 许可
 
-- 代码（HTML 结构、CSS、JavaScript、Python 构建脚本）：MIT，见 `LICENSE`。
-- 文字和图像（首页文案与插图、研究报告、长文、分享卡片）：CC BY 4.0，见 `LICENSE-CONTENT.md`。转载或改编时，请注明出处“共同未来 / Futures We Share”并附上仓库链接。
+- 代码（HTML 结构、CSS、JavaScript、Python 构建脚本、短片的渲染代码）：MIT，见 `LICENSE`。
+- 文字、图像和短片（首页文案与插图、研究报告、长文、分享卡片、短片的画面与配乐）：CC BY 4.0，见 `LICENSE-CONTENT.md`。转载或改编时，请注明出处“共同未来 / Futures We Share”并附上仓库链接。

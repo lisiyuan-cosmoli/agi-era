@@ -76,6 +76,22 @@ p{margin:0}
 .go{margin-top:28px;display:inline-flex;align-items:center;gap:12px;padding:13px 22px;border-radius:999px;background:var(--human);color:#1a1206;font-weight:800;text-decoration:none;font-size:16px}
 .go:hover{background:#ffd27a}
 .go span{transition:transform .3s}.go:hover span{transform:translateY(3px)}
+.hero-go{margin-top:28px;display:flex;flex-wrap:wrap;gap:12px}
+.hero-go .go{margin-top:0}
+.go.ghost{background:transparent;color:var(--night-ink);border:1px solid color-mix(in srgb,var(--night-ink) 38%,transparent);padding:12px 20px}
+.go.ghost:hover{background:rgba(255,255,255,.07);border-color:var(--night-ink)}
+.go.ghost:hover span{transform:none}
+.tri{display:inline-block;flex:none;width:0;height:0;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent currentColor}
+/* 短片播放层 */
+.short{padding:0;border:0;background:transparent;color:var(--night-ink);max-width:none;max-height:none;overflow:visible}
+.short::backdrop{background:rgba(5,8,15,.88)}
+.short-box{position:relative;display:grid;gap:12px;justify-items:center}
+.short video{display:block;width:min(92vw,calc(82vh * 9 / 16));aspect-ratio:9/16;height:auto;border-radius:18px;background:#0a1022;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+@supports (height:1dvh){.short video{width:min(92vw,calc(82dvh * 9 / 16))}}
+.short-x{position:absolute;top:10px;right:10px;width:42px;height:42px;border-radius:50%;border:0;background:rgba(10,16,34,.72);color:#fff;font-size:26px;line-height:1}
+.short-x:hover{background:rgba(10,16,34,.92)}
+.short-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 16px;font-size:14px;color:var(--night-dim)}
+.short-bar a{color:var(--night-ink);font-weight:700}
 .hero-art{position:relative;max-width:380px;width:100%;justify-self:center}
 .hero-art svg{display:block;width:100%;height:auto}
 .hero-year{position:absolute;right:0;top:6px;text-align:right;font-family:var(--mono);color:var(--night-dim);font-size:12px;line-height:1.4}
@@ -326,6 +342,7 @@ p{margin:0}
 .motto span{color:var(--ai)}
 .finale .sub{margin-top:18px;max-width:var(--measure);color:var(--ink-2)}
 .finale .row{margin-top:26px}
+.finale .btn .tri{margin-right:2px}
 .about{max-width:var(--wide);margin:52px auto 0;padding:18px 0 40px;border-top:1px solid var(--line);display:grid;gap:6px;font-size:13px;line-height:1.7;color:var(--muted)}
 
 @media (prefers-reduced-motion:reduce){

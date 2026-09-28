@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>AGI 时代下，人类如何生活？· 短片</title>
+<link rel="stylesheet" href="node_modules/@fontsource/noto-sans-sc/400.css">
+<link rel="stylesheet" href="node_modules/@fontsource/noto-sans-sc/700.css">
+<link rel="stylesheet" href="node_modules/@fontsource/noto-sans-sc/900.css">
+<link rel="stylesheet" href="node_modules/@fontsource/jetbrains-mono/700.css">
+<style>html,body{margin:0;background:#0a1022;overflow:hidden}canvas{display:block}</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script id="src">
+'use strict';
+/* 共同未来 · 短片《AGI 时代下，人类如何生活？》
+   每一帧都由 seek(t) 画出来；声音由 renderAudio() 离线合成。同样的输入，得到同样的视频。 */
+const W = 1080, H = 1920, DUR = 89.5;
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+
+/* ---------- 工具 ---------- */
+const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, k) => a + (b - a) * k;
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const Ez = {
+  io: k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2,
+  out: k => 1 - Math.pow(1 - k, 3),
+  in: k => k * k,
+  back: k => { const c1 = 1.6, c3 = c1 + 1; return 1 + c3 * Math.pow(k - 1, 3) + c1 * Math.pow(k - 1, 2); }
+};
+function vis(t, a, b, fi = .4, fo = .4) {
+  if (t < a || t > b) return 0;
+  return Math.min(Ez.out(prog(t, a, a + fi)), 1 - Ez.in(prog(t, b - fo, b)));
+}
+function rng(seed) { let s = seed >>> 0 || 1; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+function hex(h) { const n = parseInt(h.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+function mix(a, b, k) {
+  const A = hex(a), B = hex(b);
+  return '#' + A.map((v, i) => Math.round(lerp(v, B[i], clamp(k))).toString(16).padStart(2, '0')).join('');
+}
+function rgba(h, a) { const [r, g, b] = hex(h); return `rgba(${r},${g},${b},${clamp(a)})`; }
+
+const C = {
+  ink: '#f1f4fa', dim: '#a7b1c6', faint: '#6f7a92',
+  human: '#f0a02e', humanLt: '#ffd27a', winLit: '#ffe2a1', gold: '#ffc94d',
+  ai: '#3657ff', aiLt: '#7d95ff', aiInk: '#a2b3ff', aiSoft: '#dbe3ff',
+  risk: '#ff7a6a', share: '#3fd09d', gov: '#98a8c6',
+  facade: '#1e2638', facade2: '#252e43', fline: '#323d56', roof: '#3a4459', winDark: '#141b2a'
+};
+const SANS = '"Noto Sans SC","WenQuanYi Zen Hei",sans-serif';
+const MONO = '"JetBrains Mono","Noto Sans SC",monospace';
+const font = (size, weight = 700, mono = false) => `${weight} ${size}px ${mono ? MONO : SANS}`;
+
+function fill(color, path) { ctx.fillStyle = color; ctx.beginPath(); path(); ctx.fill(); }
+function textW(str, f, ls = 0) { ctx.save(); ctx.font = f; ctx.letterSpacing = ls + 'px'; const w = ctx.measureText(str).width; ctx.restore(); return w; }
+const segsOf = (line, color) => (typeof line === 'string' ? [[line, color]] : line.map(s => (typeof s === 'string' ? [s, color] : [s[0], s[1] || color])));
+
+/* 一行文字，可以分段上色 */
+function line(segs, x, y, f, { color = C.ink, align = 'left', alpha = 1, ls = 0 } = {}) {
+  if (alpha <= 0) return;
+  segs = segsOf(segs, color);
+  ctx.save();
+  ctx.font = f; ctx.letterSpacing = ls + 'px'; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  const ws = segs.map(s => ctx.measureText(s[0]).width), total = ws.reduce((a, b) => a + b, 0);
+  let cx = align === 'center' ? x - total / 2 : align === 'right' ? x - total : x;
+  ctx.globalAlpha = alpha;
+  segs.forEach((s, i) => { ctx.fillStyle = s[1]; ctx.fillText(s[0], cx, y); cx += ws[i]; });
+  ctx.restore();
+}
+/* 逐字出现的标题 */
+function reveal(segs, x, y, f, t, t0, { color = C.ink, align = 'left', alpha = 1, stagger = .032, dur = .45, rise = 30, ls = 0 } = {}) {
+  if (alpha <= 0 || t < t0) return;
+  const chars = [];
+  segsOf(segs, color).forEach(([s, c]) => [...s].forEach(ch => chars.push([ch, c])));
+  ctx.save();
+  ctx.font = f; ctx.letterSpacing = ls + 'px'; ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+  const ws = chars.map(([ch]) => ctx.measureText(ch).width), total = ws.reduce((a, b) => a + b, 0);
+  let cx = align === 'center' ? x - total / 2 : x;
+  chars.forEach(([ch, c], i) => {
+    const k = Ez.out(prog(t, t0 + i * stagger, t0 + i * stagger + dur));
+    if (k > 0) { ctx.globalAlpha = alpha * k; ctx.fillStyle = c; ctx.fillText(ch, cx, y + (1 - k) * rise); }
+    cx += ws[i];
+  });
+  ctx.restore();
+}
+/* 底部字幕：几行文字居中，淡入淡出 */
+function caption(t, a, b, lines, { y = 1440, size = 46, lh = 68, weight = 700, color = C.ink } = {}) {
+  const v = vis(t, a, b, .45, .35);
+  if (!v) return;
+  const y0 = y - (lines.length - 1) * lh / 2;
+  lines.forEach((ln, i) => {
+    const k = Ez.out(prog(t, a + i * .1, a + i * .1 + .5));
+    line(ln, W / 2, y0 + i * lh + (1 - k) * 16, font(size, weight), { color, align: 'center', alpha: v * k });
+  });
+}
+function pill(x, y, w, h, color) { fill(color, () => ctx.roundRect(x, y, w, h, h / 2)); }
+function glowDot(x, y, r, color, blur = 30) { ctx.save(); ctx.shadowColor = color; ctx.shadowBlur = blur; fill(color, () => ctx.arc(x, y, r, 0, 7)); ctx.restore(); }
+
+/* ---------- 夜空 ---------- */
+const STARS = (() => { const r = rng(7); return Array.from({ length: 110 }, () => ({ x: r() * W, y: r() * H * .8, s: r() * 1.9 + .5, p: r() * 6.28, f: .5 + r() * 1.3 })); })();
+function sky(t) {
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, '#080d1d'); g.addColorStop(.55, '#0d1630'); g.addColorStop(1, '#121d3b');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const glow = (x, y, r, c) => { const rg = ctx.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, c); rg.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = rg; ctx.fillRect(x - r, y - r, 2 * r, 2 * r); };
+  glow(W * .92 + Math.sin(t * .13) * 30, H * .8, 820, 'rgba(54,87,255,0.20)');
+  glow(W * .05, H * .1 + Math.sin(t * .1) * 40, 700, 'rgba(240,160,46,0.09)');
+  for (const s of STARS) {
+    ctx.globalAlpha = .25 + .35 * (.5 + .5 * Math.sin(t * s.f + s.p));
+    fill('#ffffff', () => ctx.arc(s.x, s.y, s.s, 0, 7));
+  }
+  ctx.globalAlpha = 1;
+}
+
+/* ---------- 楼里的 12 户人家（和网页一致） ---------- */
+const K = 999;
+const PEOPLE = [
+  ['陈工', '程序员', 6, [['写代码', 25], ['写测试', 30], ['查 bug', 38], ['设计整个系统', 65], ['出了事故负责', K]]],
+  ['王姐', '护工', 6, [['记录体征', 20], ['提醒吃药', 25], ['应对突发情况', 85], ['翻身、护理', 90], ['陪老人聊天', K]]],
+  ['小周', '客服', 5, [['回答常见问题', 8], ['查订单', 15], ['处理投诉', 45], ['安抚情绪', 55], ['特殊情况拍板', 80]]],
+  ['大海', '货车司机', 5, [['规划路线', 10], ['高速上开车', 55], ['城市里开车', 70], ['装卸货', 80], ['处理路上的意外', 90]]],
+  ['林然', '剪辑师', 4, [['加字幕、配乐', 15], ['挑素材', 25], ['粗剪', 30], ['调色、特效', 35], ['读懂客户要什么', 72]]],
+  ['苏老师', '中学老师', 4, [['出题、批改', 20], ['备课', 30], ['答疑', 45], ['管好一个班', 85], ['关心每个学生', K]]],
+  ['阿敏', '会计', 3, [['记账', 10], ['报税', 25], ['做报表', 30], ['审核', 50], ['给老板出主意', 75]]],
+  ['张哥', '外卖骑手', 3, [['接单、派单', 5], ['规划路线', 10], ['处理差评', 50], ['送餐', 75], ['上楼交到手里', 88]]],
+  ['小吴', '研究员', 2, [['查文献', 20], ['分析数据', 30], ['写论文初稿', 40], ['设计实验', 60], ['决定研究什么', 92]]],
+  ['小芳', '仓库分拣员', 2, [['扫码登记', 10], ['盘点', 30], ['分拣', 45], ['搬运', 60], ['处理破损件', 85]]],
+  ['刘医生', '医生', 1, [['写病历', 20], ['看影像片子', 35], ['辅助诊断', 50], ['定治疗方案', 68], ['陪病人、签字负责', K]]],
+  ['老马', '维修师傅', 1, [['报价', 30], ['判断故障', 50], ['上门修理', 92], ['爬高下低', 95], ['和住户沟通', K]]]
+];
+const unitXY = i => ({ x: i % 2 === 0 ? 36 : 184, y: 52 + (6 - PEOPLE[i][2]) * 52 + 6 });
+const taskOn = (th, lv) => (th === K ? 0 : clamp((lv - th + 4) / 4));
+const ainess = (p, lv) => clamp((p[3].reduce((a, tk) => a + taskOn(tk[1], lv), 0) - 2.45) / .5);
+const flickAt = (i, t) => ([2, 5, 6, 9].includes(i) && Math.floor(t * 2.2 + i * .77) % 3 === 0 ? 1 : 0);
+
+/* 画一栋楼（楼内坐标 360×430，和网页一样） */
+function building(o) {
+  const { x, y, s, alpha = 1 } = o;
+  if (alpha <= .002) return;
+  const fx = o.fx || {};
+  ctx.save();
+  ctx.translate(x, y); ctx.scale(s, s);
+  ctx.globalAlpha = alpha;
+  if (fx.off) ctx.filter = `grayscale(${(fx.off * .95).toFixed(3)}) brightness(${(1 - fx.off * .3).toFixed(3)})`;
+  roofFx(o, fx);
+  fill(C.roof, () => ctx.roundRect(16, 44, 328, 8, 3));
+  fill(C.facade, () => ctx.rect(24, 52, 312, 312));
+  ctx.strokeStyle = C.fline; ctx.lineWidth = 2;
+  for (let f = 1; f < 6; f++) { ctx.beginPath(); ctx.moveTo(24, 52 + f * 52); ctx.lineTo(336, 52 + f * 52); ctx.stroke(); }
+  PEOPLE.forEach((p, i) => unit(o, fx, p, i));
+  fill(C.facade2, () => ctx.rect(24, 364, 312, 52));
+  shop(o, fx);
+  fill(C.facade, () => ctx.roundRect(262, 376, 44, 40, 3));
+  fill(C.fline, () => ctx.roundRect(8, 416, 344, 8, 2));
+  bodyFx(o, fx);
+  if (fx.alarm) {
+    const t = o.t || 0;
+    ctx.filter = 'none';
+    ctx.globalAlpha = alpha * fx.alarm * (Math.floor(t * 2) % 2 ? .35 : 1);
+    glowDot(180, 26, 11, C.risk, 24);
+    ctx.fillStyle = C.risk; ctx.font = font(13, 900); ctx.textAlign = 'left'; ctx.fillText('系统失灵', 200, 31);
+  }
+  ctx.restore();
+}
+function unit(o, fx, p, i) {
+  const { lv = 0, labels = 0, t = 0, alpha = 1, hl } = o;
+  const { x, y } = unitXY(i);
+  const ai = ainess(p, lv);
+  const dark = Math.max(fx.dark ? (fx.dark[i] || 0) : 0, fx.flick ? fx.flick * flickAt(i, t) : 0);
+  const gold = fx.gold ? (fx.gold[i] || 0) : 0;
+  let col = mix(C.winLit, C.aiSoft, ai);
+  col = mix(col, C.gold, gold);
+  col = mix(col, C.winDark, dark);
+  ctx.save();
+  ctx.shadowColor = gold > .5 ? rgba('#ffc94d', .9 * (1 - dark * .5)) : ai > .5 ? rgba('#7d95ff', .8 * (1 - dark)) : rgba('#ffc46e', .6 * (1 - dark));
+  ctx.shadowBlur = 30 + gold * 20;
+  fill(col, () => ctx.roundRect(x, y, 140, 40, 6));
+  ctx.restore();
+  // 窗户变蓝的一瞬间，外面闪一圈
+  const ring = 4 * ai * (1 - ai);
+  if (ring > .02) { ctx.save(); ctx.globalAlpha = alpha * ring; ctx.strokeStyle = C.aiLt; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.roundRect(x - 4 - ring * 3, y - 4 - ring * 3, 148 + ring * 6, 48 + ring * 6, 9); ctx.stroke(); ctx.restore(); }
+  if (hl && hl[i]) { ctx.save(); ctx.globalAlpha = alpha * hl[i]; ctx.strokeStyle = C.humanLt; ctx.lineWidth = 3; ctx.beginPath(); ctx.roundRect(x - 4, y - 4, 148, 48, 9); ctx.stroke(); ctx.restore(); }
+  const ink = mix(mix('#2b2418', '#1c2a6b', ai), '#46506a', dark);
+  if (labels < 1) {
+    ctx.save(); ctx.globalAlpha = alpha * (1 - labels) * .5 * (1 - dark * .5); ctx.fillStyle = ink;
+    ctx.beginPath(); ctx.arc(x + 70, y + 14, 6, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.roundRect(x + 62, y + 22, 16, 18, 7); ctx.fill();
+    ctx.restore();
+  }
+  if (labels > 0) {
+    ctx.save();
+    ctx.globalAlpha = alpha * labels;
+    ctx.fillStyle = ink; ctx.textAlign = 'left';
+    ctx.font = font(15, 900); ctx.fillText(p[0], x + 9, y + 18);
+    const nw = ctx.measureText(p[0]).width;
+    ctx.font = font(12.5, 400); ctx.globalAlpha = alpha * labels * .85; ctx.fillText(p[1], x + 9 + nw + 6, y + 18);
+    ctx.globalAlpha = alpha * labels;
+    p[3].forEach((tk, k) => {
+      const cx = x + 16 + k * 15, cy = y + 30;
+      if (tk[1] === K) {
+        ctx.setLineDash([2.2, 2]); ctx.strokeStyle = mix('#c97c10', '#46506a', dark); ctx.lineWidth = 1.7;
+        ctx.beginPath(); ctx.arc(cx, cy, 4.4, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+      } else {
+        const on = taskOn(tk[1], lv), pop = 4 * on * (1 - on);
+        fill(mix(mix('#e8940f', C.ai, on), '#46506a', dark), () => ctx.arc(cx, cy, 4.6 * (1 + pop * .45), 0, 7));
+      }
+    });
+    ctx.restore();
+  }
+}
+function shop(o, fx) {
+  const dark = fx.shopDark || 0;
+  ctx.save();
+  ctx.shadowColor = rgba('#ffb45a', .6 * (1 - dark)); ctx.shadowBlur = 26;
+  fill(mix('#ffd9a8', C.winDark, dark), () => ctx.roundRect(38, 380, 204, 32, 4));
+  ctx.restore();
+  for (let k = 0; k < 8; k++) {
+    const x0 = 34 + k * 27;
+    ctx.beginPath(); ctx.moveTo(x0, 366); ctx.lineTo(x0 + 27, 366); ctx.lineTo(x0 + 27, 376); ctx.quadraticCurveTo(x0 + 13.5, 383, x0, 376); ctx.closePath();
+    ctx.fillStyle = k % 2 ? mix('#f1f4fa', '#5b6377', dark) : mix(C.risk, '#5a3b3b', dark); ctx.fill();
+  }
+  ctx.fillStyle = mix('#2b2418', '#8b95a7', dark); ctx.font = font(12.5, 900); ctx.textAlign = 'center';
+  ctx.fillText(dark > .5 ? '楼下小馆' : '楼下小馆 · 营业中', 140, 401);
+}
+function roofFx(o, fx) {
+  const t = o.t || 0;
+  if (fx.garden) {
+    ctx.save(); ctx.globalAlpha *= fx.garden;
+    [[66, 22], [100, 18], [260, 20], [294, 24]].forEach(([x, y], k) => {
+      const sway = Math.sin(t * 1.3 + k) * 1.2;
+      fill('#5a4a32', () => ctx.rect(x - 2, y + 6, 4, 44 - y - 6));
+      fill(C.share, () => ctx.arc(x + sway, y, 10, 0, 7));
+    });
+    [[160, 36], [182, 34], [202, 37]].forEach(([x, y]) => {
+      fill('#cfd6e6', () => ctx.arc(x, y - 7, 3.5, 0, 7));
+      fill('#cfd6e6', () => ctx.roundRect(x - 3.5, y - 3, 7, 10, 3));
+    });
+    ctx.restore();
+  }
+  if (fx.platform) {
+    ctx.save(); ctx.globalAlpha *= fx.platform;
+    ctx.shadowColor = rgba(C.aiLt, .8); ctx.shadowBlur = 20;
+    fill(C.ai, () => ctx.roundRect(100, 4, 160, 30, 8));
+    ctx.shadowBlur = 0;
+    fill(C.ai, () => ctx.rect(172, 34, 16, 10));
+    ctx.fillStyle = '#fff'; ctx.font = font(13.5, 900); ctx.textAlign = 'center'; ctx.fillText('大平台 · 规则由我定', 180, 24.5);
+    ctx.restore();
+  }
+  if (fx.pent) {
+    ctx.save(); ctx.globalAlpha *= fx.pent;
+    ctx.shadowColor = rgba(C.gold, .9); ctx.shadowBlur = 26;
+    fill(C.gold, () => ctx.roundRect(120, 6, 120, 38, 6));
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#3a2a00'; ctx.font = font(12.5, 900); ctx.textAlign = 'center'; ctx.fillText('少数人的顶层', 180, 30);
+    ctx.restore();
+  }
+}
+function bodyFx(o, fx) {
+  if (fx.scaffold) {
+    ctx.save(); ctx.globalAlpha *= fx.scaffold;
+    ctx.strokeStyle = '#d1913a'; ctx.lineWidth = 2;
+    [30, 330].forEach(x => { ctx.beginPath(); ctx.moveTo(x, 100); ctx.lineTo(x, 340); ctx.stroke(); });
+    [104, 156, 208, 260, 312].forEach(y => { ctx.beginPath(); ctx.moveTo(22, y); ctx.lineTo(338, y); ctx.stroke(); });
+    fill('#f1f4fa', () => ctx.roundRect(128, 170, 104, 24, 6));
+    ctx.fillStyle = '#141a24'; ctx.font = font(12, 900); ctx.textAlign = 'center'; ctx.fillText('修修补补中', 180, 186.5);
+    ctx.restore();
+  }
+  if (fx.platform) {
+    ctx.save(); ctx.globalAlpha *= fx.platform * .9;
+    ctx.strokeStyle = C.aiLt; ctx.lineWidth = 1.5; ctx.setLineDash([4, 4]);
+    [80, 132, 184, 236, 288].forEach((y, k) => { ctx.beginPath(); ctx.moveTo(180, 44); ctx.lineTo(k % 2 ? 254 : 106, y); ctx.stroke(); });
+    ctx.restore();
+  }
+  if (fx.crack) {
+    ctx.save(); ctx.globalAlpha *= Math.min(1, fx.crack * 2);
+    const pts = [[180, 52], [172, 100], [186, 150], [174, 200], [188, 250], [176, 300], [186, 340], [180, 364]];
+    const len = 330;
+    ctx.strokeStyle = C.risk; ctx.lineWidth = 3.2; ctx.lineJoin = 'round';
+    ctx.shadowColor = rgba(C.risk, .8); ctx.shadowBlur = 12;
+    ctx.setLineDash([len * clamp(fx.crack), len]);
+    ctx.beginPath(); pts.forEach(([x, y], k) => (k ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.stroke();
+    ctx.restore();
+  }
+  if (fx.closed) {
+    ctx.save(); ctx.globalAlpha *= fx.closed;
+    fill('#0b1120', () => ctx.roundRect(84, 386, 112, 20, 4));
+    ctx.fillStyle = '#eef1f6'; ctx.font = font(12, 900); ctx.textAlign = 'center'; ctx.fillText('暂停营业', 140, 400.5);
+    ctx.restore();
+  }
+}
+
+/* ---------- 楼在整部片子里的位置：[时间, 中心 x, 顶部 y, 缩放, 透明度, 名字和圆点] ---------- */
+const BK = [
+  [0, 540, 740, 1.8, 1, 0], [5.0, 540, 740, 1.8, 1, 0], [5.9, 540, 650, 1.3, 1, 0],
+  [19.5, 540, 650, 1.3, 1, 0], [20.3, 540, 660, 1.3, .3, 0], [25.0, 540, 660, 1.3, .3, 0],
+  [26.1, 540, 440, 2.2, 1, 1], [35.7, 540, 440, 2.2, 1, 1], [36.5, 540, 420, 2.0, 0, 1],
+  [55.9, 540, 700, 1.5, 0, 0], [56.8, 540, 690, 1.5, 1, 0], [69.2, 540, 690, 1.5, 1, 0],
+  [69.9, 540, 660, 1.4, 0, 0], [83.9, 540, 470, 1.0, 0, 0], [84.7, 540, 470, 1.0, 1, 0], [DUR + 1, 540, 470, 1.0, 1, 0]
+];
+function bAt(t) {
+  let i = 0;
+  while (i < BK.length - 2 && t > BK[i + 1][0]) i++;
+  const a = BK[i], b = BK[i + 1], k = Ez.io(prog(t, a[0], b[0]));
+  const v = j => lerp(a[j], b[j], k);
+  const s = v(3);
+  return { x: v(1) - 180 * s, y: v(2), s, alpha: v(4), labels: v(5) };
+}
+const EVT = [
+  [2012, 'AI 学会“看图”', '能从照片里认出猫和狗。'],
+  [2016, '下围棋赢了世界冠军', '靠“感觉”的事，AI 也能赢过人。'],
+  [2020, '写出像人写的文章', '给它开个头，它就能接着往下写。'],
+  [2022, '会聊天的 AI 来了', '很快就有上亿人用上了它。'],
+  [2024, '一句话生成视频', '光影和镜头，像真的拍出来的。'],
+  [2025, '数学奥赛拿到金牌水平', '也开始自己写代码、操作电脑。'],
+  [2026, 'AI 独立解开 80 年前的数学难题', '它自己找到了埃尔德什 1946 年一个猜想的反例。']
+];
+const EVT_T = [5.7, 7.6, 9.4, 11.0, 12.5, 13.9, 15.3];
+function yearAt(t) {
+  if (t <= EVT_T[0]) return 2012;
+  for (let i = 0; i < EVT_T.length - 1; i++) if (t < EVT_T[i + 1]) return lerp(EVT[i][0], EVT[i + 1][0], Ez.io(prog(t, EVT_T[i + 1] - .9, EVT_T[i + 1])));
+  return 2026;
+}
+const levelOfYear = y => (y <= 2022 ? (y - 2012) / 10 * 5 : 5 + (y - 2022) / 4 * 35);
+function levelAt(t) {
+  if (t < 25.0) return levelOfYear(yearAt(t));
+  if (t < 28.4) return 40;
+  if (t < 30.6) return lerp(40, 70, Ez.io(prog(t, 28.4, 30.6)));
+  if (t < 31.6) return 70;
+  if (t < 33.6) return lerp(70, 100, Ez.io(prog(t, 31.6, 33.6)));
+  if (t < 36.6) return 100;
+  return 40;
+}
+
+/* 四种未来：切换时间和每种未来的样子 */
+const FUT_T = [[57.3, 'A'], [59.5, 'B'], [61.7, 'C'], [63.9, 'D'], [66.1, 'X'], [67.9, 'N']];
+const FUT_FX = {
+  A: { garden: 1 },
+  B: { scaffold: 1, flick: 1 },
+  C: { platform: 1 },
+  D: { crack: 1, pent: 1, closed: 1, shopDark: 1, dark: [0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], gold: [1, 1] },
+  X: { off: 1, alarm: 1 },
+  N: {}, O: {}
+};
+function futAt(t) {
+  let cur = 'O', prev = 'O', t0 = 0;
+  for (const [ft, key] of FUT_T) if (t >= ft) { prev = cur; cur = key; t0 = ft; }
+  return { cur, prev, k: Ez.io(prog(t, t0, t0 + .7)), t0 };
+}
+function blendFx(a, b, k) {
+  const out = {};
+  for (const key of new Set([...Object.keys(a), ...Object.keys(b)])) {
+    const va = a[key], vb = b[key];
+    if (Array.isArray(va) || Array.isArray(vb)) out[key] = Array.from({ length: 12 }, (_, i) => lerp(va ? va[i] || 0 : 0, vb ? vb[i] || 0 : 0, k));
+    else out[key] = lerp(va || 0, vb || 0, k);
+  }
+  if (b.crack && !a.crack) out.crack = k;
+  return out;
+}
+function fxAt(t) {
+  if (t < 56) return {};
+  const f = futAt(t);
+  return blendFx(FUT_FX[f.prev], FUT_FX[f.cur], f.k);
+}
+
+/* ---------- 章节标签 ---------- */
+const TAGS = [[5.5, 25.1, 1, '节点'], [25.1, 36.1, 2, 'AI 敲门'], [36.1, 47.6, 3, '连锁反应'], [47.6, 56.1, 4, '钱怎么转'], [56.1, 69.6, 5, '四种未来'], [69.6, 75.1, 6, '各方能做什么'], [75.1, 80.6, 7, '更远的未来'], [84.2, DUR + 1, 8, '轮到你']];
+function chapterTag(t) {
+  for (const [a, b, n, name] of TAGS) {
+    const v = vis(t, a, b, .45, .4);
+    if (!v) continue;
+    const x = 96, y = 116, f = font(34, 900), w = textW(name, f) + 108;
+    ctx.save(); ctx.globalAlpha = v; ctx.translate((1 - Ez.out(prog(t, a, a + .5))) * -30, 0);
+    pill(x, y, w, 66, 'rgba(125,149,255,0.14)');
+    glowDot(x + 33, y + 33, 23, C.ai, 16);
+    ctx.fillStyle = '#fff'; ctx.font = font(26, 700, true); ctx.textAlign = 'center'; ctx.fillText(n, x + 33, y + 42);
+    ctx.fillStyle = C.aiInk; ctx.font = f; ctx.textAlign = 'left'; ctx.fillText(name, x + 70, y + 45);
+    ctx.restore();
+  }
+}
+
+/* ---------- 0 开场 ---------- */
+function s0(t) {
+  const v = 1 - Ez.in(prog(t, 4.7, 5.4));
+  if (v <= 0) return;
+  ctx.save(); ctx.translate(0, -Ez.in(prog(t, 4.7, 5.4)) * 60);
+  // 小标题
+  ctx.globalAlpha = v;
+  glowDot(108, 186, 8, C.human, 18);
+  line('10 分钟互动推演', 130, 198, font(34, 700), { color: C.human, alpha: v, ls: 2 });
+  line('AGI 时代下，', 90, 326, font(108, 900), { alpha: v });
+  line('人类如何生活？', 90, 454, font(108, 900), { color: C.humanLt, alpha: v });
+  reveal('假如整个社会，是一栋楼。', 96, 560, font(48, 700), t, 1.0, { alpha: v });
+  reveal('12 户人家，做着各种各样的工作；', 96, 632, font(38, 400), t, 2.1, { color: C.dim, alpha: v, stagger: .02 });
+  reveal('楼下，还有一家小馆。', 96, 686, font(38, 400), t, 2.7, { color: C.dim, alpha: v, stagger: .02 });
+  ctx.restore();
+}
+
+/* ---------- 1 节点：时间轨道 ---------- */
+const railX = (i, t) => {
+  const k = Ez.io(prog(t, 19.5, 20.3));
+  return lerp(120 + i * 130, 120 + i * 100, k);
+};
+function rail(t) {
+  const v = vis(t, 5.6, 25.4, .6, .6);
+  if (!v) return;
+  const y = 1300;
+  ctx.save(); ctx.globalAlpha = v;
+  const yr = yearAt(t);
+  // 当前进度在轨道上的位置
+  let head = railX(0, t);
+  for (let i = 0; i < EVT.length - 1; i++) if (yr >= EVT[i][0]) head = lerp(railX(i, t), railX(i + 1, t), clamp((yr - EVT[i][0]) / (EVT[i + 1][0] - EVT[i][0])));
+  fill(C.fline, () => ctx.roundRect(railX(0, t), y - 4, railX(6, t) - railX(0, t), 8, 4));
+  const g = ctx.createLinearGradient(railX(0, t), 0, railX(6, t), 0); g.addColorStop(0, C.human); g.addColorStop(1, C.ai);
+  fill(g, () => ctx.roundRect(railX(0, t), y - 4, Math.max(0, head - railX(0, t)), 8, 4));
+  // 下一站 AGI
+  const ag = Ez.out(prog(t, 19.9, 20.6));
+  if (ag > 0) {
+    ctx.save(); ctx.strokeStyle = rgba(C.aiLt, .8 * ag); ctx.lineWidth = 5; ctx.setLineDash([10, 12]);
+    ctx.beginPath(); ctx.moveTo(railX(6, t) + 24, y); ctx.lineTo(lerp(railX(6, t) + 24, 870, ag), y); ctx.stroke(); ctx.restore();
+    const pulse = .5 + .5 * Math.sin(t * 5);
+    ctx.save(); ctx.globalAlpha = v * Ez.out(prog(t, 20.3, 20.8));
+    ctx.strokeStyle = rgba(C.aiLt, .5 * pulse); ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(880, y, 30 + pulse * 10, 0, 7); ctx.stroke();
+    ctx.strokeStyle = C.aiLt; ctx.lineWidth = 4; ctx.setLineDash([6, 6]); ctx.beginPath(); ctx.arc(880, y, 24, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = C.aiLt; ctx.font = font(30, 900); ctx.textAlign = 'center'; ctx.fillText('?', 880, y + 11);
+    ctx.font = font(26, 700, true); ctx.fillText('AGI', 880, y - 44);
+    ctx.restore();
+  }
+  EVT.forEach((e, i) => {
+    const x = railX(i, t), passed = yr >= e[0] - .01, cur = passed && (i === EVT.length - 1 || yr < EVT[i + 1][0] - .01);
+    if (cur) { ctx.save(); ctx.globalAlpha = v * .35; fill(C.ai, () => ctx.arc(x, y, 34, 0, 7)); ctx.restore(); }
+    fill(cur ? C.ai : passed ? C.ink : '#0d1630', () => ctx.arc(x, y, cur ? 20 : 15, 0, 7));
+    if (!passed) { ctx.strokeStyle = C.faint; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(x, y, 15, 0, 7); ctx.stroke(); }
+    line(String(e[0]), x, y - 40, font(26, 700, true), { color: cur ? C.aiInk : C.dim, align: 'center', alpha: v });
+    if (i < EVT.length - 1) line(`${EVT[i + 1][0] - e[0]} 年`, (x + railX(i + 1, t)) / 2, y + 52, font(24, 700), { color: C.faint, align: 'center', alpha: v * (1 - Ez.io(prog(t, 19.5, 20.1))) });
+  });
+  ctx.restore();
+}
+function s1(t) {
+  const v = vis(t, 5.5, 19.9, .5, .5);
+  if (!v) return;
+  reveal('我们正站在一个节点上', 96, 290, font(64, 900), t, 5.6, { alpha: v });
+  // 年份卡片：每到一站，新卡片从下面滑上来
+  let idx = 0;
+  EVT_T.forEach((et, i) => { if (t >= et) idx = i; });
+  for (let i = Math.max(0, idx - 1); i <= idx; i++) {
+    const t0 = EVT_T[i], kin = i === 0 ? Ez.out(prog(t, t0, t0 + .45)) : Ez.out(prog(t, t0 + .16, t0 + .56)), kout = i < idx ? Ez.out(prog(t, EVT_T[i + 1], EVT_T[i + 1] + .2)) : 0;
+    const a = v * kin * (1 - kout);
+    if (a <= 0) continue;
+    const dy = (1 - kin) * 40 - kout * 40, e = EVT[i];
+    line(String(e[0]), 90, 492 + dy, font(150, 700, true), { alpha: a, ls: -4 });
+    if (i === EVT.length - 1) {
+      const k = Ez.back(prog(t, t0 + .35, t0 + .8));
+      ctx.save(); ctx.globalAlpha = a * clamp(k * 2);
+      ctx.translate(560, 438 + dy); ctx.scale(k, k);
+      pill(-6, -40, 196, 64, C.ai);
+      ctx.fillStyle = '#fff'; ctx.font = font(32, 900); ctx.textAlign = 'center'; ctx.fillText('你在这里', 92, 3);
+      ctx.restore();
+    }
+    const tf = e[1].length > 12 ? 48 : 56;
+    line(e[1], 96, 578 + dy, font(tf, 900), { alpha: a });
+    line(e[2], 96, 638 + dy, font(34, 400), { color: C.dim, alpha: a });
+  }
+  caption(t, 17.0, 19.8, ['大事，一件比一件来得快。'], { y: 1450 });
+}
+
+/* ---------- 下一站：AGI？ ---------- */
+function s2(t) {
+  const v = vis(t, 20.2, 25.3, .5, .5);
+  if (!v) return;
+  reveal([['下一站：', C.ink], ['AGI？', C.aiLt]], 96, 330, font(96, 900), t, 20.3, { alpha: v });
+  reveal('在大多数工作上，都能做得和人一样好、', 96, 420, font(38, 400), t, 20.9, { color: C.dim, alpha: v, stagger: .015 });
+  reveal('甚至更好的 AI。', 96, 474, font(38, 400), t, 21.2, { color: C.dim, alpha: v, stagger: .015 });
+  const chips = [['2027', 96, 528], ['2028', 296, 528], ['2029', 496, 528], ['2030 以后', 96, 616], ['不会来', 380, 616]];
+  chips.forEach(([label, x, y], i) => {
+    const t0 = 21.9 + i * .2, k = Ez.back(prog(t, t0, t0 + .45));
+    if (k <= 0) return;
+    const f = font(34, 700, true), w = textW(label, f) + 64;
+    const hop = 23.0 + i * .22, on = vis(t, hop, hop + .4, .06, .2);
+    ctx.save(); ctx.globalAlpha = v * clamp(k * 1.5);
+    ctx.translate(x + w / 2, y + 36); ctx.scale(lerp(.6, 1, clamp(k, 0, 1.2)), lerp(.6, 1, clamp(k, 0, 1.2))); ctx.translate(-w / 2, -36);
+    fill(mix('#18223d', C.ai, on), () => ctx.roundRect(0, 0, w, 72, 36));
+    ctx.strokeStyle = rgba(C.ink, .22 + on * .5); ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(0, 0, w, 72, 36); ctx.stroke();
+    ctx.fillStyle = C.ink; ctx.font = f; ctx.textAlign = 'center'; ctx.fillText(label, w / 2, 48);
+    ctx.restore();
+  });
+  caption(t, 23.8, 25.3, ['它哪一年到来，没有人知道。', [['你猜呢？', C.humanLt]]], { y: 1466 });
+}
+
+/* ---------- 2 AI 敲门 ---------- */
+function s3(t) {
+  const v = vis(t, 25.2, 36.0, .6, .5);
+  if (!v) return;
+  reveal('谁家的活，先被 AI 接手？', 96, 256, font(60, 900), t, 25.3, { alpha: v });
+  // 时间滑条
+  const lv = levelAt(t), x0 = 150, x1 = 900, y = 370;
+  ctx.save(); ctx.globalAlpha = v * Ez.out(prog(t, 25.6, 26.2));
+  fill(C.fline, () => ctx.roundRect(x0, y - 4, x1 - x0, 8, 4));
+  const g = ctx.createLinearGradient(x0, 0, x1, 0); g.addColorStop(0, C.human); g.addColorStop(1, C.ai);
+  const hx = lerp(x0, x1, lv / 100);
+  fill(g, () => ctx.roundRect(x0, y - 4, hx - x0, 8, 4));
+  [[0, '2022'], [40, '今天'], [70, '更强的 AI'], [100, 'AGI']].forEach(([p, s]) => {
+    const tx = lerp(x0, x1, p / 100);
+    fill(C.faint, () => ctx.arc(tx, y, 5, 0, 7));
+    line(s, tx, y + 46, font(24, 700), { color: C.faint, align: p === 0 ? 'left' : p === 100 ? 'right' : 'center', alpha: v });
+  });
+  glowDot(hx, y, 17, '#ffffff', 20);
+  fill(C.ai, () => ctx.arc(hx, y, 9, 0, 7));
+  const stage = lv < 55 ? '今天 · 2026' : lv < 85 ? '更强的 AI' : 'AGI';
+  const f = font(28, 900), w = textW(stage, f) + 36, bx = clamp(hx - w / 2, 96, 940 - w);
+  pill(bx, y - 78, w, 46, C.ai);
+  ctx.fillStyle = '#fff'; ctx.font = f; ctx.textAlign = 'center'; ctx.fillText(stage, bx + w / 2, y - 45);
+  ctx.restore();
+  caption(t, 26.0, 28.9, ['每个小圆点，是这户人家的一件活。', [['变蓝', C.aiLt], '，表示 AI 已经能做。']], { y: 1474 });
+  caption(t, 29.1, 32.0, ['坐在电脑前、按流程办事的活，', '最先变。'], { y: 1474 });
+  caption(t, 32.2, 36.0, ['要到现场动手、要被人信任的活，最晚。', [['虚线圈', C.humanLt], '的，可能一直留给人。']], { y: 1474 });
+}
+
+/* ---------- 3 连锁反应：多米诺 ---------- */
+const DOM = [
+  ['AI 接手了', '客服和会计', '的活'], ['公司不再', '需要那么', '多人'], ['小周和阿敏', '丢了工作'], ['不再去楼下', '小馆吃饭'],
+  ['小馆生意', '变差，辞掉', '帮工'], ['大家都少', '花钱，房贷', '吃紧'], ['银行收紧', '贷款，更多', '店铺关门'], ['物业费收不', '上来，电梯', '也修不起了']
+];
+const DX = i => 196 + (i % 4) * 228, DY = i => (i < 4 ? 760 : 1180);
+const RUN1 = 37.9, RUN2 = 44.3, GAP = .5, REW = 42.7, WALL = 43.5;
+function domAngle(i, t) {
+  const fall = (st, lim = 1.29) => { const k = prog(t, st, st + .42); return lim * Math.pow(k, 1.8) - (k >= 1 ? Math.sin(prog(t, st + .42, st + .7) * Math.PI) * .06 : 0); };
+  let a = 0;
+  if (t < REW) a = fall(RUN1 + i * GAP);
+  else if (t < RUN2 - .05) a = 1.29 * (1 - Ez.io(prog(t, REW + (7 - i) * .06, REW + (7 - i) * .06 + .45)));
+  else if (i < 2) a = fall(RUN2 + i * GAP);
+  else if (i === 2) a = fall(RUN2 + i * GAP, .34);
+  else if (i === 3) a = Math.sin(prog(t, RUN2 + 2 * GAP + .36, RUN2 + 2 * GAP + .9) * Math.PI * 2) * .05;
+  return a;
+}
+function s4(t) {
+  const v = vis(t, 36.2, 47.6, .5, .5);
+  if (!v) return;
+  reveal('一户出事，整栋楼都会感觉到', 96, 256, font(58, 900), t, 36.3, { alpha: v });
+  ctx.save(); ctx.globalAlpha = v;
+  // 挡板
+  const wk = Ez.back(prog(t, WALL, WALL + .5)), shake = Math.sin(prog(t, RUN2 + 2 * GAP + .36, RUN2 + 2 * GAP + .8) * Math.PI * 6) * 5 * (1 - prog(t, RUN2 + 2 * GAP + .36, RUN2 + 2 * GAP + .8));
+  if (wk > 0) {
+    const wx = (DX(2) + DX(3)) / 2 + 18 + shake, base = DY(2);
+    ctx.save(); ctx.shadowColor = rgba(C.share, .8); ctx.shadowBlur = 24;
+    fill(C.share, () => ctx.roundRect(wx - 9, base - 160 * clamp(wk, 0, 1.1), 18, 160 * clamp(wk, 0, 1.1), 6));
+    ctx.restore();
+    const lk = Ez.out(prog(t, WALL + .2, WALL + .6));
+    line('失业以后，收入不断档', wx, base - 212, font(32, 900), { color: C.share, align: 'center', alpha: v * lk });
+  }
+  DOM.forEach((lab, i) => {
+    const x = DX(i), base = DY(i), rise = Ez.back(prog(t, 36.5 + i * .07, 36.5 + i * .07 + .5));
+    if (rise <= 0) return;
+    const a = domAngle(i, t), fallen = a > .6, lean = i === 2 && t > RUN2 + 2 * GAP + .3;
+    const saved = t > RUN2 + 2 * GAP + .45 && i >= 3 ? Ez.out(prog(t, RUN2 + 2 * GAP + .45 + (i - 3) * .08, RUN2 + 2 * GAP + .85 + (i - 3) * .08)) : 0;
+    fill(C.fline, () => ctx.roundRect(x - 96, base, 192, 4, 2));
+    ctx.save();
+    ctx.translate(x + 33, base); ctx.rotate(a); ctx.scale(1, rise);
+    const col = i === 0 ? C.ai : (fallen || lean) ? C.risk : C.ink;
+    ctx.shadowColor = i === 0 ? rgba(C.aiLt, .7) : (fallen || lean) ? rgba(C.risk, .5) : 'rgba(0,0,0,0)'; ctx.shadowBlur = 20;
+    fill(col, () => ctx.roundRect(-66, -186, 66, 186, 11));
+    ctx.shadowBlur = 0;
+    const dot = i === 0 ? '#dbe3ff' : '#0d1630';
+    fill(dot, () => ctx.arc(-33, -140, 9, 0, 7)); fill(dot, () => ctx.arc(-33, -48, 9, 0, 7));
+    fill(dot, () => ctx.rect(-55, -95, 44, 3));
+    ctx.restore();
+    const lc = saved ? mix(C.dim, C.share, saved) : (fallen || lean) ? C.risk : C.dim;
+    lab.forEach((s, k) => line(s, x, base + 54 + k * 43, font(32, fallen || saved > .5 ? 900 : 700), { color: lc, align: 'center', alpha: v * clamp(rise) }));
+  });
+  ctx.restore();
+  caption(t, 36.9, 40.7, ['假设客服小周和会计阿敏的活，', '大部分交给了 AI……'], { y: 1484 });
+  caption(t, 40.9, 42.8, ['一块推倒一块，', '最后电梯也修不起了。'], { y: 1484 });
+  caption(t, 43.6, 47.6, ['提前放好挡板，', [['连锁反应就能停下来。', C.share]]], { y: 1484 });
+}
+
+/* ---------- 4 钱怎么转 ---------- */
+const NODE = { firm: [540, 560, 92, '公司'], home: [230, 1080, 92, '住户'], own: [850, 1080, 92, 'AI 公司\n和平台'], gov: [540, 980, 70, '基金\n政府'] };
+const PATH = {
+  wage: [[470, 615], [330, 655], [232, 805], [232, 988]],
+  spend: [[296, 1000], [370, 890], [440, 760], [500, 650]],
+  ai: [[610, 615], [750, 655], [848, 805], [848, 988]],
+  tax: [[758, 1080], [700, 1075], [650, 1045], [606, 1010]],
+  share: [[474, 1010], [430, 1045], [380, 1075], [322, 1080]]
+};
+function bez(P, u) { const [a, b, c, d] = P, m = 1 - u; return [0, 1].map(j => m * m * m * a[j] + 3 * m * m * u * b[j] + 3 * m * u * u * c[j] + u * u * u * d[j]); }
+function strokePath(P, w, color, alpha, drawK = 1) {
+  if (alpha <= 0 || drawK <= 0) return;
+  ctx.save(); ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round';
+  ctx.beginPath();
+  for (let s = 0; s <= 40; s++) { const u = s / 40 * drawK, [x, y] = bez(P, u); s ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+  ctx.stroke(); ctx.restore();
+}
+function coins(P, t, n, speed, color, alpha) {
+  if (alpha <= 0 || n <= 0) return;
+  for (let i = 0; i < n; i++) {
+    const u = ((t * speed + i / n) % 1 + 1) % 1, [x, y] = bez(P, u), edge = Math.min(u, 1 - u) * 8;
+    ctx.save(); ctx.globalAlpha = alpha * clamp(edge);
+    ctx.shadowColor = color; ctx.shadowBlur = 16;
+    fill(color, () => ctx.arc(x, y, 11, 0, 7));
+    ctx.shadowBlur = 0; ctx.strokeStyle = 'rgba(8,13,29,.6)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, 11, 0, 7); ctx.stroke();
+    ctx.restore();
+  }
+}
+function node(key, alpha, extra = 0) {
+  const [x, y, r, label] = NODE[key];
+  if (alpha <= 0) return;
+  const k = Ez.back(clamp(alpha));
+  ctx.save(); ctx.globalAlpha = clamp(alpha); ctx.translate(x, y); ctx.scale(k, k);
+  const ring = key === 'own' ? C.ai : key === 'gov' ? C.share : key === 'home' ? C.human : C.ink;
+  ctx.shadowColor = rgba(ring, .5 + extra * .4); ctx.shadowBlur = 30 + extra * 20;
+  fill('#131c33', () => ctx.arc(0, 0, r, 0, 7));
+  ctx.shadowBlur = 0; ctx.strokeStyle = ring; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(0, 0, r, 0, 7); ctx.stroke();
+  const ls = label.split('\n');
+  ls.forEach((s, i) => line(s, 0, (i - (ls.length - 1) / 2) * 38 + 12, font(ls.length > 1 ? 30 : 38, 900), { align: 'center', alpha: 1 }));
+  ctx.restore();
+}
+function meter(x, y, w, val, color, label, alpha) {
+  if (alpha <= 0) return;
+  ctx.save(); ctx.globalAlpha = alpha;
+  fill('#1b2540', () => ctx.roundRect(x, y, w, 16, 8));
+  fill(color, () => ctx.roundRect(x, y, Math.max(16, w * clamp(val)), 16, 8));
+  line(label, x, y - 14, font(24, 700), { color: C.dim, alpha });
+  ctx.restore();
+}
+function s5(t) {
+  const v = vis(t, 47.7, 56.1, .5, .5);
+  if (!v) return;
+  reveal('楼里的钱，是怎么转起来的？', 96, 256, font(58, 900), t, 47.8, { alpha: v });
+  const a = .8 * Ez.io(prog(t, 50.9, 52.9)), sh = Ez.io(prog(t, 53.6, 54.6));
+  const wage = 1 - a * .85, ai = .15 + a, spend = wage * .8 + sh * .55;
+  const pk = Ez.out(prog(t, 48.3, 49.2)), gk = Ez.out(prog(t, 53.3, 54.0));
+  strokePath(PATH.wage, 8 + 30 * wage, C.human, v * .75, pk);
+  strokePath(PATH.spend, 8 + 26 * spend, mix(C.human, C.faint, .45), v * .6, pk);
+  strokePath(PATH.ai, 8 + 30 * ai, C.ai, v * .8, pk);
+  strokePath(PATH.tax, 6 + 16 * sh, C.share, v * .7, gk);
+  strokePath(PATH.share, 6 + 20 * sh, C.share, v * .8, gk);
+  const ck = v * Ez.out(prog(t, 48.9, 49.5));
+  coins(PATH.wage, t, Math.round(2 + 6 * wage), .42, C.humanLt, ck);
+  coins(PATH.spend, t, Math.round(2 + 5 * spend), .42, '#e7c48f', ck * .9);
+  coins(PATH.ai, t, Math.round(1 + 8 * ai), .42, C.aiLt, ck);
+  coins(PATH.tax, t, Math.round(1 + 2 * sh), .7, '#9ff0cf', v * sh);
+  coins(PATH.share, t, Math.round(1 + 2 * sh), .7, '#9ff0cf', v * sh);
+  const tag = (s, x, y, c, al) => line(s, x, y, font(30, 900), { color: c, align: 'center', alpha: v * al });
+  tag('工资', 196, 760, C.humanLt, pk); tag('消费', 474, 860, '#e7c48f', pk); tag('AI 收益', 872, 700, C.aiInk, pk);
+  tag('分红', 395, 1130, C.share, gk); tag('税和基金', 688, 1130, C.share, gk);
+  node('firm', v * prog(t, 47.9, 48.4)); node('home', v * prog(t, 48.0, 48.5), sh); node('own', v * prog(t, 48.1, 48.6), a);
+  node('gov', v * prog(t, 53.2, 53.7));
+  const nk = v * Ez.out(prog(t, 48.6, 49.2));
+  meter(150, 1232, 160, .3 + .7 * wage + .5 * sh, C.human, '住户的收入', nk);
+  meter(770, 1232, 160, .15 + .9 * a, C.ai, 'AI 公司的财富', nk);
+  caption(t, 48.4, 50.8, ['公司发工资，住户拿去消费，', '钱又回到公司。'], { y: 1470 });
+  caption(t, 51.0, 53.4, ['AI 接手的活越多，', [['工资', C.humanLt], '这条管道就越细。']], { y: 1470 });
+  caption(t, 53.6, 56.1, ['接一条新管道：AI 的收益，', [['通过基金和分红，回到每户人家。', C.share]]], { y: 1470 });
+}
+
+/* ---------- 5 四种未来 ---------- */
+const FUT_TXT = {
+  A: ['软着陆', C.share, ['大家一周工作三四天，', 'AI 的收益变成分红和更好的公共服务。']],
+  B: ['反复阵痛', C.humanLt, ['每来一轮新技术，就有几户人家先断了收入，', '过一两年才被接住。']],
+  C: ['被照顾，但说不上话', C.aiLt, ['人人都有基本保障，', '可接什么活、拿多少钱，都由大平台说了算。']],
+  D: ['撕裂', C.risk, ['楼顶越来越亮，楼里越来越暗，', '大家越来越难坐下来商量。']],
+  X: ['失控', C.risk, ['最关键的 AI 行动没人能叫停，', '两个开关都扳不动了。']],
+  N: ['AI 本身不决定结局。', C.ink, ['“管得住”，是一切选择的前提。']]
+};
+const SW = { A: ['all', 'early'], B: ['all', 'late'], C: ['few', 'early'], D: ['few', 'late'], X: ['few', 'late'], N: ['few', 'late'], O: [null, null] };
+function segCtl(x, y, w, opts, sel, prevSel, k, alpha, disabled) {
+  const h = 76, half = w / 2;
+  ctx.save(); ctx.globalAlpha = alpha * (disabled ? .45 : 1);
+  fill('#151e37', () => ctx.roundRect(x, y, w, h, h / 2));
+  ctx.strokeStyle = 'rgba(241,244,250,.18)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(x, y, w, h, h / 2); ctx.stroke();
+  const pos = v => (v === opts[0][0] ? 0 : v === opts[1][0] ? 1 : null);
+  const p0 = pos(prevSel), p1 = pos(sel);
+  if (p1 !== null) {
+    const px = p0 === null ? p1 : lerp(p0, p1, k), op = p0 === null ? k : 1;
+    ctx.globalAlpha = alpha * op * (disabled ? .45 : 1);
+    fill(C.ink, () => ctx.roundRect(x + 6 + px * half, y + 6, half - 12, h - 12, (h - 12) / 2));
+  }
+  ctx.globalAlpha = alpha * (disabled ? .45 : 1);
+  opts.forEach(([val, label], j) => {
+    const on = p1 === j ? (p0 === null ? k : p0 === j ? 1 : k) : p0 === j && p1 !== j ? 1 - k : 0;
+    line(label, x + half * j + half / 2, y + 50, font(32, 900), { color: mix(C.dim, '#0d1630', on), align: 'center', alpha: alpha * (disabled ? .45 : 1) });
+  });
+  ctx.restore();
+}
+function s6(t) {
+  const v = vis(t, 56.1, 69.6, .5, .5);
+  if (!v) return;
+  reveal('同一栋楼，可以变成很不一样的样子', 96, 256, font(52, 900), t, 56.2, { alpha: v, stagger: .025 });
+  const f = futAt(t), [d1, p1] = SW[f.cur], [d0, p0] = SW[f.prev];
+  const sk = Ez.out(prog(t, 56.5, 57.0)), off = f.cur === 'X';
+  ctx.save(); ctx.translate(0, (1 - sk) * 20);
+  line('① AI 带来的财富，怎么分？', 96, 352, font(32, 700), { color: C.dim, alpha: v * sk });
+  segCtl(96, 372, 848, [['all', '大家都能分到'], ['few', '少数人拿走']], d1, d0, f.k, v * sk, off);
+  line('② 社会什么时候开始准备？', 96, 506, font(32, 700), { color: C.dim, alpha: v * sk });
+  segCtl(96, 526, 848, [['early', '提前准备好'], ['late', '出了事再补']], p1, p0, f.k, v * sk, off);
+  ctx.restore();
+  // 前提开关
+  const ck = Ez.out(prog(t, 56.9, 57.4)), onNow = f.cur === 'X' ? 1 - f.k : f.prev === 'X' ? f.k : 1;
+  ctx.save(); ctx.globalAlpha = v * ck;
+  const tx = 96, ty = 630;
+  fill(mix('#2b3550', C.share, onNow), () => ctx.roundRect(tx, ty, 92, 50, 25));
+  fill('#ffffff', () => ctx.arc(tx + lerp(25, 67, onNow), ty + 25, 19, 0, 7));
+  line('前提：人类还管得住 AI', tx + 112, ty + 37, font(32, 900), { color: onNow > .5 ? C.ink : C.risk, alpha: v * ck });
+  ctx.restore();
+  // 结果文字
+  for (const key of [f.prev, f.cur]) {
+    const txt = FUT_TXT[key];
+    if (!txt) continue;
+    const a = key === f.cur ? f.k : 1 - f.k;
+    if (a <= 0 || key === 'O') continue;
+    const dy = key === f.cur ? (1 - f.k) * 24 : -f.k * 24;
+    line(txt[0], W / 2, 1400 + dy, font(key === 'N' ? 52 : 60, 900), { color: txt[1], align: 'center', alpha: v * a });
+    txt[2].forEach((s, i) => line(s, W / 2, 1462 + i * 50 + dy, font(34, 400), { color: C.dim, align: 'center', alpha: v * a }));
+  }
+}
+
+/* ---------- 6 各方能做什么 ---------- */
+const ROLES = [
+  ['政府', '收入一掉，保障就接上', C.gov, 'M3 9l9-6 9 6M5 9v9M9.5 9v9M14.5 9v9M19 9v9M3 20h18'],
+  ['公司', '提前说清楚，一起商量', C.human, 'M4 10h16M5 10l1-5h12l1 5M6 10v9h12v-9M10 19v-5h4v5'],
+  ['AI 公司', '越关键的操作，越要能叫停', C.ai, 'M9 7h6a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zM10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4'],
+  ['国家之间', '出了事故，互相通报', C.share, 'M12 3a9 9 0 1 0 0.01 0zM3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18'],
+  ['每个人', '先学会用 AI 干活，别一个人硬扛', C.humanLt, 'M12 4a4 4 0 1 0 0.01 0zM4 21c1-5 4-7 8-7s7 2 8 7']
+];
+function s7(t) {
+  const v = vis(t, 69.6, 75.1, .5, .5);
+  if (!v) return;
+  reveal('这两个开关，由谁来扳？', 96, 256, font(60, 900), t, 69.7, { alpha: v });
+  ROLES.forEach(([name, act, col, d], i) => {
+    const t0 = 70.1 + i * .28, k = Ez.out(prog(t, t0, t0 + .55));
+    if (k <= 0) return;
+    const y = 350 + i * 176, x = 96 + (1 - k) * 80;
+    ctx.save(); ctx.globalAlpha = v * k;
+    fill('rgba(241,244,250,0.06)', () => ctx.roundRect(x, y, 848, 150, 30));
+    ctx.strokeStyle = 'rgba(241,244,250,0.12)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(x, y, 848, 150, 30); ctx.stroke();
+    ctx.shadowColor = rgba(col, .6); ctx.shadowBlur = 24;
+    fill(col, () => ctx.arc(x + 82, y + 75, 50, 0, 7));
+    ctx.shadowBlur = 0;
+    ctx.save(); ctx.translate(x + 82 - 36, y + 75 - 36); ctx.scale(3, 3);
+    ctx.strokeStyle = '#0d1630'; ctx.lineWidth = 1.9; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke(new Path2D(d));
+    ctx.restore();
+    line(name, x + 162, y + 66, font(44, 900), { alpha: v * k });
+    line(act, x + 162, y + 116, font(32, 400), { color: C.dim, alpha: v * k });
+    ctx.restore();
+  });
+  caption(t, 72.2, 75.1, ['没有哪一方能单独扳动。'], { y: 1330 + 50 });
+}
+
+/* ---------- 7 更远的未来 ---------- */
+const PARTS = (() => { const r = rng(42); return Array.from({ length: 44 }, (_, i) => ({ k: i % 3, x: r(), y: r(), vx: (r() - .5) * .07, vy: (r() - .5) * .07 })); })();
+const tri = v => { const f = ((v % 2) + 2) % 2; return f < 1 ? f : 2 - f; };
+function s8(t) {
+  const v = vis(t, 75.1, 80.8, .5, .6);
+  if (!v) return;
+  reveal('如果有一天，', 96, 256, font(62, 900), t, 75.2, { alpha: v });
+  reveal([['AI 也有了', C.ink], ['自己的感受', C.aiLt], ['？', C.ink]], 96, 336, font(62, 900), t, 75.5, { alpha: v });
+  const pk = v * Ez.out(prog(t, 75.6, 76.6));
+  const X0 = 110, X1 = 970, Y0 = 440, Y1 = 1200;
+  const pts = PARTS.map(p => ({ k: p.k, x: X0 + tri(p.x + p.vx * t) * (X1 - X0), y: Y0 + tri(p.y + p.vy * t) * (Y1 - Y0) }));
+  ctx.save();
+  for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+    const d = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
+    if (d < 200) { ctx.globalAlpha = pk * (1 - d / 200) * .55; ctx.strokeStyle = pts[i].k === 2 || pts[j].k === 2 ? C.aiLt : C.humanLt; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y); ctx.stroke(); }
+  }
+  pts.forEach(p => {
+    ctx.globalAlpha = pk;
+    if (p.k === 0) glowDot(p.x, p.y, 11, C.humanLt, 18);
+    else if (p.k === 1) { ctx.strokeStyle = C.humanLt; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(p.x, p.y, 11, 0, 7); ctx.stroke(); }
+    else { ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(Math.PI / 4); ctx.shadowColor = C.aiLt; ctx.shadowBlur = 18; fill(C.aiLt, () => ctx.rect(-9, -9, 18, 18)); ctx.restore(); }
+  });
+  ctx.restore();
+  const lk = v * Ez.out(prog(t, 76.2, 76.8));
+  ctx.save(); ctx.globalAlpha = lk;
+  glowDot(150, 1262, 10, C.humanLt, 10); line('自然人', 172, 1272, font(28, 700), { color: C.dim, alpha: lk });
+  ctx.strokeStyle = C.humanLt; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(350, 1262, 10, 0, 7); ctx.stroke(); line('增强自己的人', 372, 1272, font(28, 700), { color: C.dim, alpha: lk });
+  ctx.save(); ctx.translate(628, 1262); ctx.rotate(Math.PI / 4); fill(C.aiLt, () => ctx.rect(-8, -8, 16, 16)); ctx.restore(); line('可能有感受的 AI', 650, 1272, font(28, 700), { color: C.dim, alpha: lk });
+  ctx.restore();
+  caption(t, 76.9, 79.0, ['更强，不等于有权替别人做决定。'], { y: 1420 });
+  caption(t, 79.1, 80.8, ['对人如此。', '如果 AI 真的有了感受，对它也一样。'], { y: 1440 });
+}
+
+/* ---------- 结尾 ---------- */
+function rings(cx, cy, r, alpha) {
+  ctx.save(); ctx.globalAlpha = alpha; ctx.lineWidth = r * .16;
+  ctx.strokeStyle = C.human; ctx.beginPath(); ctx.arc(cx - r * .5, cy, r, 0, 7); ctx.stroke();
+  ctx.strokeStyle = C.ai; ctx.beginPath(); ctx.arc(cx + r * .5, cy, r, 0, 7); ctx.stroke();
+  ctx.restore();
+}
+function s9(t) {
+  const mv = vis(t, 80.9, 84.0, .5, .5);
+  if (mv) {
+    reveal('智能继续生长。', W / 2, 880, font(92, 900), t, 81.0, { alpha: mv, align: 'center', stagger: .05 });
+    reveal('未来，保持开放。', W / 2, 1010, font(92, 900), t, 81.8, { color: C.humanLt, alpha: mv, align: 'center', stagger: .05 });
+  }
+  const ev = vis(t, 84.2, DUR + 5, .6, .1);
+  if (!ev) return;
+  reveal('你是楼里的哪一户？', W / 2, 360, font(84, 900), t, 84.3, { alpha: ev, align: 'center', stagger: .04 });
+  const k = Ez.out(prog(t, 85.3, 85.9));
+  line('打开 10 分钟的互动推演，', W / 2, 1010, font(44, 700), { alpha: ev * k, align: 'center' });
+  line('在楼里找到你自己。', W / 2, 1076, font(44, 700), { color: C.humanLt, alpha: ev * k, align: 'center' });
+  const uk = Ez.back(prog(t, 85.9, 86.5));
+  if (uk > 0) {
+    const url = 'lisiyuan-cosmoli.github.io/agi-era', f = font(34, 700, true), w = textW(url, f) + 80;
+    ctx.save(); ctx.globalAlpha = ev * clamp(uk); ctx.translate(W / 2, 1200); ctx.scale(clamp(uk, 0, 1.2), clamp(uk, 0, 1.2));
+    ctx.shadowColor = rgba(C.ai, .7); ctx.shadowBlur = 30;
+    pill(-w / 2, -44, w, 88, C.ai);
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#fff'; ctx.font = f; ctx.textAlign = 'center'; ctx.fillText(url, 0, 12);
+    ctx.restore();
+  }
+  const bk = Ez.out(prog(t, 86.4, 87.0));
+  rings(508, 1330, 20, ev * bk);
+  line('共同未来', 566, 1342, font(34, 900), { alpha: ev * bk });
+}
+
+/* ---------- 一帧 ---------- */
+function seek(t) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.globalAlpha = 1; ctx.filter = 'none'; ctx.shadowBlur = 0; ctx.setLineDash([]); ctx.letterSpacing = '0px';
+  sky(t);
+  const b = bAt(t);
+  const f = fxAt(t);
+  if (t > 84) f.garden = Ez.out(prog(t, 84.6, 85.4));
+  building({ ...b, t, lv: levelAt(t), fx: f, hl: hlAt(t) });
+  rail(t);
+  s0(t); s1(t); s2(t); s3(t); s4(t); s5(t); s6(t); s7(t); s8(t); s9(t);
+  chapterTag(t);
+  const wm = vis(t, 5.6, 83.9, .8, .6) * .5;
+  if (wm) { rings(W / 2 - 250, 1668, 9, wm); line('共同未来 · lisiyuan-cosmoli.github.io/agi-era', W / 2 - 226, 1677, font(24, 700), { color: C.dim, alpha: wm }); }
+  // 开头结尾的淡入淡出
+  const fade = Math.max(1 - prog(t, 0, .25), prog(t, DUR - .9, DUR));
+  if (fade > 0 && t > 1) { ctx.globalAlpha = fade; ctx.fillStyle = '#05080f'; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; }
+}
+function hlAt(t) {
+  // 讲到“小周和阿敏”时，把他们两家圈出来
+  const k = vis(t, 36.0, 36.9, .2, .5);
+  if (!k) return null;
+  const h = new Array(12).fill(0); h[2] = k; h[6] = k;
+  return h;
+}
+
+/* ---------- 声音：离线合成 ---------- */
+const SR = 48000, CH = 2 * 1024 * 1024;
+async function renderAudio() {
+  const ac = new OfflineAudioContext(2, Math.ceil((DUR + .5) * SR), SR);
+  const R = rng(99);
+  const master = ac.createGain(); master.gain.value = .9;
+  const comp = ac.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 3; comp.attack.value = .01; comp.release.value = .3;
+  master.connect(comp); comp.connect(ac.destination);
+  const verb = ac.createConvolver();
+  const ir = ac.createBuffer(2, SR * 3.2, SR);
+  for (let c = 0; c < 2; c++) { const d = ir.getChannelData(c); for (let i = 0; i < d.length; i++) d[i] = (R() * 2 - 1) * Math.pow(1 - i / d.length, 3.2); }
+  verb.buffer = ir; verb.connect(master);
+  const bus = (dry, wet) => { const g = ac.createGain(); g.gain.value = dry; g.connect(master); const s = ac.createGain(); s.gain.value = wet; g.connect(s); s.connect(verb); return g; };
+  const padBus = bus(1.1, .8), sfxBus = bus(.8, .16), bellBus = bus(1.0, .7);
+  const noise = ac.createBuffer(1, SR * 2, SR); { const d = noise.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = R() * 2 - 1; }
+  const nf = m => 440 * Math.pow(2, (m - 69) / 12);
+  const pan = (node, p, dest) => { const pn = ac.createStereoPanner(); pn.pan.value = p; node.connect(pn); pn.connect(dest); };
+
+  function pad(m, t0, t1, g = .02, p = 0, cut = 1000) {
+    const out = ac.createGain();
+    out.gain.setValueAtTime(0, t0); out.gain.linearRampToValueAtTime(g, t0 + 1.2);
+    out.gain.setValueAtTime(g, Math.max(t0 + 1.2, t1)); out.gain.linearRampToValueAtTime(0, Math.max(t0 + 1.2, t1) + 2.0);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = cut; lp.Q.value = .5;
+    lp.connect(out); pan(out, p, padBus);
+    [['sawtooth', 1.004, .45], ['sawtooth', .996, .45], ['triangle', .5, .7], ['sine', 1, .5]].forEach(([type, mul, amp]) => {
+      const o = ac.createOscillator(); o.type = type; o.frequency.value = nf(m) * mul;
+      const og = ac.createGain(); og.gain.value = amp; o.connect(og); og.connect(lp);
+      o.start(t0); o.stop(Math.max(t0 + 1.2, t1) + 2.2);
+    });
+  }
+  const chord = (ms, t0, t1, g = .016, cut = 1000) => ms.forEach((m, i) => pad(m, t0, t1, g, (i / Math.max(1, ms.length - 1) - .5) * .7, cut));
+  function bell(m, t, g = .05, dec = 1.8, p = 0, ratio = 3.5, idx = 1.2) {
+    const f = nf(m);
+    const car = ac.createOscillator(); car.frequency.value = f;
+    const mod = ac.createOscillator(); mod.frequency.value = f * ratio;
+    const mg = ac.createGain(); mg.gain.setValueAtTime(f * idx, t); mg.gain.exponentialRampToValueAtTime(f * .01, t + dec * .7);
+    mod.connect(mg); mg.connect(car.frequency);
+    const env = ac.createGain(); env.gain.setValueAtTime(.0001, t); env.gain.exponentialRampToValueAtTime(g, t + .008); env.gain.exponentialRampToValueAtTime(.0001, t + dec);
+    car.connect(env); pan(env, p, bellBus);
+    car.start(t); mod.start(t); car.stop(t + dec + .1); mod.stop(t + dec + .1);
+  }
+  const pluck = (m, t, g = .06, p = 0) => bell(m, t, g, 1.4, p, 2, .5);
+  function tick(f, t, g = .012, dec = .05, p = 0) {
+    const o = ac.createOscillator(); o.frequency.value = f;
+    const env = ac.createGain(); env.gain.setValueAtTime(.0001, t); env.gain.exponentialRampToValueAtTime(g, t + .003); env.gain.exponentialRampToValueAtTime(.0001, t + dec);
+    o.connect(env); pan(env, p, sfxBus); o.start(t); o.stop(t + dec + .02);
+  }
+  function hiss(t, dur, f, g, q = 1.2, p = 0) {
+    const s = ac.createBufferSource(); s.buffer = noise;
+    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = f; bp.Q.value = q;
+    const env = ac.createGain(); env.gain.setValueAtTime(.0001, t); env.gain.exponentialRampToValueAtTime(g, t + .004); env.gain.exponentialRampToValueAtTime(.0001, t + dur);
+    s.connect(bp); bp.connect(env); pan(env, p, sfxBus); s.start(t, R() * 1.5); s.stop(t + dur + .02);
+  }
+  function thump(t, g = .25, f0 = 150, f1 = 70, dec = .18) {
+    const o = ac.createOscillator(); o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t + dec);
+    const env = ac.createGain(); env.gain.setValueAtTime(.0001, t); env.gain.exponentialRampToValueAtTime(g, t + .005); env.gain.exponentialRampToValueAtTime(.0001, t + dec);
+    o.connect(env); env.connect(sfxBus); o.start(t); o.stop(t + dec + .02);
+  }
+  const clack = (t, p = 0) => { hiss(t, .06, 2300, .12, 1.6, p); thump(t, .11, 170, 90, .12); };
+  const boom = (t, g = .32) => thump(t, g * .5, 95, 38, 1.6);
+  function riser(t0, t1, f0, f1, g = .05) {
+    const s = ac.createBufferSource(); s.buffer = noise; s.loop = true;
+    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 2; bp.frequency.setValueAtTime(f0, t0); bp.frequency.exponentialRampToValueAtTime(f1, t1);
+    const env = ac.createGain(); env.gain.setValueAtTime(.0001, t0); env.gain.exponentialRampToValueAtTime(g, t1 - .05); env.gain.exponentialRampToValueAtTime(.0001, t1 + .3);
+    s.connect(bp); bp.connect(env); env.connect(sfxBus); s.start(t0); s.stop(t1 + .35);
+  }
+  function beep(f, t, d, g = .03) {
+    const o = ac.createOscillator(); o.type = 'triangle'; o.frequency.value = f;
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1600;
+    const env = ac.createGain(); env.gain.setValueAtTime(.0001, t); env.gain.exponentialRampToValueAtTime(g, t + .01); env.gain.setValueAtTime(g, t + d - .04); env.gain.exponentialRampToValueAtTime(.0001, t + d);
+    o.connect(lp); lp.connect(env); env.connect(sfxBus); o.start(t); o.stop(t + d + .02);
+  }
+  const click = t => { hiss(t, .025, 4200, .08, .8); tick(1500, t, .03, .03); };
+
+  // 和弦（D 大调）
+  const D = [
+    [0, 5.3, [50, 57, 61, 64, 66]], [5.3, 9.0, [47, 54, 57, 61, 62]], [9.0, 12.6, [43, 50, 54, 59]], [12.6, 16.0, [42, 50, 52, 57]],
+    [16.0, 19.5, [45, 52, 57, 62, 64]], [19.5, 25.1, [43, 50, 57, 59, 66]], [25.1, 28.6, [40, 47, 50, 54, 55]], [28.6, 32.1, [47, 54, 57, 62]],
+    [32.1, 36.1, [43, 50, 54, 59]], [36.1, 40.2, [47, 54, 59, 62]], [40.2, 43.4, [43, 50, 55, 59]], [43.4, 47.6, [45, 50, 54, 57, 62]],
+    [47.6, 51.0, [43, 50, 54, 59]], [51.0, 53.5, [40, 47, 50, 55]], [53.5, 56.1, [50, 57, 59, 64]],
+    [56.1, 59.4, [50, 57, 61, 64, 66]], [59.4, 61.6, [47, 54, 57, 62]], [61.6, 63.8, [43, 50, 54, 61]], [63.8, 66.0, [40, 47, 48, 55]],
+    [66.0, 67.8, [38, 45]], [67.8, 69.6, [43, 50, 54, 59, 57]], [69.6, 71.5, [50, 57, 62, 66]], [71.5, 73.3, [49, 57, 61, 64]], [73.3, 75.1, [47, 54, 59, 62]],
+    [75.1, 80.8, [55, 59, 62, 66, 69]], [80.8, 84.1, [45, 52, 57, 62, 64]], [84.1, DUR - 1.2, [50, 57, 61, 64, 66, 69]]
+  ];
+  D.forEach(([a, b, ms]) => chord(ms, a, b, a >= 66 && a < 67.8 ? .02 : .014, a >= 75 && a < 81 ? 1500 : 1000));
+  // 开场
+  bell(81, .35, .035, 2.4, -.3); bell(74, 1.1, .03, 2.4, .2); bell(78, 2.2, .03, 2.4, 0);
+  // 时间轨道：每一站一个音，越来越高
+  [74, 76, 78, 81, 83, 85, 86].forEach((m, i) => { pluck(m, EVT_T[i], .06, (i - 3) * .15); if (i === 6) { bell(74, EVT_T[i] + .02, .04, 3); boom(EVT_T[i], .28); } });
+  riser(19.4, 20.4, 300, 2600, .04); bell(76, 20.35, .045, 2.6);
+  [0, 1, 2, 3, 4].forEach(i => tick(1760 + i * 140, 21.9 + i * .2, .02, .08));
+  [0, 1, 2, 3, 4].forEach(i => tick(1320, 23.0 + i * .22, .014, .05));
+  // 小圆点变蓝：算出每个圆点什么时候变蓝，就在那一刻轻轻响一下
+  const lvTime = lv => (lv <= 70 ? lerp(28.4, 30.6, clamp((lv - 40) / 30)) : lerp(31.6, 33.6, clamp((lv - 70) / 30)));
+  PEOPLE.forEach((p, i) => p[3].forEach(([, th]) => { if (th > 40 && th <= 100) { const tt = 28.4 + (lvTime(th) - 28.4); tick(1900 + p[2] * 110, tt, .012, .07, i % 2 ? .35 : -.35); } }));
+  // 多米诺
+  for (let i = 0; i < 8; i++) clack(RUN1 + i * GAP + .4, (i % 4 - 1.5) * .25);
+  riser(REW, REW + .8, 2400, 400, .03);
+  thump(WALL + .1, .12, 110, 60, .25);
+  for (let i = 0; i < 2; i++) clack(RUN2 + i * GAP + .4, (i - 1.5) * .25);
+  thump(RUN2 + 2 * GAP + .36, .16, 130, 55, .3); hiss(RUN2 + 2 * GAP + .36, .08, 900, .08, 1);
+  [74, 78, 81, 86].forEach((m, i) => bell(m, RUN2 + 2 * GAP + .55 + i * .12, .035, 2.2, (i - 1.5) * .2));
+  // 钱：硬币
+  for (let tt = 49.0; tt < 55.8; tt += .38) tick(tt < 53.6 ? 2637 : 3136, tt, .008, .09, R() - .5);
+  riser(53.3, 54.0, 400, 1800, .03); bell(81, 53.7, .04, 2.2);
+  // 四种未来
+  FUT_T.forEach(([ft, key]) => {
+    if (key !== 'N') { click(ft); click(ft + .12); }
+    if (key === 'A') { bell(74, ft + .2, .045, 2.4); bell(78, ft + .32, .04, 2.4); bell(81, ft + .44, .04, 2.4); }
+    if (key === 'B') { bell(71, ft + .2, .04, 1.8); bell(74, ft + .5, .035, 1.8); }
+    if (key === 'C') bell(73, ft + .25, .04, 2.2);
+    if (key === 'D') boom(ft + .1, .26);
+    if (key === 'X') { boom(ft, .34); for (let k = 0; k < 3; k++) { beep(660, ft + .2 + k * .5, .2); beep(520, ft + .45 + k * .5, .2); } }
+    if (key === 'N') { bell(74, ft + .1, .045, 2.6); bell(81, ft + .3, .04, 2.6); }
+  });
+  // 各方
+  [74, 76, 78, 81, 83].forEach((m, i) => pluck(m, 70.1 + i * .28, .05, (i - 2) * .2));
+  // 更远的未来：星光
+  for (let tt = 75.6; tt < 80.6; tt += .42) bell([83, 86, 88, 90][Math.floor(R() * 4)], tt, .016, 1.6, R() * 1.2 - .6);
+  // 结尾
+  bell(74, 81.0, .05, 3); bell(78, 81.8, .045, 3); bell(81, 84.3, .05, 3.2); bell(86, 85.9, .035, 3); boom(84.2, .2);
+  const buf = await ac.startRendering();
+  // 编码成 16 位 WAV
+  const n = buf.length, L = buf.getChannelData(0), Rr = buf.getChannelData(1);
+  const ab = new ArrayBuffer(44 + n * 4), dv = new DataView(ab);
+  const ws = (o, s) => [...s].forEach((c, i) => dv.setUint8(o + i, c.charCodeAt(0)));
+  ws(0, 'RIFF'); dv.setUint32(4, 36 + n * 4, true); ws(8, 'WAVE'); ws(12, 'fmt '); dv.setUint32(16, 16, true); dv.setUint16(20, 1, true); dv.setUint16(22, 2, true);
+  dv.setUint32(24, SR, true); dv.setUint32(28, SR * 4, true); dv.setUint16(32, 4, true); dv.setUint16(34, 16, true); ws(36, 'data'); dv.setUint32(40, n * 4, true);
+  let o = 44;
+  for (let i = 0; i < n; i++) for (const ch of [L, Rr]) { const v = Math.max(-1, Math.min(1, ch[i])); dv.setInt16(o, v < 0 ? v * 32768 : v * 32767, true); o += 2; }
+  window.__wav = new Uint8Array(ab);
+  return Math.ceil(ab.byteLength / CH);
+}
+window.audioChunk = i => {
+  const u = window.__wav.subarray(i * CH, (i + 1) * CH);
+  let s = '';
+  for (let j = 0; j < u.length; j += 0x8000) s += String.fromCharCode.apply(null, u.subarray(j, j + 0x8000));
+  return btoa(s);
+};
+
+/* 先把用到的字都加载好，再开始画 */
+window.ready = (async () => {
+  const txt = document.getElementById('src').textContent;
+  await Promise.all(['400', '700', '900'].map(w => document.fonts.load(`${w} 40px "Noto Sans SC"`, txt)).concat(document.fonts.load('700 40px "JetBrains Mono"', '0123456789AGI?abcdefghijklmnopqrstuvwxyz.-/ ')));
+  await document.fonts.ready;
+  seek(0);
+  return true;
+})();
+window.seek = seek;
+window.renderAudio = renderAudio;
+window.DUR = DUR;
+</script>
+</body>
+</html>

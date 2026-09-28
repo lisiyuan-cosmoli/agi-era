@@ -37,7 +37,10 @@
       <p class="kicker">10 分钟互动推演</p>
       <h1 id="heroTitle">AGI 时代下，<br><em>人类如何生活？</em></h1>
       <p class="hero-lede">假如整个社会是一栋楼：12 户人家做着各种各样的工作，楼下还有一家小馆。AI 越来越能干了，这栋楼会发生什么？</p>
-      <a class="go" href="#c1">走进这栋楼 <span aria-hidden="true">↓</span></a>
+      <div class="hero-go">
+        <a class="go" href="#c1">走进这栋楼 <span aria-hidden="true">↓</span></a>
+        <button type="button" class="go ghost" data-short aria-haspopup="dialog"><span class="tri" aria-hidden="true"></span>看 90 秒短片</button>
+      </div>
     </div>
     <figure class="hero-art" style="margin:0">
       <div class="hero-year" aria-hidden="true">年份<b id="heroYear">2026</b></div>
@@ -307,14 +310,22 @@
   <div class="row">
     <a class="btn" href="report/index.html">读完整的研究报告 →</a>
     <a class="btn line" href="report/en.html">Read the report in English</a>
+    <button type="button" class="btn line" data-short aria-haspopup="dialog"><span class="tri" aria-hidden="true"></span>看 90 秒短片</button>
   </div>
 </section>
 </main>
 <footer class="about">
   <p>关于这一页：楼里的人家都是虚构的。图都是示意，不是预测，也不是统计数据。AGI 什么时候到来，没有人知道。</p>
   <p>这一页不联网，也不追踪。你选的年份和“哪一户是你”，只保存在你自己的浏览器里。</p>
-  <p>共同未来 · 文字和图像采用 CC BY 4.0 许可，代码采用 MIT 许可。</p>
+  <p>共同未来 · 文字、图像和短片采用 CC BY 4.0 许可，代码采用 MIT 许可。</p>
 </footer>
+<dialog class="short" id="short" aria-label="90 秒短片">
+  <div class="short-box">
+    <video id="shortVideo" controls playsinline preload="none" data-src="assets/short.mp4" data-poster="assets/short-poster.jpg"></video>
+    <button type="button" class="short-x" aria-label="关闭短片">×</button>
+    <p class="short-bar"><a href="assets/short.mp4" download="AGI时代下人类如何生活-短片.mp4">下载视频</a><span>竖屏 · 90 秒 · 可以直接转发</span></p>
+  </div>
+</dialog>
 <script>/*@@JS@@*/</script>
 <!--@@BODY-END@@-->
 </body>
