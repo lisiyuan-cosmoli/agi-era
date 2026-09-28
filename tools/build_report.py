@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build the research report pages from the Markdown sources. Standard library only.
 
-report/report.zh.md → report/index.html
-report/report.en.md → report/en.html
+report/report.zh.md → report/index.html      (中文网站)
+report/report.en.md → en/report/index.html   (English site)
 
 Each page is a single self-contained file that works offline. The Markdown
 subset is small on purpose: #, ## and ### headings, paragraphs, "- " and
@@ -24,36 +24,54 @@ ICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0
 
 UI = {
     'zh': {
-        'md': 'report.zh.md', 'file': 'index.html', 'other': 'en.html', 'html_lang': 'zh-CN',
+        'md': 'report.zh.md', 'out': 'report/index.html', 'url': 'report/', 'share': 'assets/share.png', 'html_lang': 'zh-CN',
+        'other_url': '../en/report/index.html', 'other_label': 'English version →', 'other_lang': 'en',
         'split': ('，', True),
         'site_name': '共同未来', 'title': '研究报告 · {t}',
         'desc': '《AGI 时代下，人类如何生活？》的研究报告：每一章的结论、证据、还不知道的事，以及会让我们改判断的信号。',
-        'skip': '跳到正文', 'back': '← 互动页面', 'lang_nav': '语言', 'toc': '目录',
+        'skip': '跳到正文', 'back': '← 互动页面', 'toc': '目录',
         'minutes': '约 {n} 分钟读完', 'refs_count': '{n} 条参考资料',
         'refs': '参考资料', 'cite': '参考资料 {n}', 'up': '回到正文', 'fut_head': '未来',
         'parts': {'证据': 'ev', '还不知道': 'unk', '什么信号会让我们改判断': 'sig'},
         'tip_label': '出处', 'tip_close': '关闭', 'tip_more': '在参考资料中查看 ↓',
         'end_title': '去楼里看看',
         'end_text': '互动页面用一栋住着 12 户人家的楼，把这份报告里的问题演一遍，大约 10 分钟。',
-        'end_btn': '打开互动页面 →', 'end_alt': 'Read in English',
+        'end_btn': '打开互动页面 →',
         'footer': '共同未来 · 文字和图像采用 CC BY 4.0 许可，代码采用 MIT 许可。',
     },
     'en': {
-        'md': 'report.en.md', 'file': 'en.html', 'other': 'index.html', 'html_lang': 'en',
+        'md': 'report.en.md', 'out': 'en/report/index.html', 'url': 'en/report/', 'share': 'en/assets/share.png', 'html_lang': 'en',
+        'other_url': '../../report/index.html', 'other_label': '中文版 →', 'other_lang': 'zh-CN',
         'split': (' in the ', False),
         'site_name': 'Futures We Share', 'title': 'Research report · {t}',
         'desc': 'The research report behind “How Will Humans Live in the Age of AGI?”: for each chapter, the bottom line, the evidence, what we don’t know yet, and the signals that would change our minds.',
-        'skip': 'Skip to content', 'back': '← Interactive page', 'lang_nav': 'Language', 'toc': 'Contents',
+        'skip': 'Skip to content', 'back': '← Interactive page', 'toc': 'Contents',
         'minutes': 'About {n} min read', 'refs_count': '{n} references',
         'refs': 'References', 'cite': 'Reference {n}', 'up': 'Back to text', 'fut_head': 'Future',
         'parts': {'Evidence': 'ev', 'What we don’t know yet': 'unk', 'Signals that would change our minds': 'sig'},
         'tip_label': 'Source', 'tip_close': 'Close', 'tip_more': 'See in references ↓',
         'end_title': 'See it in the building',
-        'end_text': 'The interactive page acts out the questions in this report in a building with 12 households. It takes about 10 minutes and is in Chinese.',
-        'end_btn': 'Open the interactive page →', 'end_alt': '阅读中文版',
+        'end_text': 'The interactive page acts out the questions in this report in a building with 12 households. It takes about 10 minutes.',
+        'end_btn': 'Open the interactive page →',
         'footer': 'Futures We Share · Text and images under CC BY 4.0; code under MIT.',
     },
 }
+
+REDIRECT = '''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Research report · How Will Humans Live in the Age of AGI?</title>
+<meta http-equiv="refresh" content="0; url=../en/report/index.html">
+<link rel="canonical" href="https://lisiyuan-cosmoli.github.io/agi-era/en/report/">
+<style>body{margin:0;padding:40px 20px;font:17px/1.6 system-ui,sans-serif;background:#f4f6fa;color:#141a24}a{color:#2a45d8}</style>
+</head>
+<body>
+<p>The English report has moved to <a href="../en/report/index.html">en/report/</a>.</p>
+</body>
+</html>
+'''
 
 BLOCK_START = re.compile(r'(#{1,3} |> |\||- |\d+\. )')
 
@@ -258,17 +276,14 @@ def render(lang):
     toc_items = ''.join(f'<li><a href="#{sid}"><b>{no}</b><span>{escape(label)}</span></a></li>' for sid, no, label in toc)
     minutes = reading_minutes(md.split('\n## ' + ui['refs'])[0], lang)
     site = site_url()
-    page_url = site + 'report/' + ('' if ui['file'] == 'index.html' else ui['file'])
-    alt_zh = (site + 'report/') if site else 'index.html'
-    alt_en = (site + 'report/en.html') if site else 'en.html'
+    page_url = site + ui['url']
     head_title = escape(ui['title'].format(t=title))
     desc = escape(ui['desc'], quote=True)
-    og_url = f'\n<meta property="og:url" content="{page_url}">' if site else ''
+    og_url = (f'\n<meta property="og:url" content="{page_url}">'
+              f'\n<link rel="alternate" hreflang="zh-CN" href="{site}report/">'
+              f'\n<link rel="alternate" hreflang="en" href="{site}en/report/">') if site else ''
     css = (SRC / 'report.css').read_text(encoding='utf-8')
     js = (SRC / 'report.js').read_text(encoding='utf-8')
-    zh_cur = ' aria-current="page"' if lang == 'zh' else ''
-    en_cur = ' aria-current="page"' if lang == 'en' else ''
-    other_lang = 'en' if lang == 'zh' else 'zh-CN'
 
     return f'''<!doctype html>
 <html lang="{ui['html_lang']}">
@@ -278,19 +293,17 @@ def render(lang):
 <title>{head_title}</title>
 <meta name="description" content="{desc}">
 <meta name="theme-color" content="#0f1729">
-<link rel="alternate" hreflang="zh-CN" href="{alt_zh}">
-<link rel="alternate" hreflang="en" href="{alt_en}">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="{escape(ui['site_name'], quote=True)}">
 <meta property="og:title" content="{head_title}">
 <meta property="og:description" content="{desc}">
-<meta property="og:image" content="{site}assets/share.png">
+<meta property="og:image" content="{site}{ui['share']}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">{og_url}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{head_title}">
 <meta name="twitter:description" content="{desc}">
-<meta name="twitter:image" content="{site}assets/share.png">
+<meta name="twitter:image" content="{site}{ui['share']}">
 <link rel="icon" type="image/svg+xml" href="{ICON}">
 <style>{css}</style>
 </head>
@@ -299,7 +312,6 @@ def render(lang):
 <header class="topbar">
   <a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true"></span><span class="brand-text">{escape(ui['site_name'])}</span></a>
   <a class="back" href="../index.html">{escape(ui['back'])}</a>
-  <nav class="lang" aria-label="{escape(ui['lang_nav'], quote=True)}"><a href="index.html" lang="zh-CN" hreflang="zh-CN"{zh_cur}>中文</a><a href="en.html" lang="en" hreflang="en"{en_cur}>EN</a></nav>
   <div class="progress" aria-hidden="true"></div>
 </header>
 <header class="hero">
@@ -319,11 +331,11 @@ def render(lang):
     <aside class="end">
       <b>{escape(ui['end_title'])}</b>
       <p>{escape(ui['end_text'])}</p>
-      <div class="row"><a class="btn" href="../index.html">{escape(ui['end_btn'])}</a><a class="btn line" href="{ui['other']}" lang="{other_lang}" hreflang="{other_lang}">{escape(ui['end_alt'])}</a></div>
+      <div class="row"><a class="btn" href="../index.html">{escape(ui['end_btn'])}</a></div>
     </aside>
   </main>
 </div>
-<footer class="about"><p>{escape(ui['footer'])}</p></footer>
+<footer class="about"><p>{escape(ui['footer'])}</p><p class="lang-link"><a href="{ui['other_url']}" lang="{ui['other_lang']}" hreflang="{ui['other_lang']}">{escape(ui['other_label'])}</a></p></footer>
 <div class="tip" id="tip" role="dialog" aria-labelledby="tipNo" tabindex="-1" hidden>
   <button type="button" class="tip-x" aria-label="{escape(ui['tip_close'], quote=True)}">×</button>
   <p class="tip-no" id="tipNo">{escape(ui['tip_label'])}</p>
@@ -340,8 +352,12 @@ if __name__ == '__main__':
     counts = {}
     for lang in UI:
         page = render(lang)
-        (OUT / UI[lang]['file']).write_text(page, encoding='utf-8')
+        target = ROOT / UI[lang]['out']
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(page, encoding='utf-8')
         counts[lang] = page.count('<li id="ref-')
     if counts['zh'] != counts['en']:
         fail(f'the two editions cite different numbers of references: {counts}')
+    # 旧的英文报告地址，跳到英文网站的新地址
+    (OUT / 'en.html').write_text(REDIRECT, encoding='utf-8')
     print(f'Built research report (中文 + English, {counts["zh"]} references).')

@@ -1,0 +1,49 @@
+<!doctype html>
+<!-- 英文网站分享预览图的源文件。重新生成：用浏览器按 1200×630 截图，保存为 en/assets/share.png -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>share card</title>
+<style>
+  html,body{margin:0;width:1200px;height:630px;overflow:hidden}
+  body{background:#0f1729;color:#f1f4fa;font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background-image:radial-gradient(1.5px 1.5px at 8% 14%,#fff8 50%,transparent 51%),radial-gradient(1px 1px at 30% 80%,#fff6 50%,transparent 51%),radial-gradient(1.5px 1.5px at 52% 10%,#fff7 50%,transparent 51%),radial-gradient(1px 1px at 64% 58%,#fff5 50%,transparent 51%),radial-gradient(1.5px 1.5px at 94% 20%,#fff8 50%,transparent 51%)}
+  .wrap{display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:center;height:100%;padding:0 72px 0 80px;box-sizing:border-box}
+  .kicker{font-size:21px;font-weight:700;letter-spacing:.03em;color:#f0a02e;display:flex;align-items:center;gap:12px;white-space:nowrap}
+  .kicker::before{content:"";width:12px;height:12px;border-radius:50%;background:#f0a02e;box-shadow:0 0 0 6px #f0a02e44}
+  h1{margin:24px 0 0;font-size:62px;line-height:1.12;font-weight:900;letter-spacing:-.015em}
+  h1 em{font-style:normal;color:#ffd27a}
+  p{margin:24px 0 0;font-size:25px;line-height:1.55;color:#cdd5e4;max-width:640px}
+  svg{display:block;width:360px;height:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div>
+    <div class="kicker">Futures We Share · A 10-minute interactive story</div>
+    <h1>How will humans live<br><em>in the age of AGI?</em></h1>
+    <p>Imagine society as one apartment building: 12 households and a little diner. As AI gets more capable, what happens to the building?</p>
+  </div>
+  <svg id="b" viewBox="0 0 360 430"></svg>
+</div>
+<script>
+  const s = document.getElementById('b'), NS = 'http://www.w3.org/2000/svg';
+  const add = (tag, a) => { const n = document.createElementNS(NS, tag); for (const k in a) n.setAttribute(k, a[k]); s.appendChild(n); return n; };
+  add('rect', { x: 16, y: 44, width: 328, height: 8, rx: 3, fill: '#3a4459' });
+  add('rect', { x: 24, y: 52, width: 312, height: 312, fill: '#232a3b' });
+  const blue = { '6L': 1, '4L': 1, '3L': 1, '2L': 1 };
+  for (let f = 6; f >= 1; f--) for (const side of ['L', 'R']) {
+    const x = side === 'L' ? 36 : 184, y = 52 + (6 - f) * 52 + 6, isAI = blue[f + side];
+    add('rect', { x, y, width: 140, height: 40, rx: 6, fill: isAI ? '#5d77e0' : '#ffd27a' });
+    const ink = isAI ? '#e3e8ff' : '#2b2418';
+    add('circle', { cx: x + 70, cy: y + 14, r: 6, fill: ink, opacity: .55 });
+    add('rect', { x: x + 62, y: y + 22, width: 16, height: 18, rx: 7, fill: ink, opacity: .55 });
+  }
+  add('rect', { x: 24, y: 364, width: 312, height: 52, fill: '#2b3346' });
+  add('rect', { x: 38, y: 380, width: 204, height: 32, rx: 4, fill: '#4a3a2a' });
+  for (let k = 0; k < 8; k++) add('path', { d: `M${34 + k * 27} 366 h27 v10 q-13.5 7 -27 0 z`, fill: k % 2 ? '#ffffffd9' : '#f0604d' });
+  add('rect', { x: 262, y: 376, width: 44, height: 40, rx: 3, fill: '#232a3b' });
+  add('rect', { x: 8, y: 416, width: 344, height: 8, rx: 2, fill: '#3a4459' });
+</script>
+</body>
+</html>

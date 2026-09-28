@@ -1,0 +1,304 @@
+{
+ "track": {
+  "open": "Start",
+  "stop": "Chapter {n}: {name}"
+ },
+ "people": [
+  [
+   "Ravi",
+   "programmer",
+   [
+    "writing code",
+    "writing tests",
+    "fixing bugs",
+    "designing the system",
+    "answering for outages"
+   ]
+  ],
+  [
+   "Rosa",
+   "caregiver",
+   [
+    "logging vital signs",
+    "medication reminders",
+    "handling emergencies",
+    "lifting and bathing",
+    "keeping elders company"
+   ]
+  ],
+  [
+   "Sam",
+   "support",
+   [
+    "answering FAQs",
+    "checking orders",
+    "handling complaints",
+    "calming upset customers",
+    "making the call on exceptions"
+   ]
+  ],
+  [
+   "Joe",
+   "trucker",
+   [
+    "planning routes",
+    "highway driving",
+    "city driving",
+    "loading and unloading",
+    "handling surprises on the road"
+   ]
+  ],
+  [
+   "Lin",
+   "video editor",
+   [
+    "captions and music",
+    "picking footage",
+    "rough cuts",
+    "color and effects",
+    "reading what clients want"
+   ]
+  ],
+  [
+   "Ana",
+   "teacher",
+   [
+    "setting and marking tests",
+    "planning lessons",
+    "answering questions",
+    "running a classroom",
+    "caring for each student"
+   ]
+  ],
+  [
+   "Priya",
+   "accountant",
+   [
+    "bookkeeping",
+    "filing taxes",
+    "financial reports",
+    "auditing",
+    "advising the boss"
+   ]
+  ],
+  [
+   "Kofi",
+   "courier",
+   [
+    "taking and assigning orders",
+    "planning routes",
+    "handling bad reviews",
+    "riding the deliveries",
+    "handing it over at the door"
+   ]
+  ],
+  [
+   "Mei",
+   "researcher",
+   [
+    "literature searches",
+    "data analysis",
+    "drafting papers",
+    "designing experiments",
+    "choosing what to study"
+   ]
+  ],
+  [
+   "Luis",
+   "packer",
+   [
+    "scanning items",
+    "stocktaking",
+    "sorting",
+    "carrying loads",
+    "handling damaged goods"
+   ]
+  ],
+  [
+   "Liu",
+   "doctor",
+   [
+    "writing records",
+    "reading scans",
+    "diagnosis support",
+    "choosing treatment",
+    "being there and signing off"
+   ]
+  ],
+  [
+   "Omar",
+   "handyman",
+   [
+    "quoting jobs",
+    "diagnosing faults",
+    "on-site repairs",
+    "climbing and crawling",
+    "talking with residents"
+   ]
+  ]
+ ],
+ "b": {
+  "platform": "The platform decides",
+  "top": "The few at the top",
+  "unit": "{name}, {job}, floor {floor}",
+  "me": "You",
+  "shop": "Diner · open",
+  "closed": "Closed",
+  "patch": "Patching up",
+  "alarm": "System failure"
+ },
+ "events": [
+  [
+   "AI learns to “see”",
+   "It can tell cats from dogs in photos."
+  ],
+  [
+   "It beats the world Go champion",
+   "Even an intuition-heavy game falls to AI."
+  ],
+  [
+   "It writes like a person",
+   "Give it an opening and it keeps going."
+  ],
+  [
+   "Chatbots arrive",
+   "Within months, over 100 million people use one."
+  ],
+  [
+   "Video from a single sentence",
+   "Light and camera work that look real."
+  ],
+  [
+   "Gold-medal level at the Math Olympiad",
+   "It also starts writing code and using computers."
+  ],
+  [
+   "AI cracks an 80-year-old math problem",
+   "On its own, it found a counterexample to a 1946 conjecture by Erdős."
+  ]
+ ],
+ "rail": {
+  "stop": "{year}: {title}",
+  "gap": "{n} yrs",
+  "gap1": "1 yr",
+  "here": "You are here"
+ },
+ "agi": {
+  "tick": "AGI",
+  "tickLate": "AGI (after 2030?)",
+  "tickYear": "AGI ({y}?)",
+  "never": "Maybe. But even without AGI, today’s AI is already enough to change many industries.",
+  "late": "OK, say it comes later. Even a few years later, there is just as much to prepare.",
+  "year": "OK, {y} it is. Scroll on to see what the building looks like by then."
+ },
+ "when": [
+  "2022",
+  "2024",
+  "Today (2026)",
+  "Stronger AI"
+ ],
+ "say": {
+  "lines": [
+   "Most of my work still needs me.",
+   "AI can already do two of my tasks. It saves me a lot of time.",
+   "AI can do most of my tasks now. My boss has started asking what else I can do.",
+   "AI can do nearly all of it. Will what’s left still pay my wages?"
+  ],
+  "keep": " Luckily, some things people still want a human to do.",
+  "quote": "{name}: “{s}”"
+ },
+ "res": {
+  "pick": "Tap any household to see their work.",
+  "keep": "may always stay human",
+  "on": "AI can do it",
+  "human": "still needs a person",
+  "meta": "{job} · floor {floor} · AI can do {n} of 5 tasks",
+  "isMe": "This one is most like me",
+  "isMeOn": "✓ This one is most like me",
+  "q1": "Which of your tasks is hardest to hand to AI? If it were all that was left, could it support your income?",
+  "q1Me": "You picked {name}, the {job}. Which of your tasks is hardest to hand to AI? If it were all that was left, could it support your income?"
+ },
+ "time": {
+  "count": "{total} tasks in the building; AI can do <b>{n}</b>",
+  "aria": "{when}: AI can do {n} tasks"
+ },
+ "bScene": [
+  "2022: almost all the work in the building is still done by people.",
+  "<b>Today</b>, the windows of the desk jobs turn blue first. AI can already do 4 of video editor Lin’s 5 tasks.",
+  "<b>Stronger AI</b>: Joe’s driving can be handed to AI too. Work done on site starts to change.",
+  "<b>At AGI</b>: what’s left is mostly care, trust and responsibility, like Rosa keeping an elderly resident company.",
+  "Back to today. Tap any household to see their work."
+ ],
+ "dom": {
+  "falling": "Falling…",
+  "again": "Push again",
+  "push": "Push the first one",
+  "all": "<b>All down.</b> The trouble of two households traveled all the way to the diner and the bank. Now even the elevator can’t be fixed.",
+  "blocked": "<b>Stopped!</b> The pressure halted before “{label}”. The {n} behind it are still standing.",
+  "intro": "Eight dominoes are set up. The first one is AI. Push!",
+  "round2": "Once more. This time, put a <b>barrier</b> in place first: income that continues after a job loss.",
+  "end": "Barriers have to be in place before the fall. Tap “Try it yourself” and push with a few barriers.",
+  "reset": "All standing again. Try a different set of barriers.",
+  "late": "<b>Too late.</b> The dominoes are already falling. Barriers must go in before the fall.",
+  "placed": "{n} barriers in place. Now push.",
+  "placed1": "1 barrier in place. Now push.",
+  "none": "All barriers removed."
+ },
+ "flow": {
+  "amount": [
+   "very little",
+   "some",
+   "a lot",
+   "most"
+  ],
+  "today": "Today: wages are most households’ main income. Companies pay wages, households spend them, and the money flows back to companies.",
+  "thin": "As AI takes on more work, the wage pipe narrows and more money flows to AI companies and platforms.",
+  "thinner": "The wage pipe is almost cut off. The money hasn’t vanished; it flows to AI companies and platforms. With little money, households can’t buy much even when things get cheaper, and companies lose customers too.",
+  "both": "Both new pipes are connected. Households are steady again and companies have customers again. Fixing the pipes means letting AI’s gains reach every household.",
+  "share": "A new pipe: AI’s gains flow through taxes and a public fund back to households as dividends. Where the money comes from and who manages it both need careful design.",
+  "public": "Public services make housing, health care and elder care cheaper, which eases the pressure. But the income gap is still there; this pipe alone isn’t enough."
+ },
+ "fut": {
+  "A": [
+   "Shared · Prepared early",
+   "Soft landing",
+   "A small garden appears on the roof. People work three or four days a week, and AI’s gains come back to every household as dividends and better public services. The diner downstairs is busy every day."
+  ],
+  "B": [
+   "Shared · Fixed after the fact",
+   "Recurring pain",
+   "The building is always being patched up. With each wave of new technology, a few households lose their income first and are only caught a year or two later. Nobody dares plan far ahead."
+  ],
+  "C": [
+   "Taken by a few · Prepared early",
+   "Cared for, but voiceless",
+   "Every household has a basic safety net and the lights stay on. But a big platform’s sign hangs on the roof: it decides what work there is, what it pays and which tools to use."
+  ],
+  "D": [
+   "Taken by a few · Fixed after the fact",
+   "Torn apart",
+   "The top floors get brighter while the rest get darker. The diner closes, arguments fill the hallways, and it gets harder and harder to sit down together."
+  ],
+  "off": [
+   "Precondition fails",
+   "Out of control",
+   "If the most critical AI actions can no longer be stopped, neither switch may move at all. That’s why keeping AI in check comes before every other choice."
+  ],
+  "oneMore": [
+   "One more switch",
+   "Flip the other switch",
+   "You’ve chosen how the wealth is shared. When does society start preparing?",
+   "You’ve chosen when to prepare. How is the wealth from AI shared?"
+  ],
+  "none": [
+   "Not chosen yet",
+   "Flip the two switches",
+   "What this building becomes depends on your choices."
+  ],
+  "end": [
+   "Your turn",
+   "Which building do you want?",
+   "Tap “Try it yourself” and flip the two switches."
+  ]
+ }
+}

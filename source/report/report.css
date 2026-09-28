@@ -50,9 +50,6 @@ p{margin:0}
 .brand-mark::after{left:8px;border-color:var(--ai)}
 .back{font-size:14px;font-weight:700;color:var(--ink-2);text-decoration:none;white-space:nowrap}
 .back:hover{color:var(--ink)}
-.lang{display:flex;padding:3px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line)}
-.lang a{padding:3px 11px;border-radius:999px;font-size:13px;font-weight:800;color:var(--muted);text-decoration:none;line-height:1.5}
-.lang a[aria-current="page"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .progress{position:absolute;left:0;bottom:-1px;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,var(--human),var(--ai))}
 @media (max-width:600px){.brand-text{display:none}}
 
@@ -195,9 +192,11 @@ ol.refs > li:target{background:var(--human-soft)}
 .btn.line{background:transparent;color:var(--night-ink);border:1px solid color-mix(in srgb,var(--night-ink) 30%,transparent)}
 .btn.line:hover{border-color:var(--night-ink)}
 .about{max-width:var(--wide);margin:0 auto;padding:28px var(--gutter) 44px;font-size:13px;line-height:1.7;color:var(--muted)}
+.about p + p{margin-top:6px}
+.lang-link a{font-weight:700}
 
 @media print{
-  .topbar,.toc-side,.toc-mob,.tip,.end .row{display:none!important}
+  .topbar,.toc-side,.toc-mob,.tip,.end .row,.lang-link{display:none!important}
   .hero{background:none;color:#000}.hero h1 em{color:#000}.hero-meta span{color:#333;border-color:#999}
   body{background:#fff;color:#000;font-size:11pt}
   .doc{display:block}

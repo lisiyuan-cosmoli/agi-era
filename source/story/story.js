@@ -7,6 +7,9 @@ const store = {
   get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
   set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* 私密模式等情况下忽略 */ } }
 };
+/* 页面上的文字都在文字表里（source/story/strings.*.json），构建时按语言注入 */
+const T = /*@@T@@*/{};
+const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (m, k) => (k in o ? o[k] : m));
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 function seeded(s) { return () => (s = (s * 16807) % 2147483647) / 2147483647; }
@@ -94,7 +97,7 @@ const marks = chs.map((s, i) => {
   a.className = 'track-stop';
   a.href = '#' + s.id;
   a.style.left = ((i + .5) / chs.length * 100) + '%';
-  a.setAttribute('aria-label', `第 ${i + 1} 章：${s.dataset.name}`);
+  a.setAttribute('aria-label', fmt(T.track.stop, { n: i + 1, name: s.dataset.name }));
   track.appendChild(a);
   return a;
 });
@@ -119,7 +122,7 @@ function progress() {
     m.classList.toggle('current', i === cur);
     if (i === cur) m.setAttribute('aria-current', 'step'); else m.removeAttribute('aria-current');
   });
-  now.textContent = cur < 0 ? '开场' : `${cur + 1} · ${chs[cur].dataset.name}`;
+  now.textContent = cur < 0 ? T.track.open : `${cur + 1} · ${chs[cur].dataset.name}`;
 }
 let ticking = false;
 addEventListener('scroll', () => {
@@ -132,19 +135,10 @@ measure(); progress();
 /* ---------- 楼里的 12 户人家（t：这件活大约什么时候能交给 AI；0=2022，40=今天，70=更强的 AI，100=AGI；K=可能一直留给人） ---------- */
 const K = 999;
 const PEOPLE = [
-  ['陈工', '程序员', 6, [['写代码', 25], ['写测试', 30], ['查 bug', 38], ['设计整个系统', 65], ['出了事故负责', K]]],
-  ['王姐', '护工', 6, [['记录体征', 20], ['提醒吃药', 25], ['应对突发情况', 85], ['翻身、护理', 90], ['陪老人聊天', K]]],
-  ['小周', '客服', 5, [['回答常见问题', 8], ['查订单', 15], ['处理投诉', 45], ['安抚情绪', 55], ['特殊情况拍板', 80]]],
-  ['大海', '货车司机', 5, [['规划路线', 10], ['高速上开车', 55], ['城市里开车', 70], ['装卸货', 80], ['处理路上的意外', 90]]],
-  ['林然', '剪辑师', 4, [['加字幕、配乐', 15], ['挑素材', 25], ['粗剪', 30], ['调色、特效', 35], ['读懂客户要什么', 72]]],
-  ['苏老师', '中学老师', 4, [['出题、批改', 20], ['备课', 30], ['答疑', 45], ['管好一个班', 85], ['关心每个学生', K]]],
-  ['阿敏', '会计', 3, [['记账', 10], ['报税', 25], ['做报表', 30], ['审核', 50], ['给老板出主意', 75]]],
-  ['张哥', '外卖骑手', 3, [['接单、派单', 5], ['规划路线', 10], ['处理差评', 50], ['送餐', 75], ['上楼交到手里', 88]]],
-  ['小吴', '研究员', 2, [['查文献', 20], ['分析数据', 30], ['写论文初稿', 40], ['设计实验', 60], ['决定研究什么', 92]]],
-  ['小芳', '仓库分拣员', 2, [['扫码登记', 10], ['盘点', 30], ['分拣', 45], ['搬运', 60], ['处理破损件', 85]]],
-  ['刘医生', '医生', 1, [['写病历', 20], ['看影像片子', 35], ['辅助诊断', 50], ['定治疗方案', 68], ['陪病人、签字负责', K]]],
-  ['老马', '维修师傅', 1, [['报价', 30], ['判断故障', 50], ['上门修理', 92], ['爬高下低', 95], ['和住户沟通', K]]]
-];
+  [6, [25, 30, 38, 65, K]], [6, [20, 25, 85, 90, K]], [5, [8, 15, 45, 55, 80]], [5, [10, 55, 70, 80, 90]],
+  [4, [15, 25, 30, 35, 72]], [4, [20, 30, 45, 85, K]], [3, [10, 25, 30, 50, 75]], [3, [5, 10, 50, 75, 88]],
+  [2, [20, 30, 40, 60, 92]], [2, [10, 30, 45, 60, 85]], [1, [20, 35, 50, 68, K]], [1, [30, 50, 92, 95, K]]
+].map(([floor, th], i) => [T.people[i][0], T.people[i][1], floor, th.map((v, k) => [T.people[i][2][k], v])]);
 const aiCount = (p, lv) => p[3].filter(t => t[1] <= lv).length;
 
 /* ---------- 画一栋楼（viewBox 360×430） ---------- */
@@ -162,11 +156,11 @@ function drawBuilding(svg, labels) {
   });
   const plat = fxG('platform');
   el('rect', { x: 100, y: 4, width: 160, height: 30, rx: 8 }, plat);
-  el('text', { x: 180, y: 24, 'text-anchor': 'middle', class: 'fx-text', style: 'font-size:13.5px' }, plat).textContent = '大平台 · 规则由我定';
+  el('text', { x: 180, y: 24, 'text-anchor': 'middle', class: 'fx-text', style: 'font-size:13.5px' }, plat).textContent = T.b.platform;
   el('rect', { x: 172, y: 34, width: 16, height: 10 }, plat);
   const pent = fxG('crack');
   el('rect', { x: 120, y: 6, width: 120, height: 38, rx: 6, style: 'fill:#ffc94d' }, pent);
-  el('text', { x: 180, y: 30, 'text-anchor': 'middle', class: 'fx-text', style: 'fill:#3a2a00;font-size:12.5px' }, pent).textContent = '少数人的顶层';
+  el('text', { x: 180, y: 30, 'text-anchor': 'middle', class: 'fx-text', style: 'fill:#3a2a00;font-size:12.5px' }, pent).textContent = T.b.top;
   el('rect', { x: 16, y: 44, width: 328, height: 8, rx: 3, class: 'b-roof' }, g);
   el('rect', { x: 24, y: 52, width: 312, height: 312, class: 'b-facade' }, g);
   for (let f = 1; f < 6; f++) el('line', { x1: 24, x2: 336, y1: 52 + f * 52, y2: 52 + f * 52, class: 'b-line' }, g);
@@ -178,13 +172,14 @@ function drawBuilding(svg, labels) {
     if (labels) {
       u.setAttribute('tabindex', '0');
       u.setAttribute('role', 'button');
-      u.setAttribute('aria-label', `${p[0]}，${p[1]}，${p[2]} 楼`);
-      el('text', { x: x + 10, y: y + 16, class: 'u-name' }, u).textContent = p[0];
-      el('text', { x: x + 10 + p[0].length * 12 + 5, y: y + 16, class: 'u-job' }, u).textContent = p[1];
+      u.setAttribute('aria-label', fmt(T.b.unit, { name: p[0], job: p[1], floor: p[2] }));
+      const tx = el('text', { x: x + 10, y: y + 16 }, u);
+      el('tspan', { class: 'u-name' }, tx).textContent = p[0];
+      el('tspan', { class: 'u-job', dx: 5 }, tx).textContent = p[1];
       p[3].forEach((t, k) => pips.push(el('circle', { cx: x + 15 + k * 14, cy: y + 29, r: 4.3, class: 'pip' + (t[1] === K ? ' keep' : '') }, u)));
       const me = el('g', { class: 'u-me' }, u);
       el('rect', { x: x + 110, y: y + 5, width: 24, height: 15, rx: 7.5 }, me);
-      el('text', { x: x + 122, y: y + 16, 'text-anchor': 'middle' }, me).textContent = '你';
+      el('text', { x: x + 122, y: y + 16, 'text-anchor': 'middle' }, me).textContent = T.b.me;
     } else {
       el('circle', { cx: x + 70, cy: y + 14, r: 6, class: 'av' }, u);
       el('rect', { x: x + 62, y: y + 22, width: 16, height: 18, rx: 7, class: 'av' }, u);
@@ -195,25 +190,25 @@ function drawBuilding(svg, labels) {
   const shop = el('g', { class: 'shop' }, g);
   el('rect', { x: 38, y: 380, width: 204, height: 32, rx: 4, class: 'shop-body' }, shop);
   for (let k = 0; k < 8; k++) el('path', { d: `M${34 + k * 27} 366 h27 v10 q-13.5 7 -27 0 z`, class: k % 2 ? 'awning-2' : 'awning' }, shop);
-  el('text', { x: 140, y: 401, 'text-anchor': 'middle', class: 'shop-text' }, shop).textContent = labels ? '楼下小馆 · 营业中' : '';
+  el('text', { x: 140, y: 401, 'text-anchor': 'middle', class: 'shop-text' }, shop).textContent = labels ? T.b.shop : '';
   el('rect', { x: 262, y: 376, width: 44, height: 40, rx: 3, class: 'b-facade' }, g);
   const closed = fxG('closed');
   el('rect', { x: 84, y: 386, width: 112, height: 20, rx: 4 }, closed);
-  el('text', { x: 140, y: 400.5, 'text-anchor': 'middle', class: 'fx-text', style: 'font-size:12px' }, closed).textContent = '暂停营业';
+  el('text', { x: 140, y: 400.5, 'text-anchor': 'middle', class: 'fx-text', style: 'font-size:12px' }, closed).textContent = T.b.closed;
   el('rect', { x: 8, y: 416, width: 344, height: 8, rx: 2, class: 'b-ground' }, g);
   const sc = fxG('scaffold');
   [30, 330].forEach(x => el('line', { x1: x, x2: x, y1: 100, y2: 340 }, sc));
   [104, 156, 208, 260, 312].forEach(y => el('line', { x1: 22, x2: 338, y1: y, y2: y }, sc));
   const sign = el('g', { class: 'fx-sign' }, sc);
   el('rect', { x: 128, y: 170, width: 104, height: 24, rx: 6 }, sign);
-  el('text', { x: 180, y: 186.5, 'text-anchor': 'middle', class: 'fx-text', style: 'font-size:12px' }, sign).textContent = '修修补补中';
+  el('text', { x: 180, y: 186.5, 'text-anchor': 'middle', class: 'fx-text', style: 'font-size:12px' }, sign).textContent = T.b.patch;
   const crackG = el('g', { class: 'fx fx-crack' }, g);
   el('path', { d: 'M180 52 L172 100 L186 150 L174 200 L188 250 L176 300 L186 340 L180 364' }, crackG);
   const wires = el('g', { class: 'fx fx-platform' }, g);
   [80, 132, 184, 236, 288].forEach((y, k) => el('line', { x1: 180, y1: 44, x2: k % 2 ? 254 : 106, y2: y }, wires));
   const alarm = el('g', { class: 'fx fx-alarm' }, svg);
   el('circle', { cx: 180, cy: 30, r: 11 }, alarm);
-  el('text', { x: 212, y: 35, class: 'fx-text', style: 'fill:var(--risk);font-size:13px' }, alarm).textContent = '系统失灵';
+  el('text', { x: 212, y: 35, class: 'fx-text', style: 'fill:var(--risk);font-size:13px' }, alarm).textContent = T.b.alarm;
   return { svg, units, shop, fx };
 }
 function paintLevel(b, lv) {
@@ -243,15 +238,7 @@ if (!reduce) {
 }
 
 /* ---------- 1 时间轨道：站点等距，圆点按真实间隔移动，越走越快 ---------- */
-const EVENTS = [
-  [2012, 'AI 学会“看图”', '能从照片里认出猫和狗。'],
-  [2016, '下围棋赢了世界冠军', '靠“感觉”的事，AI 也能赢过人。'],
-  [2020, '写出像人写的文章', '给它开个头，它就能接着往下写。'],
-  [2022, '会聊天的 AI 来了', '很快就有上亿人用上了它。'],
-  [2024, '一句话生成视频', '光影和镜头，像真的拍出来的。'],
-  [2025, '数学奥赛拿到金牌水平', '也开始自己写代码、操作电脑。'],
-  [2026, 'AI 独立解开 80 年前的数学难题', '它自己找到了埃尔德什 1946 年一个猜想的反例。']
-];
+const EVENTS = [2012, 2016, 2020, 2022, 2024, 2025, 2026].map((y, i) => [y, T.events[i][0], T.events[i][1]]);
 const rail = $('#rail'), railFill = $('#railFill'), railCard = $('#railCard');
 const railPos = i => (i / (EVENTS.length - 1)) * 100;
 const railStops = EVENTS.map((e, i) => {
@@ -259,14 +246,15 @@ const railStops = EVENTS.map((e, i) => {
   b.type = 'button';
   b.className = 'rail-stop';
   b.style.left = railPos(i) + '%';
-  b.setAttribute('aria-label', `${e[0]} 年：${e[1]}`);
+  b.setAttribute('aria-label', fmt(T.rail.stop, { year: e[0], title: e[1] }));
   b.innerHTML = `<span>${e[0]}</span>`;
   rail.appendChild(b);
   if (i > 0) {
     const gp = document.createElement('span');
     gp.className = 'rail-gap';
     gp.style.left = ((railPos(i - 1) + railPos(i)) / 2) + '%';
-    gp.textContent = (e[0] - EVENTS[i - 1][0]) + ' 年';
+    const gap = e[0] - EVENTS[i - 1][0];
+    gp.textContent = gap === 1 && T.rail.gap1 ? T.rail.gap1 : fmt(T.rail.gap, { n: gap });
     rail.appendChild(gp);
   }
   return b;
@@ -275,7 +263,7 @@ function railShow(i, fillTo) {
   const e = EVENTS[i], here = i === EVENTS.length - 1;
   railStops.forEach((b, k) => { b.classList.toggle('passed', k < i); b.classList.toggle('cur', k === i); });
   railFill.style.width = (fillTo === undefined ? railPos(i) : fillTo) + '%';
-  railCard.innerHTML = `<span class="rail-year">${e[0]}</span><b>${here ? '<span class="here-tag">你在这里</span>' : ''}${e[1]}</b><p>${e[2]}</p>`;
+  railCard.innerHTML = `<span class="rail-year">${e[0]}</span><b>${here ? `<span class="here-tag">${T.rail.here}</span>` : ''}${e[1]}</b><p>${e[2]}</p>`;
 }
 railShow(EVENTS.length - 1);
 const railScene = scene($('#railScene'), async ({ wait, tween }) => {
@@ -291,16 +279,16 @@ railStops.forEach((b, i) => b.addEventListener('click', () => { railScene.hands(
 
 /* ---------- 你猜 AGI 哪年来 ---------- */
 const agiBtns = $$('.agi-btn'), agiReply = $('#agiReply');
-const agiTickText = y => (!y ? 'AGI' : y > 2030 ? 'AGI（2030 后？）' : `AGI（${y}？）`);
+const agiTickText = y => (!y ? T.agi.tick : y > 2030 ? T.agi.tickLate : fmt(T.agi.tickYear, { y }));
 function setAgi(y, speak) {
   agiYear = y;
   agiBtns.forEach(b => b.setAttribute('aria-pressed', String(y !== null && +b.dataset.year === y)));
   $$('[data-agi-tick]').forEach(n => { n.textContent = agiTickText(y); });
   timeSet(+timeRange.value);
   if (!speak) return;
-  if (y === 0) agiReply.textContent = '也有可能。不过就算没有 AGI，今天的 AI 已经足够改变很多行业。';
-  else if (y > 2030) agiReply.textContent = '好，就当它来得晚一些。就算晚几年，要提前准备的事情一样多。';
-  else agiReply.textContent = `好，就按 ${y} 年。往下看，到那时这栋楼会是什么样子。`;
+  if (y === 0) agiReply.textContent = T.agi.never;
+  else if (y > 2030) agiReply.textContent = T.agi.late;
+  else agiReply.textContent = fmt(T.agi.year, { y });
 }
 agiBtns.forEach(b => b.addEventListener('click', () => {
   const y = +b.dataset.year;
@@ -315,68 +303,64 @@ const resPanel = $('#resPanel'), bCap = $('#bCap');
 const TOTAL = PEOPLE.length * 5;
 let selected = 2, meIdx = null;
 function whenText(v) {
-  if (v < 12) return '2022 年';
-  if (v < 30) return '2024 年';
-  if (v <= 45) return '今天（2026）';
-  if (v < 88) return '更强的 AI';
+  if (v < 12) return T.when[0];
+  if (v < 30) return T.when[1];
+  if (v <= 45) return T.when[2];
+  if (v < 88) return T.when[3];
   return agiTickText(agiYear);
 }
 function sayLine(p, n) {
   const hasKeep = p[3].some(t => t[1] === K);
-  let s = n <= 1 ? '我的活，大部分还得我自己来。'
-    : n === 2 ? '有两件活 AI 已经能做了，确实省了不少事。'
-    : n === 3 ? '一大半的活 AI 都能干了。老板开始问我：你还能做点什么别的？'
-    : '几乎所有活 AI 都能做了。剩下那一点，撑得起我的工资吗？';
-  if (hasKeep && n >= 3) s += '好在有些事，大家还是希望由人来做。';
-  return `${p[0]}：“${s}”`;
+  let s = T.say.lines[n <= 1 ? 0 : n === 2 ? 1 : n === 3 ? 2 : 3];
+  if (hasKeep && n >= 3) s += T.say.keep;
+  return fmt(T.say.quote, { name: p[0], s });
 }
 function renderRes() {
   const lv = +timeRange.value;
   mainB.units.forEach(x => x.u.classList.toggle('sel', x.i === selected));
-  if (selected === null) { resPanel.innerHTML = '<p class="res-say">点楼里任意一户，看看这家人的活。</p>'; return; }
+  if (selected === null) { resPanel.innerHTML = `<p class="res-say">${T.res.pick}</p>`; return; }
   const p = PEOPLE[selected], n = aiCount(p, lv), isMe = meIdx === selected;
   const items = p[3].map(t => {
-    const st = t[1] === K ? ['keep', '可能一直留给人'] : t[1] <= lv ? ['on', 'AI 已经能做'] : ['', '还得靠人'];
+    const st = t[1] === K ? ['keep', T.res.keep] : t[1] <= lv ? ['on', T.res.on] : ['', T.res.human];
     return `<li class="${st[0]}">${t[0]}<span>${st[1]}</span></li>`;
   }).join('');
-  resPanel.innerHTML = `<h3>${p[0]}<small>${p[1]} · 住 ${p[2]} 楼 · AI 能做 ${n}/5 件活</small></h3>
+  resPanel.innerHTML = `<h3>${p[0]}<small>${fmt(T.res.meta, { job: p[1], floor: p[2], n })}</small></h3>
     <ul class="res-tasks">${items}</ul><p class="res-say">${sayLine(p, n)}</p>
-    <div class="row"><button type="button" class="btn ${isMe ? '' : 'line'}" id="isMe" aria-pressed="${isMe}">${isMe ? '✓ 这一户最像我' : '这一户最像我'}</button></div>`;
+    <div class="row"><button type="button" class="btn ${isMe ? '' : 'line'}" id="isMe" aria-pressed="${isMe}">${isMe ? T.res.isMeOn : T.res.isMe}</button></div>`;
   $('#isMe').addEventListener('click', () => {
     meIdx = isMe ? null : selected;
     mainB.units.forEach(x => x.u.classList.toggle('me', x.i === meIdx));
     store.set('fws-me', meIdx === null ? '' : String(meIdx));
     renderRes();
-    $('#q1More').textContent = meIdx === null ? '你的活里，哪一件最难交给 AI？只剩这一件时，它撑得起你的收入吗？'
-      : `你选了${PEOPLE[meIdx][1]}${PEOPLE[meIdx][0]}那一户。你的活里，哪一件最难交给 AI？只剩这一件时，它撑得起你的收入吗？`;
+    $('#q1More').textContent = meIdx === null ? T.res.q1 : fmt(T.res.q1Me, { job: PEOPLE[meIdx][1], name: PEOPLE[meIdx][0] });
   });
 }
 function timeSet(v) {
   const n = paintLevel(mainB, v);
   timeWhen.textContent = whenText(v);
-  timeCount.innerHTML = `楼里 ${TOTAL} 件活，AI 能做 <b>${n}</b> 件`;
+  timeCount.innerHTML = fmt(T.time.count, { total: TOTAL, n });
   timeRange.value = v;
   timeRange.style.setProperty('--p', v + '%');
-  timeRange.setAttribute('aria-valuetext', `${whenText(v)}，AI 能做 ${n} 件活`);
+  timeRange.setAttribute('aria-valuetext', fmt(T.time.aria, { when: whenText(v), n }));
   renderRes();
 }
 const bScene = scene($('#bScene'), async ({ wait, tween }) => {
   const say = t => { bCap.innerHTML = t; };
   const lv = v => timeSet(Math.round(v));
   selected = null; timeSet(0);
-  say('2022 年：楼里的活，几乎都还是人在做。'); await wait(1600);
+  say(T.bScene[0]); await wait(1600);
   await tween(0, 40, 2600, lv);
   selected = 4; renderRes();
-  say('<b>到了今天</b>，左边一列坐在电脑前的人家，窗户先变蓝了。剪辑师林然的 5 件活，AI 已经能做 4 件。'); await wait(3600);
+  say(T.bScene[1]); await wait(3600);
   await tween(40, 70, 2000, lv);
   selected = 3; renderRes();
-  say('<b>更强的 AI</b>：司机大海开车的活，也能交给 AI 了。要到现场的活，开始变了。'); await wait(3600);
+  say(T.bScene[2]); await wait(3600);
   await tween(70, 100, 2000, lv);
   selected = 1; renderRes();
-  say('<b>到了 AGI</b>：剩下的多半是照顾、信任和承担责任，比如护工王姐陪老人聊天。'); await wait(3800);
+  say(T.bScene[3]); await wait(3800);
   await tween(100, 40, 1200, lv);
   selected = null; renderRes();
-  say('回到今天。点任意一户，看看这家人的活。');
+  say(T.bScene[4]);
 });
 timeRange.addEventListener('input', () => { bScene.hands(); timeSet(+timeRange.value); });
 mainB.units.forEach(x => {
@@ -406,9 +390,9 @@ function guardSet(list) {
 function domFinish(blockedAt) {
   domRunning = false;
   domPush.disabled = false;
-  domPush.textContent = '再推一次';
-  if (blockedAt < 0) domMsg.innerHTML = '<b>全倒了。</b>两户人家的变化，一路传到了楼下的小馆、银行，连电梯都修不起了。';
-  else domMsg.innerHTML = `<b>挡住了！</b>压力停在了“${domLabel(blockedAt)}”前面，后面 ${doms.length - blockedAt} 块都还立着。`;
+  domPush.textContent = T.dom.again;
+  if (blockedAt < 0) domMsg.innerHTML = T.dom.all;
+  else domMsg.innerHTML = fmt(T.dom.blocked, { label: domLabel(blockedAt), n: doms.length - blockedAt });
   if (domDone) { const f = domDone; domDone = null; f(); }
 }
 function domRun() {
@@ -417,7 +401,7 @@ function domRun() {
     domDone = res;
     domRunning = true;
     domPush.disabled = true;
-    domMsg.textContent = '倒下去了……';
+    domMsg.textContent = T.dom.falling;
     const gap = reduce ? 0 : 360;
     let i = 0;
     const next = () => {
@@ -438,27 +422,27 @@ function domRun() {
 }
 const domScene = scene($('#domScene'), async ({ wait }) => {
   guardSet([]); domStand();
-  domMsg.textContent = '八块多米诺已经立好。第一块是 AI。推！'; await wait(1500);
+  domMsg.textContent = T.dom.intro; await wait(1500);
   await domRun(); await wait(2800);
   domStand(); guardSet([3]);
-  domMsg.innerHTML = '再来一次。这次提前放一块<b>挡板</b>：失业以后，收入不断档。'; await wait(2600);
+  domMsg.innerHTML = T.dom.round2; await wait(2600);
   await domRun(); await wait(2400);
-  domMsg.innerHTML = '挡板要在倒下之前就放好。点“自己试试”，放几块挡板推推看。';
+  domMsg.innerHTML = T.dom.end;
 });
 domPush.addEventListener('click', () => { domScene.hands(); domRun(); });
 domReset.addEventListener('click', () => {
   domScene.hands(); domStand();
-  domPush.textContent = '推倒第一块';
-  domMsg.textContent = '都扶起来了。可以换几块挡板试试。';
+  domPush.textContent = T.dom.push;
+  domMsg.textContent = T.dom.reset;
 });
 barriers.forEach(b => b.addEventListener('click', () => {
   domScene.hands();
-  if (domRunning) { domMsg.innerHTML = '<b>来不及了。</b>多米诺已经在倒了。挡板要在倒下之前放好。'; return; }
+  if (domRunning) { domMsg.innerHTML = T.dom.late; return; }
   const at = +b.dataset.before, list = [...guard];
   guardSet(guard.has(at) ? list.filter(x => x !== at) : list.concat(at));
   domStand();
-  domPush.textContent = '推倒第一块';
-  domMsg.textContent = guard.size ? `放好了 ${guard.size} 块挡板。现在推一次试试。` : '挡板都拿走了。';
+  domPush.textContent = T.dom.push;
+  domMsg.textContent = guard.size ? (guard.size === 1 && T.dom.placed1 ? T.dom.placed1 : fmt(T.dom.placed, { n: guard.size })) : T.dom.none;
 }));
 
 /* ---------- 4 楼里的钱怎么转 ---------- */
@@ -505,7 +489,7 @@ function meter(m, top, max, v) {
   m.setAttribute('y', (top + max - h).toFixed(1));
   m.setAttribute('height', Math.max(2, h).toFixed(1));
 }
-const amount = a => (a < .15 ? '很少' : a < .4 ? '一些' : a < .7 ? '很多' : '大部分');
+const amount = a => T.flow.amount[a < .15 ? 0 : a < .4 ? 1 : a < .7 ? 2 : 3];
 const flowRange = $('#flowRange'), flowPct = $('#flowPct'), flowMsg = $('#flowMsg'), socTogs = $$('#flowScene .tog');
 const soc = { a: 0, share: false, public: false };
 const socDraw = makeFlow($('#flowSvg'),
@@ -514,13 +498,11 @@ const socDraw = makeFlow($('#flowSvg'),
   $('#coins'));
 function socText() {
   const { a, share, public: pub } = soc;
-  if (a < .25 && !share && !pub) return '今天：工资是大多数住户最主要的收入。公司发工资，住户拿去消费，钱又回到公司。';
-  if (!share && !pub) return a < .6
-    ? 'AI 接手的活越来越多，工资这条管道开始变细，更多的钱流向了 AI 公司和平台。'
-    : '工资这条管道细得快断了。钱并没有消失，它流向了 AI 公司和平台。住户手里没钱，东西再便宜也买不了多少，公司的客人也少了。';
-  if (share && pub) return '两条新管道都接上了。住户的日子稳住了，公司也重新有了客人。修管道，就是让 AI 带来的好处流到每户人家。';
-  if (share) return '接上一条新管道：AI 带来的收益通过税和公共基金变成分红，回到住户手里。钱从哪来、谁来管，都要认真设计。';
-  return '公共服务让住房、看病、养老更便宜，住户的压力小了一些。可收入的缺口还在，只靠这一条管道还不够。';
+  if (a < .25 && !share && !pub) return T.flow.today;
+  if (!share && !pub) return a < .6 ? T.flow.thin : T.flow.thinner;
+  if (share && pub) return T.flow.both;
+  if (share) return T.flow.share;
+  return T.flow.public;
 }
 function socSet() {
   const a = soc.a, wage = 1 - .8 * a, ai = .08 + .9 * a, own = .3 * ai;
@@ -558,12 +540,7 @@ const futB = drawBuilding($('#futBldg'), true);
 futB.units.forEach(x => { x.u.removeAttribute('tabindex'); x.u.removeAttribute('role'); x.u.removeAttribute('aria-label'); x.u.style.cursor = 'default'; });
 const fork = { dist: null, prep: null, ctrl: true };
 const futOut = $('#futOut'), ctrlToggle = $('#ctrlToggle');
-const FUT = {
-  A: ['分给大家 · 提前准备', '软着陆', '楼顶多了一个小花园。大家一周工作三四天，AI 带来的收益变成分红和更好的公共服务，回到每户人家。楼下小馆天天有人来。'],
-  B: ['分给大家 · 出了事再补', '反复阵痛', '楼里总在修修补补。每来一轮新技术，就有几户人家先断了收入，过一两年才被接住。大家都不太敢做长远打算。'],
-  C: ['少数人拿走 · 提前准备', '被照顾，但说不上话', '每户人家都有基本保障，灯都亮着。可楼顶挂着大平台的招牌：接什么活、拿多少钱、用什么工具，都由它说了算。'],
-  D: ['少数人拿走 · 出了事再补', '撕裂', '楼顶越来越亮，楼里越来越暗。小馆关了门，楼道里的争吵越来越多，大家越来越难坐下来一起商量。']
-};
+const FUT = T.fut;
 const FLICK = [2, 5, 6, 9], DARK_D = [0, 2, 3, 4, 5, 6, 7, 8, 9, 11];
 function futKey() {
   if (!fork.dist || !fork.prep) return null;
@@ -588,11 +565,11 @@ function futSet(endText) {
   ctrlToggle.setAttribute('aria-pressed', String(fork.ctrl));
   futOut.classList.toggle('risk', !fork.ctrl);
   let tag, title, text;
-  if (!fork.ctrl) [tag, title, text] = ['前提失效', '失控', '如果最关键的 AI 行动已经没人能叫停，这两个开关可能都扳不动了。所以“管得住”是其他一切选择的前提。'];
+  if (!fork.ctrl) [tag, title, text] = FUT.off;
   else if (e) [tag, title, text] = FUT[e];
   else if (endText) [tag, title, text] = endText;
-  else if (fork.dist || fork.prep) [tag, title, text] = ['还差一个开关', '再扳另一个开关', fork.dist ? '财富怎么分已经选了。社会什么时候开始准备？' : '准备的时机已经选了。AI 带来的财富，怎么分？'];
-  else [tag, title, text] = ['还没选', '扳动两个开关', '这栋楼会变成什么样子，取决于你的选择。'];
+  else if (fork.dist || fork.prep) [tag, title, text] = [FUT.oneMore[0], FUT.oneMore[1], FUT.oneMore[fork.dist ? 2 : 3]];
+  else [tag, title, text] = FUT.none;
   futOut.innerHTML = `<span class="tag">${tag}</span><h3>${title}</h3><p>${text}</p>`;
 }
 const futScene = scene($('#futScene'), async ({ wait }) => {
@@ -601,7 +578,7 @@ const futScene = scene($('#futScene'), async ({ wait }) => {
   }
   fork.ctrl = false; futSet(); await wait(3800);
   Object.assign(fork, { dist: null, prep: null, ctrl: true });
-  futSet(['轮到你', '你想让这栋楼变成哪一种？', '点“自己试试”，扳一扳这两个开关。']);
+  futSet(FUT.end);
 });
 $$('.switch').forEach(g => $$('.opt', g).forEach(o => o.addEventListener('click', () => {
   futScene.hands(); fork[g.dataset.k] = o.dataset.v; futSet();
@@ -703,7 +680,7 @@ const savedMe = store.get('fws-me');
 if (savedMe !== null && savedMe !== '' && !isNaN(+savedMe) && PEOPLE[+savedMe]) {
   meIdx = +savedMe;
   mainB.units.forEach(x => x.u.classList.toggle('me', x.i === meIdx));
-  $('#q1More').textContent = `你选了${PEOPLE[meIdx][1]}${PEOPLE[meIdx][0]}那一户。你的活里，哪一件最难交给 AI？只剩这一件时，它撑得起你的收入吗？`;
+  $('#q1More').textContent = fmt(T.res.q1Me, { job: PEOPLE[meIdx][1], name: PEOPLE[meIdx][0] });
   renderRes();
 }
 })();
