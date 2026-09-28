@@ -1,323 +1,257 @@
-# AI without an assumed ceiling: how can society navigate the transition?
+# How Will Humans Live in the Age of AGI?
 
-A forward-looking study of industry displacement and changes in social structure
+Research report · September 2026
 
-September 28, 2026 · 2026–2029 · Stress scenario
+This report is the written companion to the interactive page *How Will Humans Live in the Age of AGI?* The page imagines society as a single apartment building. Here we lay out what each chapter rests on: what has already happened, what is still unknown, and what would tell us we got it wrong.
 
-When AI replaces an industry, the people who used to make their living in it do not disappear. Companies may be unable to continue, income may stop, and everyday expenses will remain. If such changes come one after another while technology keeps accelerating, how can society navigate the transition?
+Most chapters have four parts:
 
-## Abstract
+- **Bottom line**: the chapter’s judgment in a sentence or two.
+- **Evidence**: sourced facts and figures. Numbers in square brackets point to the references at the end.
+- **What we don’t know yet**: questions the evidence cannot answer.
+- **Signals that would change our minds**: developments that would mean the chapter needs revising.
 
-This report traces the relationships among businesses, households and public institutions to explore the chain reactions that rapid automation could set in motion. It adopts the premise of AI without an assumed ceiling, allowing for the possibility of AGI or ASI emerging within the next one to three years, without treating that time frame as an established fact.
+Sources are current as of September 2026. Wherever we reason rather than cite data, we say so.
 
-## First, clarify the premise of this study
+## 1 The turning point · Capability is accelerating, and adoption is faster still
 
-Existing employment data alone cannot readily answer the question explored here. Data can tell us which changes have already happened, but cannot draw an endpoint in advance for a technology whose development is accelerating. This report takes the premise a step further: suppose AI capabilities continue to grow, allowing ordinary people, using publicly available tools, to complete more and more of the work that previously required specialists. Further ahead, even the work of coordinating those tasks might be delegated to agents.
+> **Bottom line:** AI is getting more capable month by month, and people are taking it up faster than they took up the personal computer or the internet. In much real work, though, it is not yet reliable. Nobody knows whether AGI will arrive, or when.
 
-This premise allows us to discuss substantial social change, but it does not mean we can casually assume that every other condition has already been met. Continuing improvements in capability do not mean that every business immediately completes deployment; the possibility that AGI or ASI might emerge relatively soon does not mean that either will arrive on a particular date. Energy and physical infrastructure may still slow the changes. Yet more capable AI might also gradually ease those constraints, so they cannot be used to prove that any industry is safe forever.
+### Evidence
 
-This report primarily explores mechanisms. It follows a change through successive questions: under what conditions would it spread, where might it be amplified, and what forces might offset it? Business failures, rising unemployment and a loss of effective control are all treated as outcomes to examine, rather than as predetermined certainties.
+- **Math competitions.** In July 2025, Google DeepMind’s Gemini Deep Think reached an officially certified gold-medal standard at the International Mathematical Olympiad: it solved 5 of the 6 problems for 35 points out of 42, reading the problems and writing its proofs in plain language within the 4.5-hour time limit. [1]
+- **Math research.** In 1946 the mathematician Paul Erdős asked: if you place n points in a plane, how many pairs can be exactly distance 1 apart? He believed the number grows only slightly faster than the number of points, and many mathematicians agreed. In May 2026, OpenAI announced that after a single prompt from its researchers, a general-purpose reasoning model found an arrangement with far more such pairs, disproving the conjecture. Human mathematicians then checked the proof and helped write it up. [2][3]
+- **How long AI can work on its own.** The research group METR measures the length of tasks AI can complete on its own, in terms of how long the same task takes a human expert. Since 2023 that length has doubled roughly every four months. By May 2026 the best model had a 50% chance of completing tasks that take a human about 16 hours; at an 80% success rate, the task length was only about 3 hours. METR cautions that measurements above 16 hours are no longer reliable. [4][5]
+- **Users.** Stanford’s *AI Index 2026* reports that generative AI reached 53% population adoption within three years, faster than the personal computer or the internet. Adoption varies widely by country and tracks income per person. 88% of organizations now use AI. [6]
+- **Money.** Global corporate investment in AI reached about $582 billion in 2025, more than double the year before. [6] Alphabet, Microsoft, Meta and Amazon together planned nearly $700 billion of capital spending for 2026 to build out AI. [7]
+- **Weak spots.** The *International AI Safety Report 2026*, written by more than 100 experts and backed by over 30 countries, finds that AI capabilities are advancing faster than the rules that govern them. It also finds that AI is still unreliable on multi-step tasks, makes things up, and has a limited grasp of the physical world. [8]
 
-> **“Displacement” must be judged by complete delivery**
-> The original test still applies: a newcomer has no relevant professional background, possesses basic computer skills and spends no more than one month learning. Using publicly available tools that can be purchased, the newcomer must be able to understand requirements, make revisions and handle common errors. Merely generating something that looks like a finished product does not establish that a professional service has been displaced.
+### What we don’t know yet
 
-Moving from that standard to an analysis of society requires another question: can AI replace the entire set of activities previously organized and delivered by a company? An individual task, a specific service and an entire industry are different levels of analysis. A change at one level does not justify declaring that the other two have disappeared.
+- Whether AGI will arrive, and when. There is no agreed definition and no agreed timeline.
+- How quickly strong test results will turn into dependable performance on real work.
+- Whether computing power, electricity and capital can keep sustaining this pace.
 
-*Figure 01. From tasks to social structure. Each further level of analysis requires its own conditions to be established.*
+### Signals that would change our minds
 
-The everyday situations described in this report are hypothetical, not findings from field research. The policy arrangements are responses offered for comparison, not a single proven solution. The report provides no unemployment-rate forecasts and assigns no invented probabilities to social outcomes.
+- The doubling time METR measures stretches out noticeably, say to more than a year: change will come more slowly than the page assumes, and society will have more time to prepare.
+- AI works on its own for days at a time in real jobs, with few errors: change will come faster than expected.
+- The huge investments fail to pay off and spending is cut sharply: progress may slow.
 
-## Why life could become harder as productive capacity grows
+## 2 AI knocks · Tasks change first, not whole jobs
 
-Society becomes increasingly capable of producing goods and services, yet many people still have to sell their labor to earn an income. If these two realities change at different speeds, a substantial gap may emerge during the transition. AI can make a service cheaper without automatically replacing the income lost by the people who used to provide it.
+> **Bottom line:** AI takes over specific tasks, not entire occupations. Rule-based information work done at a computer changes first. Most jobs will be reshaped rather than disappear, but young people just starting out may feel the pressure first.
 
-A household does benefit when it can buy software or content at a lower price. But if its wages fall while rent, care costs and existing debts remain due, daily life may still become more difficult. Assessing whether society has become richer requires us to ask who receives the output and how people can share in it.
+### Evidence
 
-*Figure 02. Productivity gains and income shocks. The connections indicate possible mechanisms; the effects on people’s lives cannot be inferred from output growth alone.*
+- **Think in tasks.** In 2003 the economists Autor, Levy and Murnane found that computers replace “routine” tasks that can be written down as explicit rules, while raising the value of tasks such as solving new problems and dealing with people. [9] The small dots for each household on the page follow this idea.
+- **How many jobs are affected.** The IMF estimates that about 40% of jobs worldwide will be affected by AI: about 60% in advanced economies, 40% in emerging markets and 26% in low-income countries. Affected does not mean replaced; some of these jobs will become more productive with AI. [10]
+- **Mostly transformed.** The International Labour Organization estimated in 2025 that one in four jobs worldwide is potentially exposed to generative AI: about a third in high-income countries and about a tenth in low-income countries. The most exposed category makes up 3.3% of global employment, and the share among women (4.7%) is about twice that among men (2.4%). The ILO’s judgment: most jobs contain tasks that still need people, so transformation is more likely than replacement. [11]
+- **Young people feel it first.** Using payroll data from the US firm ADP, the Stanford Digital Economy Lab found that employment of young workers fell markedly in the occupations most exposed to AI, while experienced workers in the same occupations held steady. [12] The August 2026 update shows that from November 2022 to June 2026, employment of 22–25-year-olds fell about 11% in the two most exposed groups of occupations, but rose about 10% in the three least exposed. The authors stress that they do not yet see widespread displacement. [13]
+- **What employers say.** The US firm Challenger, Gray & Christmas counts 101,743 announced job cuts attributed to AI in the first half of 2026, about 23% of all announced cuts, compared with 54,836 in the whole of 2025. [14][15] These are reasons employers give themselves. They may overstate or understate AI’s role, so they are not proof of cause.
+- **Not only AI.** New York Fed research shows unemployment among US recent college graduates aged 22–27 rose from 3.6% in March 2019 to 5.6% in March 2026. The researchers argue that remote work, which makes it harder to train newcomers, explains 64% of that rise. [16] AI is only one of the reasons young people are struggling to find work.
 
-We should not take this to the opposite extreme and conclude that falling labor income would leave the entire economy without customers. Owners of capital still have demand, governments still make purchases, and new investment projects may increase spending. A change in where money comes from and who holds it does not mean that all purchasing power disappears.
+### What we don’t know yet
 
-> **An outcome that deserves serious attention**
-> Total output can continue to rise, some companies can become more profitable, and large numbers of households can experience less stable incomes. All of these things can happen at the same time.
+- Is the harder entry for young people temporary or lasting? With fewer entry-level jobs, where will tomorrow’s experienced workers come from?
+- How quickly will new kinds of work appear, where, and what skills will they need?
+- Most of this data comes from the United States. The picture may be very different in outsourcing hubs and low-income countries.
 
-Within such a structure, businesses may increasingly prefer to serve groups that own assets and have purchasing power. Ordinary workers could lose their former bargaining power even without immediately falling into absolute poverty. Society would then need to address more than how to restore a particular occupation: it would also need to establish new sources of income and preserve meaningful choices for ordinary people.
+### Signals that would change our minds
 
-These pressures could ease if price reductions, new investment and improvements in public services arrive quickly enough, and if those affected gain access to new income in time. Whether the pressures emerge, and how long they last, depends on the pace at which existing income falls, the number of people reached by new income and support arrangements, and how quickly essential living costs decline.
+- Entry-level hiring keeps falling in highly exposed industries and starts to reach senior roles: the shock is deeper than we think.
+- Companies that adopt AI hire more and pay more: AI is mostly helping people rather than replacing them.
 
-*Figure 03. The gap in society’s adjustment. The bands illustrate relative timing only; they are not measured data and do not designate particular years.*
+## 3 Chain reaction · The shock travels along the money
 
-## Change may begin before companies actually lay people off
+> **Bottom line:** The shock does not stop with the people who lose their jobs. Less income means less spending, and the pressure passes along the money to small shops, landlords, banks and local budgets. The same holds between countries: places that live on outsourced work may be hit first.
 
-An industry need not wait for its last human task to be automated before experiencing business pressure. If customers merely believe that the same work will soon be possible at a lower cost, they may press for lower prices or postpone purchases. If management believes that future operations will require fewer workers, it may freeze hiring first. When investors change their assessment of future revenue, financing conditions may change ahead of everything else.
+### Evidence
 
-Expectations sometimes change faster than actual deployment. Those expectations may also prove mistaken or later be revised in response to new demand. But a company under cash-flow pressure may not be able to survive until that correction comes.
+- **Lessons from robots.** The economists Acemoglu and Restrepo studied industrial robots in the United States. Each additional robot per thousand workers in an area lowered the area’s employment-to-population ratio by about 0.2 percentage points and wages by about 0.42%. That is the average change across the whole local labor market, not just in the factories that installed robots. [17]
+- **One good job supports several others.** The economist Enrico Moretti estimates that each new high-tech job in a city eventually creates about five local service jobs, in restaurants, shops, clinics and the like; some scholars think the figure is too high. [18] Run the logic in reverse and losing well-paid jobs would drag down local services too. That is reasoning; there is no direct evidence yet from the AI era.
+- **Dominoes between countries.** The Philippines’ IT and business-process outsourcing industry employed 1.8 million people in 2024, 3.8% of national employment, and earned $38 billion, equal to 8.2% of GDP. Contact centers accounted for 83% of the revenue and 89% of the jobs, exactly the kind of work AI takes on first. [19] In July 2026 the industry association, citing rapid AI adoption and global competition, cut its 2028 targets from $59 billion in revenue and 2.5 million workers to $43.3–50.5 billion and 1.85–2.14 million. [20] These are only targets, but they show that expectations are already reshaping an entire industry’s plans.
 
-*Figure 04. How pressures feed back through the economy. This diagram isolates adverse transmission mechanisms; the productivity-gain pathways discussed earlier may offset some of the pressure. The net outcome cannot be judged from this diagram alone.*
+### What we don’t know yet
 
-### Businesses first have to deal with fixed costs
+- AI makes many things cheaper. How much can that offset lost income?
+- Will the shock arrive gradually or be concentrated into a few years? Slowly, society has time to adjust; quickly, the existing cushions may not hold.
+- How far ahead of layoffs can expectations push the pressure? Once customers, bosses and investors believe AI can save labor, they may cut prices, freeze hiring and tighten credit first. That is reasoning; it has not been measured directly.
 
-Orders and selling prices can fall rapidly, while leases and debts may not adjust in time. Even a company that understands the technological shift can run into difficulty because its existing costs still fall due. Downsizing can buy time, but if customers no longer need this type of organization, cutting staff alone cannot restore its former business foundations.
+### Signals that would change our minds
 
-When companies exit, suppliers lose orders, and commercial landlords and creditors may also incur losses. The shock begins to spread beyond the industry first affected by displacement. A temporary shortage of funds must be distinguished from a fundamental change in the basis of a business: providing liquidity to the former and arranging restructuring for the latter are different responses.
+- Unusual changes in spending, mortgage arrears and local tax revenue in highly exposed areas: the dominoes have started to fall.
+- A wave of small businesses built on AI that begin hiring: the “cheaper goods bring new business” barrier is working.
 
-### Households transmit pressure to other industries
+## 4 How money flows · Distribution is the core issue
 
-When income becomes unstable, households usually postpone spending that can be deferred. Businesses not directly displaced by AI may still be affected when customers cut consumption. If debt pressures increase, asset sales, defaults and a contraction in credit may follow, making it harder for businesses to obtain finance once again.
+> **Bottom line:** Most people have shared in economic growth through their wages. AI will send more income to whoever owns the computing power, models and platforms, and wages’ share of total income may keep falling. Whether the future is good depends on whether the wealth AI creates can find new channels back to ordinary households.
 
-This is not the only force at work. New investment may create demand, and cheaper services may free up money for consumption. To judge whether the shock will continue to spread, we need to compare the speed and reach of these forces rather than examine just one pathway.
+### Evidence
 
-### Governments are part of these relationships too
+- **Workers’ share is already shrinking.** The ILO estimates that from 2014 to 2024, global output per worker grew 17.9%, yet labor’s share of income fell from 53.0% to 52.4%. Had the share held at its 2014 level, workers worldwide would have earned about $1 trillion more in 2024. [21]
+- **Money is concentrated.** In 2025, US private investment in AI was $285.9 billion, 23 times that of the runner-up, China ($12.4 billion). [6] Four companies alone planned nearly $700 billion of capital spending in a single year. [7] Whoever owns these facilities is best placed to capture AI’s returns. The same holds between countries: customer service, design and software work that used to be outsourced abroad may shift to companies that command AI (see chapter 3).
+- **New channels can be built.** The US state of Alaska saves oil revenue in a permanent fund and has paid every resident an annual dividend since 1982. In 2025 it paid $1,000 each to more than 600,000 people. [22] Sharing the returns from a public resource directly with everyone can work for decades.
+- **Does cash make people stop working?** One study gave 1,000 low-income Americans $1,000 a month for three years, while a control group of 2,000 received $50 a month. Recipients’ labor-force participation fell by 2.0 percentage points and they worked about 1.3–1.4 fewer hours a week; their partners cut their hours by a similar amount, and the extra time went mostly to leisure. [23] Cash leads people to work somewhat less, but nowhere near “everyone quits”.
 
-As demand for support rises, existing sources of tax revenue may come under pressure. If additional profits are difficult to tax, or if most of the gains accrue elsewhere, public services will face greater fiscal pressure. Any cuts to public services would then weaken households’ ability to adjust their lives.
+### What we don’t know yet
 
-Yet the absence of wages does not mean the absence of all tax revenue. Profits and other income may create new tax bases, while AI may reduce the costs of public services and tax administration. Whether public finances come under strain depends on the existing revenue structure, the practical ability to collect taxes and how quickly new spending needs grow.
+- Where will the gains finally land: with the model makers, with the companies selling computing power and chips, or with every industry that uses AI? Will competition push prices down so that ordinary users capture more of the benefit?
+- How should public funds, dividends and taxes be designed for the AI era, so that they last and are not captured by a few?
+- Is cash enough? If housing, health care and elder care fall short, rent and rising prices may eat it up. That is reasoning and needs more evidence.
 
-> **Individual efforts to cope can amplify collective pressure**
-> Companies conserve cash, households cut spending and banks tighten lending, each for understandable reasons. When these choices occur together, however, they may leave fewer opportunities to earn new income. It is difficult to expect any one business or household to resolve this kind of coordination problem alone.
+### Signals that would change our minds
 
-## Some companies will shrink; others may lose their reason to exist
+- Labor’s share falls faster while a few AI companies keep very high profits: distribution is more urgent than we think.
+- AI services become much cheaper and free or open models are good enough: the benefits will spread more widely.
+- Public funds or dividends financed by AI returns appear: new channels are being connected.
 
-Much of the value offered by professional service firms lies in completing work that customers cannot organize on their own. These firms sell expertise while also handling communication and coordination. If agents can take over an entire workflow, services that customers previously had to buy externally may be brought in-house.
+## 5 Four futures · Two switches and one precondition
 
-Work that once required a project team might later begin with a customer stating an objective and end with a group of agents carrying it out. What is at stake here is why this company is worth paying. Employees using AI to become more efficient and customers no longer needing the company are two very different outcomes.
+> **Bottom line:** AI does not decide the ending. Two things matter more: how the wealth AI creates is shared, and when society starts to prepare. Together the two switches give four futures. All of it rests on one precondition: humans can still keep AI in check.
 
-A company’s organizational value is not limited to execution. Customer relationships, physical assets and the assumption of responsibility may all provide reasons to continue operating. Some companies may therefore reduce employment while maintaining or even improving returns; others may face simultaneous declines in orders and prices. Businesses across an entire industry cannot all be assigned the same outcome.
+### Four futures
 
-*Figure 05. Where business value may move. The number of small teams may grow even as control becomes more concentrated upstream.*
-
-| What needs to be assessed separately | The pressures it may be more likely to face | Conditions that may allow it to remain viable |
+| Future | The two switches | Early signs you can watch for today |
 | --- | --- | --- |
-| Providers primarily selling standardized delivery | Customers do the work themselves, or new entrants compete at lower prices | Customers still need the provider to handle complex handoffs, acceptance checks or the consequences |
-| Companies primarily coordinating collaboration among specialists | Agents take over coordination, eroding the advantage of the existing organizational cost structure | The organization holds customer trust, assets or business relationships that are difficult to transfer |
-| Platforms controlling models or access to customers | Competition may also drive down prices; returns are not permanently guaranteed | Switching costs remain high, and control of key access points and production requirements remains concentrated |
-| Small teams using publicly available tools | Entry is easy, but acquiring customers and retaining profits may become harder | They can secure real customers and move between tools and channels |
+| Soft landing | Shared widely · Prepared early | Support kicks in automatically when income drops; AI returns start flowing into public funds or dividends; more trials of shorter hours without lower pay |
+| Recurring pain | Shared widely · Fixed after the fact | Relief is improvised only after each shock; to get help, people must first prove why they lost their job |
+| Cared for, but voiceless | Taken by a few · Prepared early | A basic safety net exists, but a few platforms decide what work there is, what it pays and which tools to use; switching providers is hard |
+| Torn apart | Taken by a few · Fixed after the fact | Labor’s share keeps falling; gaps between regions and generations widen; public debate grows ever more polarized |
+| Out of control (precondition fails) | Critical AI actions can no longer be stopped | Serious incidents rise but go unreported and no one is held responsible; safety rules are postponed again and again |
 
-A rise in one-person businesses can coexist with greater concentration of economic power. The former indicates that organizing production has become easier; the latter depends on who controls computing capacity and access to customers, and who sets the rules of exchange. Having tools does not automatically mean having customers or pricing power.
+### Evidence
 
-If publicly available capabilities are cheap enough, and data and customer relationships can be transferred, small organizations may gain more room to operate. If switching suppliers becomes increasingly costly, many apparently independent companies may gradually come to depend on the same platform.
+- **Distribution does not improve by itself.** Over the past decade output per worker rose while labor’s share of income fell [21], and AI investment is concentrated in a few countries and companies [6][7]. Someone has to flip the first switch.
+- **Timing matters.** As chapter 6 shows, after-the-fact help that requires proof of cause has had limited effect, while a dividend set up in advance and paid automatically has lasted for decades. That is the basis for the second switch.
+- **The precondition is not secure.** The *International AI Safety Report 2026* finds that AI capabilities are advancing faster than governance. [8]
 
-## Society will adjust on its own, but adjustment has conditions
+### What we don’t know yet
 
-Businesses will change direction, people will change careers, and families will help one another. An analysis of disruption must account for these responses. But we still need to ask how much change these mechanisms can absorb, rather than treating “society will adapt” as the end of the analysis.
+- Will reality settle into one of these, or swing between them? Different countries and groups may well end up in different futures.
+- Beyond the two switches, are there equally decisive variables, such as how intense AI competition between countries becomes?
 
-| Adjustment mechanism | Why it can help | Where it may break down |
+### Signals that would change our minds
+
+- The last column of the table above is the list of signals to watch. Whichever row’s signs keep multiplying is the future we are heading toward.
+
+## 6 Who can do what · The tools we have, and how well they work
+
+> **Bottom line:** We are not empty-handed. Income support, public funds and safety rules all have precedents. But the evidence also shows that after-the-fact fixes with layers of proof work poorly, and rules, once written, can be delayed again and again.
+
+### Evidence
+
+- **Lessons from after-the-fact help.** The US Trade Adjustment Assistance program offers training and income support to workers who lose their jobs to import competition, but only after the government certifies that trade was the cause. An evaluation commissioned by the US Department of Labor found that participants did markedly worse than similar comparison workers on employment and earnings in the first two years. The gap narrowed later, but in the final year participants still earned about $3,300 less on average. [24] The page’s point that people should not “first have to prove which AI replaced them” comes from this lesson.
+- **Channels built in advance.** Alaska’s permanent fund dividend is paid automatically every year [22], and the cash experiment shows that giving people money does not make most of them stop working [23].
+- **Rules are being written, and delayed.** The EU AI Act took effect in August 2024 as the first comprehensive law governing AI, and obligations for general-purpose AI models have applied since August 2025. [25] It requires high-risk AI systems to allow human oversight, including the ability to interrupt the system with a “stop” button or a similar procedure [26], and serious incidents must generally be reported within 15 days [27]. But a simplification package that took effect in July 2026 pushed the high-risk rules back to December 2027, and some to August 2028. [28]
+- **Countries are sharing information.** The *International AI Safety Report*, written by more than 100 experts and backed by over 30 countries, is one example of countries pooling what they know about risks. Its own conclusion, though, is that governance is not keeping up with capabilities. [8]
+
+### What each party can do now
+
+| Who | What they can do now | Basis |
 | --- | --- | --- |
-| Lower prices and new demand | Services that were previously unaffordable become accessible | Existing income disappears first, while essential expenses and debts fail to fall at the same pace |
-| Career changes and retraining | People move into tasks that still require human labor | New tasks are also automated rapidly, leaving training without corresponding income opportunities |
-| Entrepreneurship and small teams | The cost of entering a market falls | Competition among similar offerings depresses returns, and new businesses also need few employees |
-| Family support and relocation | People share expenses and seek places with more suitable costs or opportunities | Relatives and different regions are affected at the same time and cannot provide one another with enough support |
-| Cooperative organizations and shared assets | Members gain joint access to tools and channels, distribute risks and share returns | Members lose external income simultaneously, or organizational governance and dependence on upstream providers create constraints |
-| Shorter working hours | Remaining work is shared more widely, increasing leisure time | Demand for labor continues to decline, and distributing working hours alone cannot sustain income |
+| Governments | When income drops, support kicks in without first proving why the job was lost | The Trade Adjustment Assistance evaluation [24] |
+| Governments | Build channels that return AI’s gains to every household, with open and accountable rules on where the money comes from and how it is shared | Alaska’s permanent fund [22] |
+| Companies | Tell employees early what is coming, and work out transfers, shorter hours and profit-sharing together | Reasoning: expectations move ahead of layoffs (chapter 3) |
+| AI companies | The more critical the action, the more it must be possible to stop and undo; report incidents promptly | EU AI Act, Articles 14 and 73 [26][27] |
+| Countries | Report incidents to one another, set shared rules, and don’t compete to be the least guarded | *International AI Safety Report* [8] |
+| Everyone | Learn to work with AI; test big, hard-to-reverse decisions in small steps first; keep a few months of savings as a cushion | Most jobs will be transformed rather than replaced [11]; the rest is common-sense advice |
 
-Past technological changes created new occupations, but that does not guarantee enough human jobs with adequate pay this time. Under the premise that AI continues to grow more capable, new tasks may also be automated quickly. What we need to observe is how much human labor additional output still requires, and how much income workers receive.
+### What we don’t know yet
 
-Mutual-support organizations can address some risks, but they cannot conjure up replacement income when all their members lose external earnings at once. The more a shock affects different industries and regions simultaneously, the greater the need to share risks across a wider population.
+- In the AI era, which form of income support works best, and who pays for it?
+- Can countries cooperate on safety rules instead of competing to regulate least?
+- Now that AI itself can help people find work and learn new skills, will training programs work better than in the past?
 
-Self-directed adjustment is more likely to work when changes arrive at different times, when groups are not all affected in the same way, and when people can afford the costs of learning and moving. Without those conditions, even determined individual efforts may simply move people from one difficulty to another.
+### Signals that would change our minds
 
-## An established social arrangement may break at its central link
+- Income support appears that kicks in automatically, without proof of cause: society is preparing early.
+- Safety rules keep getting postponed and incident reporting becomes a formality: the precondition of keeping AI in check is weakening.
 
-Education leads to an occupation, an occupation brings income, and income supports family life and allows people to form expectations about the future. Many people organize their lives around this sequence. If the connection between occupation and income weakens persistently, the effects will spread both backward and forward along it.
+## 7 The farther future · What if AI has feelings of its own?
 
-*Figure 06. As the link provided by employment weakens, livelihoods, participation and long-term expectations each need new foundations.*
+> **Bottom line:** Whether AI can have feelings has no answer today. But serious researchers think the possibility cannot be ruled out and deserves to be treated as a research and policy question now. The page’s three principles offer a direction under uncertainty, not a prophecy.
 
-### Education still needs to explain what it can promise
+### Evidence
 
-When entry-level jobs decline, young people may lose not only their first income but also the opportunity to develop gradually into experienced professionals. Education can, of course, still help people understand the world and participate in public life. But the promise that years of study will lead to a stable career needs to be reassessed in light of the conditions it requires.
+- In 2024 a group of researchers including Robert Long and Jeff Sebo published *Taking AI Welfare Seriously*. They argue that it is a “realistic possibility” that some AI systems in the near future will be conscious or robustly agentic. They do not claim that AI is conscious now. Instead they recommend that AI companies take three steps now: acknowledge that this is an important issue, start assessing their systems, and prepare to treat them with an appropriate level of moral concern. [29]
 
-If professional capabilities are supplied primarily through publicly available tools in the future, education may need to place more emphasis on developing judgment, understanding responsibility and participating in collective decisions. This is a possible change in education’s role. These capabilities should not, in turn, be presented as a guaranteed source of employment that can never be displaced.
+### Three principles
 
-### Family assets will affect who has time to adapt
+These are value choices, not research findings:
 
-Faced with the same career disruption, a family with assets can allow its members to try something new and wait for opportunities. A family with little financial cushion needs to accept arrangements that generate income sooner. The same AI tools may therefore lead to very different outcomes in people’s lives.
+1. **People should not have to prove “AI can never do my job” to deserve a future.** A job can be replaced; a person’s life is still worth living.
+2. **Being more capable does not give anyone the right to decide for others.** That holds for people. If AI truly comes to have feelings of its own, it holds for AI too.
+3. **The future need not have only one way to live.** Those who want to change themselves through technology can do so, and those who want to stay as they are can do that too.
 
-Timely public support can reduce this disparity. If each family is largely left to manage on its own, previously accumulated assets may increasingly determine the range of choices available to the next generation.
+### What we don’t know yet
 
-### A more capable government does not automatically give the public more choice
+- How could we tell whether an AI has feelings?
+- If it does, what rights should it have, and what responsibilities should it bear?
+- Will people using technology to change their bodies and minds create new inequalities?
 
-AI can help governments improve services and may make administration and enforcement more efficient. Whether the public gains greater convenience or faces tighter constraints also depends on how authority and oversight are organized. Institutions involve the interests of different groups; a technically optimal calculation cannot decide on people’s behalf which costs should be borne by whom.
+### Signals that would change our minds
 
-If people experience falling incomes while also feeling that they lack ways to improve their circumstances, support for policies and social trust may both suffer. Governments may then find it harder to introduce taxes or transfers, further increasing the cost of transition. Government is not an actor standing outside society and operating a set of controls; it is itself affected by these relationships.
+- Scientists converge further on how to tell whether a system is conscious.
+- Reliable methods emerge for checking whether what an AI says about its own states is true.
 
-### With less work, people still need to feel needed
+## 8 Your turn · How to tell where we are
 
-Work provides income, relationships and a way to participate in society. Securing basic living standards does not guarantee that people will accept an arrangement in which they permanently lack a say. Caregiving, community activities and independent research could become more important parts of life, but these choices require real time, resources and opportunities to participate.
+> **Bottom line:** No one can foretell the future, but we can watch a handful of signals. The table below gathers the most important signals from the chapters above.
 
-> **A successful transition must also be judged by people’s circumstances**
-> When someone no longer needs to do their former job, can they still live with dignity, choose their own direction and participate in decisions about the shared future? The size of a subsidy cannot answer these questions on its own.
-
-## The same technology may lead different regions toward different outcomes
-
-Placing the entire world on a single displacement curve would miss important differences. Some regions earn much of their income by providing professional services to external customers; others possess key production resources; still others may lack frontier models yet improve local production with low-cost tools. The shocks a region experiences and the capabilities it gains need to be considered separately.
-
-Suppose a region previously earned income from customer support or software outsourcing, and its customers later switched to AI deployed locally. That region might face both a decline in service income and the cost of purchasing new tools. If its capacity to provide public support were also limited, the transition would be more difficult.
-
-Another path is also possible. If tools are cheap enough and well adapted to local languages and business needs, local organizations could gain new productive capabilities and undertake activities they previously could not afford. A region’s wealth or poverty alone does not predetermine whether it will benefit or lose out.
-
-| Differences to examine | What they may affect |
-| --- | --- |
-| Where existing income comes from | Whether displacement affects local demand or service exports, and whether new sources of income exist |
-| Who owns key assets and access points | Whether the gains from output growth remain mainly within the region or flow elsewhere |
-| Whether public institutions can respond in time | Whether basic living standards and services can be maintained after an income shock |
-| Whether tools are genuinely accessible and portable | Whether low barriers translate into usable productive capacity or create new dependence |
-
-Competition among countries and regions may also affect the pace of deployment. A participant that fears losing its advantage by slowing down may face greater pressure to launch. Without shared rules, others can easily be drawn into accelerating as well. Incident reporting and assessments of high-impact deployments could provide a starting point for coordination, but we cannot assume that all parties are naturally willing to cooperate.
-
-## The future can diverge: distribution and control require separate judgments
-
-Discussions of AI’s future can easily swing between universal prosperity and total collapse. This analysis needs to preserve the possibilities in between. A society can produce a great deal while leaving most people with fewer choices; different groups within the same country may also be at different stages of transition.
-
-How gains are distributed and whether systems are effectively constrained are separate questions. Effective control does not guarantee that gains are widely shared, and widely shared gains do not demonstrate that a system is safe.
-
-*Figure 07. A two-dimensional comparison of scenarios. Continuity in access to economic gains and constraints on system actions must be assessed separately; recurring instability describes a process, not a mutually exclusive endpoint.*
-
-### Gains can be widely shared
-
-If the gains from production reach affected people in time through public services, cooperative ownership or other income arrangements, falling demand for labor could translate into shorter working hours and more room to shape one’s life. Companies would still exit and occupations would still change, but people’s basic livelihoods need not be disrupted along with them.
-
-This path also requires an adequate supply of essentials. Even after digital services become cheaper, shortages of housing and care could absorb the gains through other expenses. People’s ability to have a say also needs its own safeguards.
-
-### High output alongside concentrated dependence
-
-Suppose tools become widely available while core assets and access to customers grow increasingly concentrated. Ordinary people might run their own small businesses and receive some support, yet their principal sources of income and scope of activity could be shaped by the rules of a few platforms. Their living standards might not be poorer than before, but their bargaining power could be weaker.
-
-Simply distributing more AI toolkits cannot prevent this outcome. The ability to transfer data, change suppliers and share in returns on assets will all affect the degree of dependence.
-
-### Recurring crises during the transition
-
-If income arrangements repeatedly lag behind technological change, each wave of automation may produce another round of unemployment and defaults. Society might then regain a fragile stability through restructuring and compensation, only for the next wave to arrive. This need not lead to total collapse in the long run, but people may remain unable to form stable expectations.
-
-In this scenario, the pace of change matters especially. Continued technological progress does not by itself show that society has recovered; nor can a growing number of new businesses substitute for improvements in household incomes and actual living conditions.
-
-### A loss of effective control
-
-If we add the stronger assumption that systems can already bypass critical constraints and humans can no longer intervene effectively, the foundations of the economic adjustments described above may fail. We can no longer promise that taxation and training will deliver a smooth transition. Whether income arrangements and other social choices can be implemented would then depend first on whether humans retain the ability to intervene effectively.
-
-> **Outcomes can change, but change itself has costs**
-> These scenarios may coexist or shift into one another. Timely income arrangements can ease shocks, and reducing dependence on platforms can expand choice. But no policy should be depicted as a button that is guaranteed to work when pressed.
-
-## What governments can prepare before existing incomes disappear
-
-Stopping all development is unlikely to provide a complete answer to the question explored here. Continuing development also requires an answer about who bears the costs of transition. If governments wait until large numbers of households have already lost the means to maintain their lives before debating whether AI caused the unemployment, the response may come too late.
-
-Changes in income, working hours and re-employment can provide grounds for activating support. Policies need not require each person to prove exactly which model displaced them. Trigger rules should be agreed in advance and then calibrated to local conditions. There is not enough evidence here to specify a numerical threshold that would suit every place.
-
-*Figure 08. Responses and where they take effect. Select a measure to see its conditions and costs; all explanations expand in print.*
-
-| Situation | Arrangements that can be prepared | Costs that must also be addressed |
+| What to watch | Where to look | If… |
 | --- | --- | --- |
-| A sudden fall in household income | Maintain continuity of basic support and healthcare, and provide necessary assistance during the transition | Funding sources, coverage and the pace at which support is withdrawn |
-| A business can no longer readily continue operating | Protect unpaid wages and the handover of essential services, and arrange restructuring or an orderly exit | Recognize and share losses without preserving existing shareholders’ returns indefinitely |
-| Existing debts no longer match future income | Establish timely and reviewable routes to debt adjustment | Losses borne by creditors and the capacity of financial institutions to absorb them |
-| Labor income continues to decline | Broaden access to the gains from production and reduce support systems’ reliance on wages alone | Tax collection capacity, cross-border gains and the quality of governance |
-| The supply of essential goods and services is constrained | Expand basic services and essential supply at the same time | Construction lead times, funding and an assessment of actual demand |
-| Control over key access points and rules becomes concentrated | Support portability and interoperability, and preserve alternative suppliers and routes for appeal | Prevent compliance costs from ending up protecting only large organizations |
+| How long the tasks AI can finish on its own are | METR [4] | Doubling speeds up: change will come sooner; it slows markedly: we have more time |
+| Whether young people can get a foot in the door | The Stanford Digital Economy Lab’s tracking [13]; data on recent graduates [16] | Entry-level jobs keep shrinking and senior roles follow: the shock is deepening |
+| How many layoffs employers attribute to AI | Challenger’s monthly reports [14] | The share keeps rising: companies are replacing people with AI, or at least say so |
+| Labor’s share of income | International Labour Organization [21] | It falls faster: distribution is more urgent |
+| Jobs in outsourcing hubs | Industry data from the Philippines and elsewhere [20] | Targets and jobs keep being cut: the dominoes between countries are falling |
+| Whether safety rules take effect | The EU AI Act timetable [28] | Repeated delays: the precondition of keeping AI in check is weakening |
+| New channels for sharing | Public funds, dividends and cash experiments [22][23] | Dividends funded by AI returns appear: signs of a soft landing |
 
-### Protecting people’s livelihoods and preserving every existing business are separate tasks
+### Three questions worth asking now
 
-A company’s loss of demand does not mean that its employees should bear all the consequences. Unpaid wages, the handover of essential services and basic living standards can be protected, but this does not imply that all returns to existing shareholders must be maintained. Businesses facing temporary funding difficulties should also be treated differently from those whose underlying business foundations have changed.
+1. **Which household in the building are you?** Of all the things you do at work, which is hardest to hand to AI? If that were all that was left, could it support your income?
+2. **If your income stopped tomorrow, how many months could you last?** What about your family? Is there anyone nearby you could count on, and who could count on you?
+3. **Who do you want to set the building’s rules?** Companies, governments, experts, or everyone affected? Where do you get a say?
 
-### Support systems need sustainable sources of funding
+## Method and limits
 
-If labor income keeps declining, support arrangements that depend exclusively on wage-related revenues may come under increasing strain. Public services, ways for residents to share capital returns, and broader risk-sharing arrangements can be compared as alternative mechanisms. A basic income is also open for discussion, but it is not the only option.
+- We use only public, verifiable sources. Every figure is cited, and sources are current as of September 2026.
+- Much of the data comes from the United States, where it is most complete and timely. Other countries, especially low-income ones, may look very different.
+- We do not predict when AGI will arrive, and we do not assign probabilities to the four futures.
+- The households in the interactive page are fictional. When each task could be handed to AI is a rough judgment for illustration, not a forecast.
+- Where we reason rather than cite data, the text says so.
+- The page and this report may contain mistakes. If you find one, please report it in the [GitHub repository](https://github.com/lisiyuan-cosmoli/agi-era/issues).
 
-All these arrangements require us to examine where the money comes from and who bears the risk. AI companies may not remain highly profitable forever. Competition can drive prices down, and gains may accrue to energy suppliers or other scarce resources instead. A support system cannot be staked on the valuations of a few companies rising indefinitely.
+## References
 
-If cash support increases without a corresponding expansion in the supply of essentials, rents and other expenses may absorb part of the benefit. Fiscal arrangements and physical supply must be considered together.
-
-## What responsibilities can AI companies, other businesses and civil society take on?
-
-Retraining has value, but in a scenario where new tasks may also be automated rapidly, it cannot resolve the long-term income problem by itself. The harder AI companies find it to predict every consequence, the more clearly they need to explain which actions can be constrained, who is responsible when incidents occur, and how downstream organizations can exit.
-
-### Make control measures stand up to scrutiny
-
-Answering questions and independently conducting transactions or controlling critical systems require different levels of authorization. Assessment should cover the complete system rather than just the performance of an individual model. When multiple agents act together, their combined permissions and overall impact also need to be examined.
-
-Limiting scope, keeping authorizations revocable, and maintaining the ability to isolate problems and recover can all reduce some risks. But these measures themselves need to be verified. Having someone who does not understand the consequences mechanically click “approve” does not constitute effective oversight.
-
-### Give those who depend on a service time to adjust
-
-Model updates and service changes may affect businesses whose operations depend on them. Version migration arrangements, explanations of capability changes and reasonable handover provisions can allow customers to revalidate critical workflows. If an organization lacks even the opportunity to change suppliers, its reliance on the technology may gradually become a constraint on its business.
-
-Incident reporting and compensation arrangements should also be considered before deployment expands. Insurance or reserves can cover some compensable losses, but the ability to pay compensation does not confer permission to take any risk. The acceptability of high-impact deployments requires independent scrutiny and public decision-making.
-
-### Other businesses need to reassess why customers pay
-
-Employees learning to use AI does not guarantee that a company’s existing business remains viable. Companies need to keep assessing whether customers can now do the work themselves and, if they still choose to buy, which part of the value they are paying for. Fixed costs and business commitments also need to adjust to changing demand.
-
-During a transition, businesses can communicate changes in roles in advance and discuss feasible redeployment, shorter hours or sharing the gains. If the business has lost its foundations, an orderly exit needs to be considered. It is difficult for a company to guarantee every job indefinitely, and society cannot expect voluntary arrangements at each firm to solve the overall purchasing-power problem.
-
-### Civil society can help dispersed individuals build collective capacity
-
-Cooperative organizations can jointly own tools and customer channels, establish mutual support, and organize bargaining with platforms and public discussion. The benefits members actually receive, and whether they can participate in decisions, deserve more scrutiny than how advanced the organization’s AI is.
-
-These organizations also incur governance costs and may experience internal concentrations of power. They need to create real value, rather than sustain themselves solely by defending old professional barriers to entry.
-
-## An inability to predict consequences is different from an inability to control actions
-
-Before research and development begins, it is difficult to predict precisely what form society will eventually take. That uncertainty cannot be eliminated, but attempts can be made to manage it through trials with a limited scope, continuous observation and revocable authorization.
-
-Growth in capability, the scale of actual deployment and the authority a system can exercise independently can proceed at different speeds. Uses with limited consequences that can be withdrawn can be tested more quickly; uses with major consequences that are difficult to reverse require stronger evidence for effective control. Pausing the relevant activities when necessary is also part of an ongoing process of adjustment.
-
-*Figure 09. A governance process that can be revised repeatedly. The process itself does not guarantee safety; every stage needs to be tested.*
-
-Control is not just a technical question of whether a stop button exists. Even if a system can be shut down, society may have few practical choices if it can no longer bear the cost of doing so. Another possibility is that the system can be constrained technically, but the ultimate allocation of authority is unclear: the public does not know who has the right to decide or how to appeal when disputes arise.
-
-| Levels that need to be distinguished | Questions to keep asking |
-| --- | --- |
-| Technical control | Can critical permissions be limited or revoked, can abnormal behavior be isolated, and can operations recover after a shutdown? |
-| Economic and organizational dependence | Are alternative suppliers available, can data and operations be transferred, and are the costs of exit bearable? |
-| Public authorization | Who has the authority to decide the scope of use, who bears losses, and how can affected people appeal and participate? |
-
-AI can help analyze policy, but greater intelligence does not automatically give it the authority to decide how society’s interests should be distributed. The costs different groups are willing to bear still require a process that can be authorized, supervised and held accountable.
-
-> **A boundary this analysis cannot cross**
-> If we explicitly assume that humans can no longer constrain a system’s critical actions or implement their own decisions, we cannot simultaneously promise that conventional economic policies will ensure a smooth transition. The question of effective control must then be addressed first.
-
-## Individuals can prepare, but cannot bear the whole transition alone
-
-Under the premise of AI without an assumed ceiling, it is difficult to produce a list of occupations that “will never be displaced.” Treating a capability that is currently out of reach as a lasting competitive defense may also lead people to make commitments that are too difficult to unwind.
-
-Learning to use AI still has value. It can expand people’s ability to get things done and help them explore new sources of income. But as tools become more widespread, knowing how to use them becomes less likely to provide a durable advantage on its own. People also need to keep asking where their customers are, how income is earned and whether they can leave a particular platform.
-
-Both businesses and individuals can divide decisions into steps that are easier to adjust. Confirm demand and the ability to deliver in practice before expanding commitments; maintain working relationships with others and participate in organizations that can share risks. These preparations can create more room to maneuver, but cannot guarantee that an individual will withstand a systemic shock alone.
-
-This is also why governments, businesses and civil society need to act at the same time. Expecting everyone to solve every problem by continually changing careers may transfer responsibility for institutional adjustment to those with the least financial cushion.
-
-## How to tell when this analysis needs to change
-
-A forward-looking study is difficult to test if it only explains why everything will unfold as it predicts. It needs to state in advance which developments would support the proposed pathway and which should lead to a revision of its judgments.
-
-| Proposition being explored | Signals that would support it | Signals that should prompt revision |
-| --- | --- | --- |
-| Displacement may put sustained pressure on established service providers | Customers continue to do the work themselves, while both revenue and employment in the original services come under pressure | Affected businesses regain sustainable income through new demand or cost adjustments |
-| Pressure on living standards may spread to other industries | Real incomes fall, while essential expenses and debts are slow to adjust | Essential expenses fall in time, and new income and support reach those affected |
-| Growth in small organizations may coincide with greater platform concentration | Customer acquisition and payment settlement depend on a few access points, and switching costs rise | Suppliers are easy to replace, customer relationships can be retained, and members can share the gains |
-| Self-directed adjustment may be insufficient | Income opportunities remain scarce after training, and different groups face pressure at the same time | New jobs continue to emerge, affected people can enter them, and those jobs provide enough income to live on |
-| Governance capacity may lag behind deployment | Critical permissions expand while incident-response and recovery capabilities remain unverified | Independent scrutiny finds constraints effective, and exit and appeal channels work in practice |
-
-These observations cannot establish on their own that the changes are caused by AI. Economic cycles, market structure and other factors can produce similar outcomes. The process through which businesses adopt AI needs to be examined alongside changes in income and organizations, while continuing to test alternative explanations.
-
-This report does not say where humanity’s future is certain to lead. It keeps following the questions further: after an industry is displaced, how do businesses exit, how do people sustain their lives, and who controls the new capabilities? Technology can continue to develop, and society also needs to prepare for these questions before the changes arrive.
-
-## Sources, assumptions and notes on the report
-
-This is a forward-looking exploration of mechanisms, using a 2026–2029 discussion window. No additional experiment testing delivery by newcomers was conducted, and no calibrated macroeconomic model was developed. The policies discussed in the report are conditional options, not verified implementation plans.
-
-Model names, individual demonstrations and isolated capabilities have not been treated as evidence that an entire industry has already disappeared. Nor has the statement that “AI companies cannot predict every outcome” been presented as a fact that current systems are already completely out of control.
-
-- [Broadening the Gains from Generative AI: The Role of Fiscal Policies](https://www.imf.org/en/publications/staff-discussion-notes/issues/2024/06/11/broadening-the-gains-from-generative-ai-the-role-of-fiscal-policies-549639). IMF Staff Discussion Note, 2024-06-17. Global policy discussion; the authors’ views do not represent official IMF policy. Provides background for the discussion of fiscal buffers and distribution mechanisms. It cannot establish the report’s scenarios or its judgments about AGI/ASI timelines.
-
-- [AI Risk Management Framework 1.0 · Core](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/). NIST, 2023. A voluntary risk-management framework issued by a US agency; it has no social-forecasting data coverage period relevant to this report. Provides background for the discussion of governance mechanisms such as continuous assessment, allocation of responsibility and deactivation. It cannot establish that ASI will necessarily remain controllable.
-
-Sources are collected in the appendix; the main text focuses on the question itself and on causal reasoning. The materials above do not prove future outcomes. Any additional empirical claims should be checked separately for the period covered by the data, the market scope and the conditions for complete delivery.
-
-### A few terms used in this report
-
-**AGI / ASI**: In this report, these refer respectively to broadly general intelligence and to superintelligence that goes further beyond human capabilities. This report does not set a certification threshold that has already been met or confirm a specific arrival date.
-
-**Agent**: A system that can organize tasks around a goal, use tools and take actions. Its range of capabilities and its authority to act need to be assessed separately.
-
-**Public benefits and sharing the gains**: Ways for residents to share in growth in production through public services, cooperative organizations, capital returns or other channels. The report does not select one institutional arrangement in advance.
-
-**Effective control**: The practical ability to limit or revoke critical actions, including the capacity to isolate problems and recover when something goes wrong. It is not the same as being able to predict every outcome.
+1. Google DeepMind (2025). [Advanced version of Gemini with Deep Think officially achieves gold-medal standard at the International Mathematical Olympiad](https://deepmind.google/blog/advanced-version-of-gemini-with-deep-think-officially-achieves-gold-medal-standard-at-the-international-mathematical-olympiad/)
+2. OpenAI (2026). [An OpenAI model has disproved a central conjecture in discrete geometry](https://openai.com/index/model-disproves-discrete-geometry-conjecture/)
+3. Nature (2026). [AI cracks 80-year-old mathematics challenge — researchers are astonished](https://www.nature.com/articles/d41586-026-01651-0)
+4. METR. [Task-Completion Time Horizons of Frontier AI Models](https://metr.org/time-horizons/)
+5. METR (2026). [Time Horizon 1.1](https://metr.org/blog/2026-1-29-time-horizon-1-1/)
+6. Stanford HAI (2026). [The 2026 AI Index Report](https://hai.stanford.edu/ai-index/2026-ai-index-report)
+7. CNBC (2026). [Tech AI spending approaches $700 billion in 2026, cash taking big hit](https://www.cnbc.com/2026/02/06/google-microsoft-meta-amazon-ai-cash.html)
+8. International AI Safety Report (2026). [International AI Safety Report 2026](https://internationalaisafetyreport.org/publication/international-ai-safety-report-2026)
+9. Autor, Levy & Murnane (2003). [The Skill Content of Recent Technological Change: An Empirical Exploration](https://academic.oup.com/qje/article-abstract/118/4/1279/1925105). Quarterly Journal of Economics.
+10. IMF (2024). [AI Will Transform the Global Economy. Let’s Make Sure It Benefits Humanity](https://www.imf.org/en/blogs/articles/2024/01/14/ai-will-transform-the-global-economy-lets-make-sure-it-benefits-humanity)
+11. ILO (2025). [Generative AI and jobs: A 2025 update](https://www.ilo.org/publications/generative-ai-and-jobs-2025-update)
+12. Brynjolfsson, Chandar & Chen (2025). [Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of Artificial Intelligence](https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/). Stanford Digital Economy Lab.
+13. Brynjolfsson, Chandar & Chen (2026). [Canaries in the Coal Mine?, August 2026 update](https://digitaleconomy.stanford.edu/app/uploads/2026/08/Canaries_August2026.pdf). Stanford Digital Economy Lab.
+14. Challenger, Gray & Christmas (2026). [June Layoffs Cool to 45,849, Down 53% From May; AI Leads Reasons for Fourth Consecutive Month](https://www.challengergray.com/blog/challenger-report-june-layoffs-cool-to-45849-down-53-from-may-ai-leads-reasons-for-fourth-consecutive-month/)
+15. Challenger, Gray & Christmas (2026). [Job Cut Announcement Report, December 2025](https://www.challengergray.com/wp-content/uploads/2026/01/Challenger-Report-December-2025.pdf)
+16. Emanuel, Harrington & Pallais (2026). [Remote Work Leaves Younger Workers Sidelined](https://libertystreeteconomics.newyorkfed.org/2026/06/remote-work-leaves-younger-workers-sidelined/). Liberty Street Economics, Federal Reserve Bank of New York.
+17. Acemoglu & Restrepo (2020). [Robots and Jobs: Evidence from US Labor Markets](https://www.nber.org/papers/w23285). Journal of Political Economy.
+18. Moretti (2012). [The New Geography of Jobs](https://eml.berkeley.edu/~moretti/book.htm)
+19. AMRO (2025). [Can the Philippines IT-BPM Industry Stay Ahead Amid the AI Wave?](https://amro-asia.org/can-the-philippines-it-bpm-industry-stay-ahead-amid-the-ai-wave)
+20. BusinessWorld (2026). [AI, global competition force Philippines’ IT-BPM industry to cut targets](https://bworldonline.com/top-stories/2026/07/15/763409/ai-global-competition-force-philippines-it-bpm-industry-to-cut-targets/)
+21. ILO (2025). [ILO Director-General urges action to strengthen decent work amid global uncertainty](https://www.ilo.org/resource/news/ilo-director-general-urges-action-strengthen-decent-work-amid-global)
+22. Alaska Department of Revenue (2025). [Department of Revenue announces 2025 Permanent Fund Dividend amount](https://dor.alaska.gov/department-of-revenue/news-detail/2025/09/22/department-of-revenue-announces-2025-permanent-fund-dividend-amount)
+23. Vivalt et al. (2024). [The Employment Effects of a Guaranteed Income: Experimental Evidence from Two U.S. States](https://www.nber.org/papers/w32719). NBER Working Paper 32719.
+24. U.S. Department of Labor (2012). [The Evaluation of the Trade Adjustment Assistance Program: A Synthesis of Major Findings](https://www.dol.gov/sites/dolgov/files/ETA/publications/ETAOP_2013_08.pdf). Mathematica Policy Research & Social Policy Research Associates.
+25. European Commission. [AI Act](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai)
+26. EU AI Act. [Article 14: Human Oversight](https://artificialintelligenceact.eu/article/14/)
+27. EU AI Act. [Article 73: Reporting of Serious Incidents](https://artificialintelligenceact.eu/article/73/)
+28. Council of the EU (2026). [Artificial intelligence: Council gives final green light to simplify and streamline rules](https://www.consilium.europa.eu/en/press/press-releases/2026/06/29/artificial-intelligence-council-gives-final-green-light-to-simplify-and-streamline-rules/)
+29. Long, Sebo et al. (2024). [Taking AI Welfare Seriously](https://arxiv.org/abs/2411.00986)

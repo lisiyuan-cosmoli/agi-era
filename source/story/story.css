@@ -125,7 +125,7 @@ p{margin:0}
 .rail-stop span{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--muted);white-space:nowrap}
 .rail-stop.cur span{color:var(--ai-ink)}
 .rail-gap{position:absolute;top:42px;transform:translateX(-50%);font-size:10.5px;font-weight:700;color:var(--muted);white-space:nowrap}
-.rail-card{display:grid;grid-template-columns:auto 1fr;gap:2px 16px;align-items:center;margin-top:16px;min-height:5em}
+.rail-card{display:grid;grid-template-columns:auto 1fr;gap:2px 16px;align-items:center;align-content:center;margin-top:16px;min-height:5em}
 .rail-year{grid-row:span 2;font-family:var(--mono);font-size:clamp(32px,6vw,46px);font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
 .rail-card b{font-size:18px;line-height:1.4}
 .rail-card p{font-size:15px;color:var(--ink-2);line-height:1.6}
@@ -405,4 +405,4 @@ p{margin:0}
   .fut-out p{font-size:14.5px;line-height:1.7}
 }
 .b-card{margin-top:10px}
-@media (max-width:600px){.b-card{padding:6px;margin-top:8px}.scene{margin-top:14px}}
+@media (max-width:600px){.b-card{padding:6px;margin-top:8px}.scene{margin-top:14px}.rail-card{min-height:6.6em}}

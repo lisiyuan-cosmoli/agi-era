@@ -12,20 +12,20 @@
 ## 内容
 
 - `index.html`：互动推演（中文）。把整个社会比作一栋住着 12 户人家的楼，共八章：节点、AI 敲门、连锁反应、钱怎么转、四种未来、各方能做什么、更远的未来、轮到你。
-- `report/`：完整研究报告《AI 不设上限以后，社会如何完成过渡？》，中英双语，14 章、9 张机制图，另有 Markdown 文字版。
+- `report/`：研究报告，中英双语（`index.html`、`en.html`）。和互动页面的八章一一对应，每章写清结论、证据、还不知道的问题，以及出现什么信号就要改判断。所有数字都注明出处，共 29 条参考资料，资料截至 2026 年 9 月。Markdown 原文是 `report/report.zh.md` 和 `report/report.en.md`。
 - `essay/开放演化的共生文明.md`：关于智能、主体与共同未来的长文，第 07 章由此而来。
 
 ## 修改与构建
 
 - `source/story/`：首页的页面、样式和脚本。`tools/build_story.py` 把它们合成单文件 `index.html`。
-- `source/report-original/`：中文报告的内容与生成代码。`source/report.en.json`、`source/report-ui.en.json`：英文译文。
+- `report/report.zh.md`、`report/report.en.md`：报告正文。`source/report/` 是报告页面的样式和脚本，`tools/build_report.py` 把它们生成 `report/index.html` 和 `report/en.html`。
 - 修改后在仓库根目录执行：
 
 ```sh
 python3 build.py
 ```
 
-只用 Python 标准库，运行时不联网。修改中文报告时要同步更新英文译文，构建会列出没有翻译的文字。
+只用 Python 标准库，运行时不联网。修改报告时，中英两版要一起改；构建会检查每个引用编号都有出处、每条参考资料都被引用，两版的参考资料数量一致。
 
 ## 发布到 GitHub Pages
 
@@ -42,6 +42,7 @@ SITE_URL=https://新网址/ python3 build.py
 ## 内容边界
 
 - 图都是示意，不是预测，也没有虚构数据或概率。
+- 报告只用公开、可查证的资料；属于推理而不是数据的地方，文中写明了。
 - AI 能力持续增长是推演的前提。AGI／ASI 的到来时间、AI 是否具有主体性、未来会走向哪种结果，都没有写成确定的事实。
 - 页面不联网、不追踪。首页只在读者自己的浏览器里记住所选的年份。
 
